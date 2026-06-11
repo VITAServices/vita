@@ -1,34 +1,22 @@
-# Dev artifacts
-temporary screenshots/
 node_modules/
-.vercel/
+temporary screenshots/
 .env
 .env.local
-
-# AI-generated draft media (not used on site)
 hf_*.mp4
 hf_*.png
 hf_*.jpeg
-
-# Unused large originals
 Marche de Louest_walker.png
 Marcher de Louest Photo Aidante.png
-
-# Dev scripts
 compress.mjs
 get-dims.mjs
 screenshot-clip.mjs
 screenshot-lang.mjs
 ck.mjs
 s2.mjs
-
-# Content reference files
+screenshot.mjs
+serve.mjs
+test-*.mjs
 French Website Content.pdf
 generate_vita_docs.py
 brand_section.html
-
-# Sensitive credentials - never commit
-Twilio/
-DNS.PNG
-
-.vercel
+supabase/

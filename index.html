@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://vitasoinsetservices.com/">
     <title>VITA Services à Domicile | Home Care</title>
     <link rel="icon" type="image/png" href="Brand_Assets/Hero_Favicon.png">
     <link rel="apple-touch-icon" href="Brand_Assets/Hero_Favicon.png">
@@ -299,6 +300,14 @@
             color: var(--white);
             transform: translateY(-1px);
         }
+        .nav-employee-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.6rem 1.2rem 0.6rem 1rem;
+        }
+        .nav-employee-btn svg { flex-shrink: 0; }
+        .nav-mobile-extra .nav-employee-btn { justify-content: center; }
 
         /* --- HERO --- */
         .hero {
@@ -1011,7 +1020,7 @@
 
         @media (max-width: 940px) {
             .nav-links { display: none; }
-            .nav-right > .nav-phone, .nav-right > .btn-primary { display: none; }
+            .nav-right > .nav-phone, .nav-right > .btn-primary, .nav-right > .nav-employee-btn { display: none; }
             .nav-toggle { display: flex; }
             .nav-mobile-panel, .nav-overlay { display: block; }
         }
@@ -1405,7 +1414,7 @@
 <nav class="main-nav" id="mainNav">
     <div class="nav-inner">
         <a href="#" class="nav-logo">
-            <img src="Brand_Assets/VITA_LOGO.png" alt="VITA Services a Domicile">
+            <img src="Brand_Assets/VITA_SERVICES_LOGO.png" alt="VITA Services a Domicile">
         </a>
         <ul class="nav-links">
             <li><a href="#services">
@@ -1443,6 +1452,12 @@
             <a href="tel:5149176167" class="nav-phone">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 514-917-6167
+            </a>
+            <a href="#" onclick="openEmployeeLogin(); return false;" class="btn-ghost nav-employee-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span data-lang="en" class="active">Employee Login</span>
+                <span data-lang="fr">Espace employés</span>
+                <span data-lang="es">Acceso empleados</span>
             </a>
             <a href="#" onclick="openCareModal(); return false;" class="btn-primary">
                 <span data-lang="en" class="active">Request Care</span>
@@ -1493,6 +1508,12 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 514-917-6167
             </a>
+            <a href="#" onclick="openEmployeeLogin(); closeMobileNav(); return false;" class="btn-ghost nav-employee-btn">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span data-lang="en" class="active">Employee Login</span>
+                <span data-lang="fr">Espace employés</span>
+                <span data-lang="es">Acceso empleados</span>
+            </a>
             <a href="#" onclick="openCareModal(); closeMobileNav(); return false;" class="btn-primary">
                 <span data-lang="en" class="active">Request Care</span>
                 <span data-lang="fr">Demander des soins</span>
@@ -1535,7 +1556,7 @@
         </div>
     </div>
     <div class="hero-media">
-        <video id="heroVideo" autoplay muted playsinline>
+        <video id="heroVideo" autoplay muted playsinline preload="auto">
             <source src="Marche de Louest_walker_video.mp4" type="video/mp4">
         </video>
         <div class="hero-stat">
@@ -1812,7 +1833,7 @@
     <div class="wrap">
         <div class="story-inner">
             <div class="story-img-wrap reveal">
-                <img src="Marie_tremblay.png" alt="Lorena Ybarra, founder of Vita Soins et Services">
+                <img src="Marie_tremblay.jpg" alt="Lorena Ybarra, founder of Vita Soins et Services" width="900" height="1613" loading="lazy">
             </div>
             <div class="reveal">
                 <p class="story-tag">
@@ -1901,7 +1922,7 @@
                 </div>
             </div>
             <div class="cov-map reveal">
-                <img src="Brand_Assets/regions montreal.png" alt="VITA service coverage map - Montreal and surrounding areas">
+                <img src="Brand_Assets/regions-montreal.jpg" alt="VITA service coverage map - Montreal and surrounding areas" width="1000" height="791" loading="lazy">
             </div>
         </div>
     </div>
@@ -1912,8 +1933,8 @@
     <div class="wrap">
         <div class="heal-inner">
             <div class="heal-img-wrap reveal">
-                <video id="healVideo" autoplay muted playsinline style="width:100%; height:480px; object-fit:cover; display:block;">
-                    <source src="Healing at home wheel chair.mp4" type="video/mp4">
+                <video id="healVideo" class="lazy-video" muted playsinline preload="none" style="width:100%; height:480px; object-fit:cover; display:block;">
+                    <source data-src="Healing at home wheel chair.mp4" type="video/mp4">
                 </video>
             </div>
             <div class="reveal">
@@ -2129,8 +2150,8 @@
                 </a>
             </div>
             <div class="join-img-wrap reveal">
-                <video autoplay muted loop playsinline style="width:100%; height:380px; object-fit:cover; display:block;">
-                    <source src="Join our team.mp4" type="video/mp4">
+                <video id="joinVideo" class="lazy-video" muted loop playsinline preload="none" style="width:100%; height:380px; object-fit:cover; display:block;">
+                    <source data-src="Join our team.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
@@ -2310,6 +2331,40 @@
                 <span data-lang="es">Cerrar</span>
             </button>
         </div>
+
+        <div class="modal-success" id="modalFallback" style="display:none;">
+            <div class="success-icon" style="background:rgba(0,104,129,0.12); color:var(--teal-dark);">&#9993;</div>
+            <h3 style="font-size:1.35rem; font-weight:900; color:var(--teal-dark); margin-bottom:0.6rem;">
+                <span data-lang="en" class="active">Couldn't open your email app</span>
+                <span data-lang="fr">Impossible d'ouvrir votre messagerie</span>
+                <span data-lang="es">No se pudo abrir su correo</span>
+            </h3>
+            <p style="font-size:0.9rem; color:var(--neutral); line-height:1.65; margin-bottom:1rem;">
+                <span data-lang="en" class="active">No problem - copy your request below and send it to <strong>Lorena@vitasoinsetservices.com</strong>, or call us at <strong>514-917-6167</strong>.</span>
+                <span data-lang="fr">Pas de souci - copiez votre demande ci-dessous et envoyez-la a <strong>Lorena@vitasoinsetservices.com</strong>, ou appelez-nous au <strong>514-917-6167</strong>.</span>
+                <span data-lang="es">No hay problema - copie su solicitud abajo y envienosla a <strong>Lorena@vitasoinsetservices.com</strong>, o llamenos al <strong>514-917-6167</strong>.</span>
+            </p>
+            <textarea id="modalFallbackText" readonly style="width:100%; min-height:140px; padding:0.85rem; border-radius:12px; border:1px solid var(--teal-light); background:var(--teal-lighter); color:var(--teal-dark); font-family:'Courier New', monospace; font-size:0.76rem; line-height:1.5; resize:vertical;"></textarea>
+            <div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap; justify-content:center;">
+                <button type="button" onclick="copyFallbackText('modalFallbackText', this)" class="btn-primary" style="border:none; cursor:pointer;">
+                    <span class="copy-label-default">
+                        <span data-lang="en" class="active">Copy to clipboard</span>
+                        <span data-lang="fr">Copier le texte</span>
+                        <span data-lang="es">Copiar texto</span>
+                    </span>
+                    <span class="copy-label-done" style="display:none;">
+                        <span data-lang="en" class="active">Copied!</span>
+                        <span data-lang="fr">Copie!</span>
+                        <span data-lang="es">Copiado!</span>
+                    </span>
+                </button>
+                <button type="button" onclick="closeCareModal()" class="btn-ghost" style="cursor:pointer;">
+                    <span data-lang="en" class="active">Close</span>
+                    <span data-lang="fr">Fermer</span>
+                    <span data-lang="es">Cerrar</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -2463,6 +2518,83 @@
                 <span data-lang="es">Cerrar</span>
             </button>
         </div>
+
+        <div class="modal-success" id="jobModalFallback" style="display:none;">
+            <div class="success-icon" style="background:rgba(92,191,58,0.15); color:var(--vita-green-dark);">&#9993;</div>
+            <h3 style="font-size:1.35rem; font-weight:900; color:var(--teal-dark); margin-bottom:0.6rem;">
+                <span data-lang="en" class="active">Couldn't open your email app</span>
+                <span data-lang="fr">Impossible d'ouvrir votre messagerie</span>
+                <span data-lang="es">No se pudo abrir su correo</span>
+            </h3>
+            <p style="font-size:0.9rem; color:var(--neutral); line-height:1.65; margin-bottom:1rem;">
+                <span data-lang="en" class="active">No problem - copy your application below, attach your CV, and send it to <strong>Lorena@vitasoinsetservices.com</strong>, or call us at <strong>514-917-6167</strong>.</span>
+                <span data-lang="fr">Pas de souci - copiez votre candidature ci-dessous, joignez votre CV, et envoyez-la a <strong>Lorena@vitasoinsetservices.com</strong>, ou appelez-nous au <strong>514-917-6167</strong>.</span>
+                <span data-lang="es">No hay problema - copie su solicitud abajo, adjunte su CV, y envienosla a <strong>Lorena@vitasoinsetservices.com</strong>, o llamenos al <strong>514-917-6167</strong>.</span>
+            </p>
+            <textarea id="jobModalFallbackText" readonly style="width:100%; min-height:140px; padding:0.85rem; border-radius:12px; border:1px solid var(--teal-light); background:var(--teal-lighter); color:var(--teal-dark); font-family:'Courier New', monospace; font-size:0.76rem; line-height:1.5; resize:vertical;"></textarea>
+            <div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap; justify-content:center;">
+                <button type="button" onclick="copyFallbackText('jobModalFallbackText', this)" class="btn-primary" style="border:none; cursor:pointer; background:var(--vita-green);">
+                    <span class="copy-label-default">
+                        <span data-lang="en" class="active">Copy to clipboard</span>
+                        <span data-lang="fr">Copier le texte</span>
+                        <span data-lang="es">Copiar texto</span>
+                    </span>
+                    <span class="copy-label-done" style="display:none;">
+                        <span data-lang="en" class="active">Copied!</span>
+                        <span data-lang="fr">Copie!</span>
+                        <span data-lang="es">Copiado!</span>
+                    </span>
+                </button>
+                <button type="button" onclick="closeJobModal()" class="btn-ghost" style="cursor:pointer;">
+                    <span data-lang="en" class="active">Close</span>
+                    <span data-lang="fr">Fermer</span>
+                    <span data-lang="es">Cerrar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EMPLOYEE LOGIN MODAL -->
+<div id="employeeModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="employeeModalTitle">
+    <div class="doc-modal-box" style="max-width:480px;">
+        <div class="doc-modal-header" style="background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);">
+            <button class="modal-close" onclick="closeDocModal('employeeModal')" aria-label="Close">&#x2715;</button>
+            <p class="doc-modal-title" id="employeeModalTitle">
+                <span data-lang="en" class="active">Employee Portal</span>
+                <span data-lang="fr">Portail employés</span>
+                <span data-lang="es">Portal de empleados</span>
+            </p>
+            <p class="doc-modal-subtitle">
+                <span data-lang="en" class="active">Secure access for VITA team members</span>
+                <span data-lang="fr">Accès sécurisé pour l'équipe VITA</span>
+                <span data-lang="es">Acceso seguro para el equipo de VITA</span>
+            </p>
+        </div>
+        <div class="doc-modal-body">
+            <div style="display:flex; justify-content:center; margin-bottom:1.25rem;">
+                <span style="display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; background:var(--teal-lighter); color:var(--teal);">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </span>
+            </div>
+            <p style="font-size:1rem; line-height:1.75; color:#333; text-align:center;">
+                <span data-lang="en" class="active">Our secure online employee portal is currently being finalized. In the meantime, please contact your supervisor or our administrative team to access your schedule, pay stubs, and internal resources.</span>
+                <span data-lang="fr">Notre portail employés en ligne sécurisé est actuellement en cours de finalisation. En attendant, veuillez contacter votre superviseur ou notre équipe administrative pour accéder à votre horaire, vos talons de paie et nos ressources internes.</span>
+                <span data-lang="es">Nuestro portal de empleados en línea seguro está actualmente en fase de finalización. Mientras tanto, comuníquese con su supervisor o con nuestro equipo administrativo para acceder a su horario, recibos de pago y recursos internos.</span>
+            </p>
+            <div class="doc-contact" style="margin-top:1.5rem; text-align:center;">
+                <strong><span data-lang="en" class="active">Need access?</span><span data-lang="fr">Besoin d'accès?</span><span data-lang="es">Necesita acceso?</span></strong><br>
+                <a href="tel:5149176167" style="color:var(--teal);">514-917-6167</a> &nbsp;|&nbsp;
+                <a href="mailto:Lorena@vitasoinsetservices.com" style="color:var(--teal);">Lorena@vitasoinsetservices.com</a>
+            </div>
+        </div>
+        <div class="doc-modal-footer">
+            <button onclick="closeDocModal('employeeModal')">
+                <span data-lang="en" class="active">Close</span>
+                <span data-lang="fr">Fermer</span>
+                <span data-lang="es">Cerrar</span>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -2539,7 +2671,7 @@
                 <span data-lang="fr">Contactez-nous et nous vous aiderons à naviguer parmi les programmes disponibles.</span>
                 <span data-lang="es">Contactenos y le ayudaremos a orientarse entre los programas disponibles.</span><br>
                 <a href="tel:5149176167" style="color:var(--teal);">514-917-6167</a> &nbsp;|&nbsp;
-                <a href="mailto:lorena@vitasoinetservices.com" style="color:var(--teal);">lorena@vitasoinetservices.com</a>
+                <a href="mailto:Lorena@vitasoinsetservices.com" style="color:var(--teal);">Lorena@vitasoinsetservices.com</a>
             </div>
         </div>
         <div class="doc-modal-footer">
@@ -2577,7 +2709,7 @@
 
             <h3><span data-lang="en" class="active">1. Scope</span><span data-lang="fr">1. Champ d'application</span><span data-lang="es">1. Alcance</span></h3>
             <p>
-                <span data-lang="en" class="active">This Policy applies to personal information collected through our website (vitasoinetservices.ca) and through our in-home care services. It covers clients, prospective clients, families, and website visitors.</span>
+                <span data-lang="en" class="active">This Policy applies to personal information collected through our website (vitasoinsetservices.com) and through our in-home care services. It covers clients, prospective clients, families, and website visitors.</span>
                 <span data-lang="fr">Cette politique s'applique aux renseignements personnels collectés via notre site Web et nos services de soins à domicile. Elle concerne les clients, clients potentiels, familles et visiteurs du site.</span>
                 <span data-lang="es">Esta politica se aplica a la informacion recopilada a traves de nuestro sitio web y nuestros servicios de atencion domiciliaria, incluyendo clientes, prospectos, familias y visitantes.</span>
             </p>
@@ -2664,7 +2796,8 @@
             <div class="doc-contact">
                 <strong><span data-lang="en" class="active">Privacy Officer / Contact</span><span data-lang="fr">Responsable de la protection de la vie privée</span><span data-lang="es">Oficial de Privacidad / Contacto</span></strong><br>
                 Lorena Ybarra, Owner - Vita Soin et Services<br>
-                <span data-lang="en" class="active">Email:</span><span data-lang="fr">Courriel:</span><span data-lang="es">Correo:</span> <a href="mailto:lorena@vitasoinetservices.com" style="color:var(--teal);">lorena@vitasoinetservices.com</a><br>
+                <span data-lang="en" class="active">Email:</span><span data-lang="fr">Courriel:</span><span data-lang="es">Correo:</span> <a href="mailto:Lorena@vitasoinsetservices.com" style="color:var(--teal);">Lorena@vitasoinsetservices.com</a><br>
+                <span data-lang="en" class="active">General inquiries:</span><span data-lang="fr">Renseignements generaux:</span><span data-lang="es">Consultas generales:</span> <a href="mailto:info@vitasoinsetservices.com" style="color:var(--teal);">info@vitasoinsetservices.com</a><br>
                 Montreal, QC, Canada
             </div>
         </div>
@@ -2749,7 +2882,8 @@
 
             <div class="doc-contact">
                 <strong><span data-lang="en" class="active">Questions or Concerns?</span><span data-lang="fr">Questions ou préoccupations?</span><span data-lang="es">Preguntas o inquietudes?</span></strong><br>
-                <span data-lang="en" class="active">Contact us at</span><span data-lang="fr">Contactez-nous a</span><span data-lang="es">Contactenos en</span> <a href="mailto:lorena@vitasoinetservices.com" style="color:var(--teal);">lorena@vitasoinetservices.com</a>
+                <span data-lang="en" class="active">Contact us at</span><span data-lang="fr">Contactez-nous a</span><span data-lang="es">Contactenos en</span> <a href="mailto:Lorena@vitasoinsetservices.com" style="color:var(--teal);">Lorena@vitasoinsetservices.com</a>
+                <span data-lang="en" class="active">or</span><span data-lang="fr">ou</span><span data-lang="es">o</span> <a href="mailto:info@vitasoinsetservices.com" style="color:var(--teal);">info@vitasoinsetservices.com</a>
                 <span data-lang="en" class="active">or by phone at</span><span data-lang="fr">ou par telephone au</span><span data-lang="es">o por telefono al</span> <a href="tel:5149176167" style="color:var(--teal);">514-917-6167</a>
             </div>
         </div>
@@ -2887,7 +3021,8 @@
             <div class="doc-contact">
                 <strong><span data-lang="en" class="active">Contact Us</span><span data-lang="fr">Contactez-nous</span><span data-lang="es">Contactenos</span></strong><br>
                 Lorena Ybarra, Owner - Vita Soin et Services<br>
-                <span data-lang="en" class="active">Email:</span><span data-lang="fr">Courriel:</span><span data-lang="es">Correo:</span> <a href="mailto:lorena@vitasoinetservices.com" style="color:var(--teal);">lorena@vitasoinetservices.com</a><br>
+                <span data-lang="en" class="active">Email:</span><span data-lang="fr">Courriel:</span><span data-lang="es">Correo:</span> <a href="mailto:Lorena@vitasoinsetservices.com" style="color:var(--teal);">Lorena@vitasoinsetservices.com</a><br>
+                <span data-lang="en" class="active">General inquiries:</span><span data-lang="fr">Renseignements generaux:</span><span data-lang="es">Consultas generales:</span> <a href="mailto:info@vitasoinsetservices.com" style="color:var(--teal);">info@vitasoinsetservices.com</a><br>
                 Montreal, QC, Canada
             </div>
         </div>
@@ -2982,7 +3117,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <div class="footer-logo-box">
-                    <img src="Brand_Assets/VITA_LOGO.png" alt="VITA Services a Domicile">
+                    <img src="Brand_Assets/VITA_SERVICES_LOGO.png" alt="VITA Services a Domicile">
                 </div>
                 <p>
                     <span data-lang="en" class="active">Providing compassionate, expert home care services to families across the region since 2023.</span>
@@ -3061,7 +3196,7 @@
                 </p>
                 <ul class="foot-links">
                     <li><a href="tel:5149176167">514-917-6167</a></li>
-                    <li><a href="mailto:lorena@vitasoinetservices.com">lorena@vitasoinetservices.com</a></li>
+                    <li><a href="mailto:Lorena@vitasoinsetservices.com">Lorena@vitasoinsetservices.com</a></li>
                     <li style="color:rgba(255,255,255,0.4); font-size:0.875rem;">
                         Montreal, Québec, Canada
                     </li>
@@ -3070,7 +3205,7 @@
         </div>
         <div class="footer-bottom">
             <p>
-                &copy; 2026 VITA Services a Domicile.
+                &copy; 2026 VITA Soins et Services .
                 <span data-lang="en" class="active">All rights reserved.</span>
                 <span data-lang="fr">Tous droits reserves.</span>
                 <span data-lang="es">Todos los derechos reservados.</span>
@@ -3173,6 +3308,26 @@
         revealObserver.observe(el);
     });
 
+    // ---- LAZY-LOAD BELOW-THE-FOLD VIDEOS ----
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const video = entry.target;
+                video.querySelectorAll('source[data-src]').forEach((source) => {
+                    source.src = source.dataset.src;
+                    source.removeAttribute('data-src');
+                });
+                video.load();
+                video.play().catch(() => {});
+                videoObserver.unobserve(video);
+            }
+        });
+    }, { rootMargin: '200px 0px' });
+
+    document.querySelectorAll('.lazy-video').forEach((video) => {
+        videoObserver.observe(video);
+    });
+
     // Stagger siblings in same grid
     document.querySelectorAll('.svc-grid, .vals-grid, .testi-grid, .cov-stats, .perks-grid').forEach(grid => {
         grid.querySelectorAll('.reveal, .svc-card, .val-card, .testi-card, .cov-stat, .perk').forEach((el, i) => {
@@ -3209,6 +3364,7 @@
         document.getElementById('careModal').classList.add('open');
         document.getElementById('modalForm').style.display = 'block';
         document.getElementById('modalSuccess').style.display = 'none';
+        document.getElementById('modalFallback').style.display = 'none';
         document.getElementById('careForm').reset();
         document.body.style.overflow = 'hidden';
         setTimeout(() => document.getElementById('mFirst').focus(), 100);
@@ -3230,8 +3386,8 @@
 
         if (!first || !last || !email || !phone || !bestTime) return;
 
-        const subject = encodeURIComponent('New Care Request - VITA Soin et Services');
-        const body = encodeURIComponent(
+        const subject = 'New Care Request - VITA Soin et Services';
+        const plainBody =
             'New Care Request\n' +
             '==================================\n\n' +
             'First Name:          ' + first + '\n' +
@@ -3239,12 +3395,95 @@
             'Email:               ' + email + '\n' +
             'Phone:               ' + phone + '\n' +
             'Best Time to Reach:  ' + bestTime + '\n\n' +
-            'Special Remarks:\n' + (msg || 'None')
-        );
+            'Special Remarks:\n' + (msg || 'None');
 
-        window.location.href = 'mailto:Lorena@vitasoinetservices.com?subject=' + subject + '&body=' + body;
-        document.getElementById('modalForm').style.display = 'none';
-        document.getElementById('modalSuccess').style.display = 'block';
+        const mailto = 'mailto:Lorena@vitasoinsetservices.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(plainBody);
+
+        function showSuccess() {
+            document.getElementById('modalForm').style.display = 'none';
+            document.getElementById('modalFallback').style.display = 'none';
+            document.getElementById('modalSuccess').style.display = 'block';
+        }
+        function showFallback(text) {
+            document.getElementById('modalFallbackText').value = 'To: Lorena@vitasoinsetservices.com\nSubject: ' + subject + '\n\n' + text;
+            document.getElementById('modalForm').style.display = 'none';
+            document.getElementById('modalSuccess').style.display = 'none';
+            document.getElementById('modalFallback').style.display = 'block';
+        }
+        function fallbackToMailto() {
+            attemptMailto(mailto, plainBody, showSuccess, showFallback);
+        }
+
+        // Primary path: send straight to the backend (saved to the leads database,
+        // triggers an instant email + SMS to Lorena). If that fails for any reason
+        // (offline, API outage), fall back to the mailto-based flow so the lead is
+        // never silently lost.
+        fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                source: 'care_request',
+                firstName: first,
+                lastName: last,
+                email: email,
+                phone: phone,
+                details: { 'Best Time to Reach': bestTime, 'Special Remarks': msg || 'None' }
+            })
+        }).then(function (res) {
+            if (!res.ok) throw new Error('request_failed');
+            return res.json();
+        }).then(function (data) {
+            if (!data || !data.ok) throw new Error('request_failed');
+            showSuccess();
+        }).catch(fallbackToMailto);
+    }
+
+    // Detects whether mailto: actually opened a mail client (browser loses focus / hides),
+    // and falls back to a copyable text panel if nothing happens within the timeout.
+    function attemptMailto(mailtoHref, plainBody, onOpened, onFailed) {
+        let settled = false;
+        const timer = setTimeout(function () { settle(false); }, 1800);
+
+        function onBlur() { settle(true); }
+        function onVisibility() { if (document.hidden) settle(true); }
+
+        function settle(opened) {
+            if (settled) return;
+            settled = true;
+            clearTimeout(timer);
+            window.removeEventListener('blur', onBlur);
+            document.removeEventListener('visibilitychange', onVisibility);
+            if (opened) onOpened(); else onFailed(plainBody);
+        }
+
+        window.addEventListener('blur', onBlur);
+        document.addEventListener('visibilitychange', onVisibility);
+        window.location.href = mailtoHref;
+    }
+
+    function copyFallbackText(textareaId, btnEl) {
+        const textarea = document.getElementById(textareaId);
+        const finish = function () {
+            const def = btnEl.querySelector('.copy-label-default');
+            const done = btnEl.querySelector('.copy-label-done');
+            def.style.display = 'none';
+            done.style.display = 'inline';
+            setTimeout(function () {
+                def.style.display = 'inline';
+                done.style.display = 'none';
+            }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textarea.value).then(finish, function () {
+                textarea.select();
+                document.execCommand('copy');
+                finish();
+            });
+        } else {
+            textarea.select();
+            document.execCommand('copy');
+            finish();
+        }
     }
 
     // Close on backdrop click
@@ -3258,7 +3497,7 @@
             closeCareModal();
         }
         if (e.key === 'Escape') {
-            ['financeModal','privacyModal','safetyModal','termsModal'].forEach(function(id) {
+            ['financeModal','privacyModal','safetyModal','termsModal','employeeModal'].forEach(function(id) {
                 var el = document.getElementById(id);
                 if (el && el.classList.contains('open')) closeDocModal(id);
             });
@@ -3275,11 +3514,15 @@
         if (body) body.scrollTop = 0;
     }
 
+    function openEmployeeLogin() {
+        openDocModal('employeeModal');
+    }
+
     function closeDocModal(id) {
         var el = document.getElementById(id);
         if (!el) return;
         el.classList.remove('open');
-        var anyOpen = ['careModal','privacyModal','safetyModal','termsModal'].some(function(mid) {
+        var anyOpen = ['careModal','privacyModal','safetyModal','termsModal','employeeModal'].some(function(mid) {
             var m = document.getElementById(mid);
             return m && m.classList.contains('open');
         });
@@ -3287,7 +3530,7 @@
     }
 
     // Backdrop click to close document modals
-    ['financeModal','privacyModal','safetyModal','termsModal'].forEach(function(id) {
+    ['financeModal','privacyModal','safetyModal','termsModal','employeeModal'].forEach(function(id) {
         var el = document.getElementById(id);
         if (!el) return;
         el.addEventListener('click', function(e) {
@@ -3300,6 +3543,7 @@
         document.getElementById('jobModal').classList.add('open');
         document.getElementById('jobModalForm').style.display = 'block';
         document.getElementById('jobModalSuccess').style.display = 'none';
+        document.getElementById('jobModalFallback').style.display = 'none';
         document.getElementById('jobForm').reset();
         document.getElementById('jCVName').innerHTML = '<span data-lang="en" class="active">No file selected</span><span data-lang="fr">Aucun fichier sélectionné</span><span data-lang="es">Ningun archivo seleccionado</span>';
         document.getElementById('jCVName').classList.remove('has-file');
@@ -3339,8 +3583,8 @@
 
         if (!first || !last || !email || !phone || !bestTime || !experience || !location) return;
 
-        var subject = encodeURIComponent('Job Application - VITA Soin et Services');
-        var body = encodeURIComponent(
+        var subject = 'Job Application - VITA Soin et Services';
+        var plainBody =
             'New Job Application\n' +
             '==================================\n\n' +
             'First Name:          ' + first + '\n' +
@@ -3352,12 +3596,51 @@
             'Location (City/Region): ' + location + '\n\n' +
             'CV / Resume:         ' + cvName + '\n' +
             (cvName !== 'Not attached' ? '>>> Please remember to attach the CV file before sending this email. <<<\n' : '') +
-            '\n---\nSent via vitasoinetservices.ca careers form'
-        );
+            '\n---\nSent via vitasoinsetservices.com careers form';
 
-        window.location.href = 'mailto:lorena@vitasoinetservices.com?subject=' + subject + '&body=' + body;
-        document.getElementById('jobModalForm').style.display = 'none';
-        document.getElementById('jobModalSuccess').style.display = 'block';
+        var mailto = 'mailto:Lorena@vitasoinsetservices.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(plainBody);
+
+        function showSuccess() {
+            document.getElementById('jobModalForm').style.display = 'none';
+            document.getElementById('jobModalFallback').style.display = 'none';
+            document.getElementById('jobModalSuccess').style.display = 'block';
+        }
+        function showFallback(text) {
+            document.getElementById('jobModalFallbackText').value = 'To: Lorena@vitasoinsetservices.com\nSubject: ' + subject + '\n\n' + text;
+            document.getElementById('jobModalForm').style.display = 'none';
+            document.getElementById('jobModalSuccess').style.display = 'none';
+            document.getElementById('jobModalFallback').style.display = 'block';
+        }
+        function fallbackToMailto() {
+            attemptMailto(mailto, plainBody, showSuccess, showFallback);
+        }
+
+        // Primary path: send straight to the backend (saved to the leads database,
+        // triggers an instant email + SMS to Lorena). Falls back to mailto if the
+        // backend call fails, so the application is never silently lost.
+        fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                source: 'job_application',
+                firstName: first,
+                lastName: last,
+                email: email,
+                phone: phone,
+                details: {
+                    'Best Time to Reach': bestTime,
+                    'Years of Experience': experience,
+                    'Location': location,
+                    'CV / Resume': cvName
+                }
+            })
+        }).then(function (res) {
+            if (!res.ok) throw new Error('request_failed');
+            return res.json();
+        }).then(function (data) {
+            if (!data || !data.ok) throw new Error('request_failed');
+            showSuccess();
+        }).catch(fallbackToMailto);
     }
 
     // Backdrop + Escape for job modal
