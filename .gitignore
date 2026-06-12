@@ -30,5 +30,6 @@ brand_section.html
 # Sensitive credentials - never commit
 Twilio/
 DNS.PNG
+Brand_Assets/APIs_Pass_logins.txt
 
 .vercel
