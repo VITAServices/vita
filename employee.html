@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="Brand_Assets/Hero_Favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <style>
         :root {
             --teal-dark: #04202a;
@@ -639,6 +641,102 @@
         .setup-banner-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
         .setup-banner-desc  { font-size: 0.875rem; opacity: 0.75; }
 
+        /* ---- Phase 2: FullCalendar overrides ---- */
+        .fc { font-family: 'Figtree', Arial, sans-serif; }
+        .fc .fc-toolbar-title { font-size: 1rem; font-weight: 700; color: var(--teal-dark); }
+        .fc .fc-button { background: var(--teal) !important; border-color: var(--teal) !important; font-family: 'Figtree', Arial, sans-serif; font-size: 0.8rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 8px; }
+        .fc .fc-button:hover { background: var(--teal-dark) !important; border-color: var(--teal-dark) !important; }
+        .fc .fc-button-active { background: var(--teal-dark) !important; border-color: var(--teal-dark) !important; }
+        .fc .fc-today-button { background: var(--vita-green) !important; border-color: var(--vita-green) !important; }
+        .fc .fc-daygrid-day.fc-day-today, .fc .fc-timegrid-col.fc-day-today { background: rgba(92,191,58,0.07) !important; }
+        .fc .fc-timegrid-slot { height: 2rem; }
+        .fc .fc-event { border-radius: 6px; padding: 0.1rem 0.35rem; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: none !important; }
+        .fc .fc-col-header-cell-cushion, .fc .fc-daygrid-day-number { color: var(--teal-dark); text-decoration: none; font-weight: 600; }
+
+        /* ---- FC Legend ---- */
+        .fc-legend { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+        .fc-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 600; color: var(--teal-dark); }
+        .fc-legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ---- Service type pills ---- */
+        .svc-pill { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+
+        /* ---- Status badges ---- */
+        .status-badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+        .status-badge.scheduled { background: #e0f2fe; color: #0369a1; }
+        .status-badge.confirmed { background: #dcfce7; color: #16a34a; }
+        .status-badge.completed { background: var(--teal-lighter); color: var(--teal); }
+        .status-badge.cancelled { background: #fee2e2; color: #dc2626; }
+
+        /* ---- Shift modal ---- */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(4,32,42,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.show { display: flex; }
+        .modal-box { background: var(--white); border-radius: 20px; padding: 2rem; width: 100%; max-width: 440px; box-shadow: var(--shadow-lg); position: relative; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; cursor: pointer; color: var(--neutral); font-size: 1.3rem; line-height: 1; padding: 0.25rem; }
+        .modal-close:hover { color: var(--teal-dark); }
+        .modal-service-tag { display: inline-block; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .modal-client { font-size: 1.2rem; font-weight: 800; color: var(--teal-dark); margin-bottom: 1.1rem; letter-spacing: -0.02em; }
+        .modal-row { display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.6rem; font-size: 0.87rem; }
+        .modal-label { font-weight: 700; color: var(--neutral); min-width: 70px; }
+        .modal-val { color: var(--teal-dark); }
+
+        /* ---- Roster table ---- */
+        .roster-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+        .roster-table th { text-align: left; padding: 0.6rem 0.9rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--neutral); border-bottom: 2px solid var(--teal-lighter); }
+        .roster-table td { padding: 0.85rem 0.9rem; border-bottom: 1px solid var(--teal-lighter); vertical-align: middle; }
+        .roster-table tr:last-child td { border-bottom: none; }
+        .roster-table tbody tr { cursor: pointer; transition: background 0.12s; }
+        .roster-table tbody tr:hover { background: var(--teal-lighter); }
+        .roster-date { font-weight: 700; color: var(--teal-dark); }
+        .roster-time { font-size: 0.78rem; color: var(--neutral); margin-top: 0.15rem; }
+        .roster-addr { color: var(--neutral); max-width: 160px; }
+
+        /* ---- Tab group ---- */
+        .tab-group { display: flex; gap: 0.3rem; }
+        .tab { background: none; border: 2px solid var(--teal-lighter); border-radius: 8px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 700; color: var(--neutral); cursor: pointer; font-family: 'Figtree', Arial, sans-serif; transition: all 0.15s; }
+        .tab:hover { border-color: var(--teal); color: var(--teal); }
+        .tab.active { background: var(--teal); border-color: var(--teal); color: var(--white); }
+
+        /* ---- Availability grid ---- */
+        .avail-grid { display: flex; flex-direction: column; gap: 0; }
+        .avail-row { display: flex; align-items: center; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--teal-lighter); }
+        .avail-row:last-child { border-bottom: none; }
+        .avail-day { font-weight: 700; color: var(--teal-dark); min-width: 90px; font-size: 0.9rem; }
+        .avail-row:not(.active) .avail-day { color: var(--neutral); }
+        .avail-times { display: flex; align-items: center; gap: 0.6rem; }
+        .avail-times.disabled { opacity: 0.35; }
+        .avail-sep { font-size: 0.78rem; color: var(--neutral); font-weight: 600; }
+        .time-input { border: 2px solid var(--teal-lighter); border-radius: 8px; padding: 0.35rem 0.6rem; font-family: 'Figtree', Arial, sans-serif; font-size: 0.85rem; color: var(--teal-dark); background: var(--bg); outline: none; transition: border-color 0.15s; }
+        .time-input:focus { border-color: var(--teal); }
+        .time-input:disabled { cursor: not-allowed; }
+
+        /* ---- Availability toggle ---- */
+        .avail-toggle { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
+        .avail-toggle input { opacity: 0; width: 0; height: 0; }
+        .avail-slider { position: absolute; inset: 0; background: #cbd5e1; border-radius: 22px; cursor: pointer; transition: background 0.18s; }
+        .avail-slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.18s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        .avail-toggle input:checked + .avail-slider { background: var(--vita-green); }
+        .avail-toggle input:checked + .avail-slider::before { transform: translateX(18px); }
+
+        /* ---- Shift item in home ---- */
+        .shift-item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.85rem 0; border-bottom: 1px solid var(--teal-lighter); cursor: pointer; transition: background 0.12s; border-radius: 6px; padding-left: 0.5rem; }
+        .shift-item:last-child { border-bottom: none; }
+        .shift-item:hover { background: var(--teal-lighter); }
+        .shift-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 0.35rem; flex-shrink: 0; }
+        .shift-item-title { font-weight: 700; font-size: 0.88rem; color: var(--teal-dark); }
+        .shift-item-time { font-size: 0.78rem; color: var(--neutral); margin-top: 0.15rem; }
+
+        /* ---- Section desc ---- */
+        .section-desc { font-size: 0.88rem; color: var(--neutral); margin-top: -0.75rem; margin-bottom: 1.25rem; line-height: 1.6; }
+
+        /* ---- Phase 2 responsive ---- */
+        @media (max-width: 680px) {
+            .avail-row { flex-wrap: wrap; gap: 0.5rem; }
+            .avail-times { flex-wrap: wrap; }
+            .roster-addr { display: none; }
+            .roster-table th:nth-child(4), .roster-table td:nth-child(4) { display: none; }
+        }
+
         /* ---- Mobile header ---- */
         .mobile-bar {
             display: none;
@@ -777,28 +875,25 @@
 
             <div class="nav-group-label">Scheduling</div>
 
-            <button class="nav-item disabled">
+            <button type="button" class="nav-item" id="nav-schedule" onclick="showSection('sec-schedule', this)">
                 <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
                 My Schedule
-                <span class="nav-pill">Phase 2</span>
             </button>
 
-            <button class="nav-item disabled">
+            <button type="button" class="nav-item" id="nav-availability" onclick="showSection('sec-availability', this)">
                 <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
                 My Availability
-                <span class="nav-pill">Phase 2</span>
             </button>
 
-            <button class="nav-item disabled">
+            <button type="button" class="nav-item" id="nav-roster" onclick="showSection('sec-roster', this)">
                 <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
                 Job Roster
-                <span class="nav-pill">Phase 2</span>
             </button>
         </nav>
 
@@ -830,18 +925,18 @@
                 <div class="stats-row">
                     <div class="stat-card">
                         <div class="stat-label">This Week</div>
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="stat-week">0</div>
                         <div class="stat-sub">Scheduled shifts</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">This Month</div>
-                        <div class="stat-value">0</div>
+                        <div class="stat-value" id="stat-month">0</div>
                         <div class="stat-sub">Completed visits</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-label">Open Jobs</div>
-                        <div class="stat-value">0</div>
-                        <div class="stat-sub">Available to book</div>
+                        <div class="stat-label">Upcoming</div>
+                        <div class="stat-value" id="stat-open">0</div>
+                        <div class="stat-sub">Confirmed shifts</div>
                     </div>
                 </div>
 
@@ -850,11 +945,11 @@
                         <div class="card-head">
                             <span class="card-title">Upcoming Shifts</span>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" id="upcoming-list">
                             <div class="empty">
                                 <div class="empty-icon">📅</div>
                                 <div class="empty-title">No upcoming shifts</div>
-                                <div class="empty-desc">Your schedule will appear here once shifts are assigned in Phase 2</div>
+                                <div class="empty-desc">Your schedule will appear here once shifts are assigned</div>
                             </div>
                         </div>
                     </div>
@@ -995,9 +1090,82 @@
                 </div>
             </div>
 
+            <!-- ========== MY SCHEDULE ========== -->
+            <div id="sec-schedule" class="sec" style="display:none">
+                <h2 class="section-h">My Schedule</h2>
+                <p class="section-desc">Your assigned shifts. Click any event to see details.</p>
+
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Shift Calendar</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="fc-legend">
+                            <div class="fc-legend-item"><div class="fc-legend-dot" style="background:#e8383a"></div>Home Care</div>
+                            <div class="fc-legend-item"><div class="fc-legend-dot" style="background:#2d9d4e"></div>House Cleaning</div>
+                            <div class="fc-legend-item"><div class="fc-legend-dot" style="background:#c026d3"></div>Nursing</div>
+                            <div class="fc-legend-item"><div class="fc-legend-dot" style="background:#2563eb"></div>Companionship</div>
+                            <div class="fc-legend-item"><div class="fc-legend-dot" style="background:#d97706"></div>Commercial Cleaning</div>
+                        </div>
+                        <div id="fc-calendar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== MY AVAILABILITY ========== -->
+            <div id="sec-availability" class="sec" style="display:none">
+                <h2 class="section-h">My Availability</h2>
+                <p class="section-desc">Set your regular weekly hours so the team can schedule shifts that work for you.</p>
+
+                <div id="avail-alert" class="alert alert-ok" style="display:none"></div>
+
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Weekly Schedule</span>
+                        <button type="button" class="btn-primary" id="save-avail-btn" onclick="saveAvailability()">Save Changes</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="avail-grid" id="avail-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== JOB ROSTER ========== -->
+            <div id="sec-roster" class="sec" style="display:none">
+                <h2 class="section-h">Job Roster</h2>
+                <p class="section-desc">All shifts assigned to you. Click a row for full details.</p>
+
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Shifts</span>
+                        <div class="tab-group">
+                            <button type="button" class="tab active" id="tab-upcoming" onclick="filterRoster('upcoming', this)">Upcoming</button>
+                            <button type="button" class="tab" id="tab-all" onclick="filterRoster('all', this)">All</button>
+                            <button type="button" class="tab" id="tab-completed" onclick="filterRoster('completed', this)">Completed</button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding:0">
+                        <div id="roster-list" style="padding:1.25rem"></div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- /page-body -->
     </div><!-- /main-wrap -->
 </div><!-- /dashboard -->
+
+<!-- ========== SHIFT DETAIL MODAL ========== -->
+<div class="modal-overlay" id="shift-modal" onclick="closeShiftModal(event)">
+    <div class="modal-box">
+        <button type="button" class="modal-close" onclick="document.getElementById('shift-modal').classList.remove('show')">&times;</button>
+        <span class="modal-service-tag" id="modal-title"></span>
+        <div class="modal-client" id="modal-client"></div>
+        <div class="modal-row"><span class="modal-label">Time</span><span class="modal-val" id="modal-time"></span></div>
+        <div class="modal-row"><span class="modal-label">Address</span><span class="modal-val" id="modal-address"></span></div>
+        <div class="modal-row"><span class="modal-label">Status</span><span class="modal-val"><span class="status-badge" id="modal-status"></span></span></div>
+        <div class="modal-row"><span class="modal-label">Notes</span><span class="modal-val" id="modal-notes"></span></div>
+    </div>
+</div>
 
 <script>
 const SUPABASE_URL  = 'https://jeubjslsrnccdqjmlmsf.supabase.co';
@@ -1008,12 +1176,33 @@ let _user    = null;
 let _profile = null;
 let _editing = false;
 
+// Phase 2 state
+let _shifts          = [];
+let _availability    = [];
+let _scheduleCalendar = null;
+let _rosterFilter    = 'upcoming';
+
+const SERVICE_TYPES = {
+    home_care:           { label: 'Home Care',          color: '#e8383a', bg: '#fde8e8' },
+    house_cleaning:      { label: 'House Cleaning',     color: '#2d9d4e', bg: '#e8f5ec' },
+    nursing:             { label: 'Nursing',             color: '#c026d3', bg: '#fae8ff' },
+    companionship:       { label: 'Companionship',       color: '#2563eb', bg: '#eff6ff' },
+    commercial_cleaning: { label: 'Commercial Cleaning', color: '#d97706', bg: '#fef3c7' },
+};
+
+const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 // ---- Auth state listener ----
 sb.auth.onAuthStateChange(async (event, session) => {
     hideLoader();
     if (session) {
         _user = session.user;
-        await loadDashboard();
+        try {
+            await loadDashboard();
+        } catch (err) {
+            console.error('Dashboard load error:', err);
+            showDashboard();
+        }
     } else {
         _user = null;
         _profile = null;
@@ -1033,12 +1222,13 @@ async function handleLogin(e) {
     btn.textContent = 'Signing in...';
     errEl.classList.remove('show');
 
-    const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-
-    if (error) {
-        errEl.textContent = error.message.includes('Invalid login credentials')
+    try {
+        const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+        if (error) throw error;
+    } catch (err) {
+        errEl.textContent = err.message?.includes('Invalid login credentials')
             ? 'Incorrect email or password. Please try again.'
-            : error.message;
+            : (err.message || 'Connection error. Please try again.');
         errEl.classList.add('show');
         btn.disabled    = false;
         btn.textContent = 'Sign In';
@@ -1053,11 +1243,17 @@ async function handleLogout() {
 
 // ---- Load dashboard ----
 async function loadDashboard() {
-    const { data: profile } = await sb
-        .from('employees')
-        .select('*')
-        .eq('id', _user.id)
-        .maybeSingle();
+    let profile = null;
+    try {
+        const { data } = await sb
+            .from('employees')
+            .select('*')
+            .eq('id', _user.id)
+            .maybeSingle();
+        profile = data;
+    } catch (err) {
+        console.warn('Employee profile fetch failed (table may not exist yet):', err.message);
+    }
 
     _profile = profile;
 
@@ -1096,6 +1292,10 @@ async function loadDashboard() {
         document.getElementById('setup-banner').style.display = 'block';
         document.getElementById('profile-view').style.display = 'none';
     }
+
+    // Load Phase 2 data in parallel
+    await Promise.all([loadShifts(), loadAvailability()]);
+    updateStats();
 
     showDashboard();
 }
@@ -1218,6 +1418,9 @@ function showSection(id, el) {
     if (el) el.classList.add('active');
     closeSidebar();
     window.scrollTo(0, 0);
+    if (id === 'sec-schedule')     initScheduleCalendar();
+    if (id === 'sec-availability') renderAvailabilitySection();
+    if (id === 'sec-roster')       renderRoster();
 }
 
 // ---- View helpers ----
@@ -1235,6 +1438,7 @@ function showDashboard() {
 
 function hideLoader() {
     const el = document.getElementById('loading-screen');
+    if (!el) return;
     el.classList.add('fade-out');
     setTimeout(() => el.remove(), 400);
 }
@@ -1253,6 +1457,223 @@ function closeSidebar() {
 // ---- Utils ----
 function v(id) { return (document.getElementById(id)?.value || '').trim(); }
 function capitalise(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+
+// ============================================================
+// PHASE 2 — Schedule, Availability, Roster
+// ============================================================
+
+async function loadShifts() {
+    try {
+        const { data } = await sb.from('shifts').select('*')
+            .eq('employee_id', _user.id).order('start_at', { ascending: true });
+        _shifts = data || [];
+    } catch(e) { _shifts = []; }
+}
+
+async function loadAvailability() {
+    try {
+        const { data } = await sb.from('availability').select('*')
+            .eq('employee_id', _user.id);
+        _availability = data || [];
+    } catch(e) { _availability = []; }
+}
+
+// ---- Dashboard stats & upcoming list ----
+function updateStats() {
+    const now = new Date();
+    const wkStart = new Date(now); wkStart.setDate(now.getDate() - now.getDay()); wkStart.setHours(0,0,0,0);
+    const wkEnd   = new Date(wkStart); wkEnd.setDate(wkStart.getDate() + 7);
+    const moStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const moEnd   = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    const weekCount  = _shifts.filter(s => { const d = new Date(s.start_at); return d >= wkStart && d < wkEnd && s.status !== 'cancelled'; }).length;
+    const moComplete = _shifts.filter(s => { const d = new Date(s.start_at); return d >= moStart && d < moEnd && s.status === 'completed'; }).length;
+    const upcoming   = _shifts.filter(s => new Date(s.start_at) >= now && s.status !== 'cancelled').length;
+
+    const wv = document.getElementById('stat-week');  if (wv) wv.textContent = weekCount;
+    const mv = document.getElementById('stat-month'); if (mv) mv.textContent = moComplete;
+    const ov = document.getElementById('stat-open');  if (ov) ov.textContent = upcoming;
+
+    const upcomingEl = document.getElementById('upcoming-list');
+    if (!upcomingEl) return;
+    const next3 = _shifts.filter(s => new Date(s.start_at) >= now && s.status !== 'cancelled').slice(0, 3);
+    if (next3.length === 0) {
+        upcomingEl.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><div class="empty-title">No upcoming shifts</div><div class="empty-desc">Your schedule will appear here once shifts are assigned</div></div>`;
+    } else {
+        upcomingEl.innerHTML = next3.map(s => {
+            const st = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
+            const d  = new Date(s.start_at);
+            return `<div class="shift-item" data-sid="${s.id}" onclick="onShiftItemClick(this)">
+                <div class="shift-dot" style="background:${st.color}"></div>
+                <div>
+                    <div class="shift-item-title">${s.client_name} &mdash; ${st.label}</div>
+                    <div class="shift-item-time">${d.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})} at ${d.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})}</div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+}
+
+// ---- Schedule calendar ----
+function initScheduleCalendar() {
+    if (_scheduleCalendar) { _scheduleCalendar.refetchEvents(); return; }
+    const el = document.getElementById('fc-calendar');
+    if (!el) return;
+    _scheduleCalendar = new FullCalendar.Calendar(el, {
+        initialView: 'timeGridWeek',
+        headerToolbar: { left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,timeGridDay' },
+        height: 'auto',
+        slotMinTime: '06:00:00',
+        slotMaxTime: '22:00:00',
+        allDaySlot: false,
+        nowIndicator: true,
+        editable: false,
+        eventBorderColor: 'transparent',
+        events: () => _shifts.map(s => {
+            const st = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
+            return { id: s.id, title: `${st.label} — ${s.client_name}`, start: s.start_at, end: s.end_at, backgroundColor: st.color, extendedProps: { sid: s.id } };
+        }),
+        eventClick: info => {
+            const s = _shifts.find(x => x.id === info.event.extendedProps.sid);
+            if (s) showShiftModal(s);
+        }
+    });
+    _scheduleCalendar.render();
+}
+
+// ---- Shift detail modal ----
+function showShiftModal(s) {
+    const st  = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
+    const fmt = d => new Date(d).toLocaleString('en-CA', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    const tag = document.getElementById('modal-title');
+    tag.textContent  = st.label;
+    tag.style.background = st.bg;
+    tag.style.color      = st.color;
+    document.getElementById('modal-client').textContent  = s.client_name;
+    document.getElementById('modal-time').textContent    = `${fmt(s.start_at)} — ${fmt(s.end_at)}`;
+    document.getElementById('modal-address').textContent = s.address || 'Not specified';
+    document.getElementById('modal-notes').textContent   = s.notes   || 'None';
+    const badge = document.getElementById('modal-status');
+    badge.textContent = capitalise(s.status);
+    badge.className   = `status-badge ${s.status}`;
+    document.getElementById('shift-modal').classList.add('show');
+}
+
+function closeShiftModal(e) {
+    if (e.target === document.getElementById('shift-modal')) document.getElementById('shift-modal').classList.remove('show');
+}
+
+function onShiftItemClick(el) {
+    const s = _shifts.find(x => x.id === el.dataset.sid);
+    if (s) showShiftModal(s);
+}
+
+// ---- Availability ----
+function renderAvailabilitySection() {
+    const grid  = document.getElementById('avail-grid');
+    if (!grid) return;
+    const avMap = {};
+    _availability.forEach(a => { avMap[a.day_of_week] = a; });
+    const order = [1,2,3,4,5,6,0];
+    grid.innerHTML = order.map(dow => {
+        const a       = avMap[dow];
+        const checked = !!a;
+        const start   = a?.start_time?.slice(0,5) || '08:00';
+        const end     = a?.end_time?.slice(0,5)   || '17:00';
+        return `<div class="avail-row${checked ? ' active' : ''}" data-dow="${dow}">
+            <label class="avail-toggle">
+                <input type="checkbox" class="avail-check"${checked ? ' checked' : ''} onchange="toggleAvailRow(this)">
+                <span class="avail-slider"></span>
+            </label>
+            <span class="avail-day">${DAY_NAMES[dow]}</span>
+            <div class="avail-times${checked ? '' : ' disabled'}">
+                <input type="time" class="avail-start time-input" value="${start}"${checked ? '' : ' disabled'}>
+                <span class="avail-sep">to</span>
+                <input type="time" class="avail-end time-input" value="${end}"${checked ? '' : ' disabled'}>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function toggleAvailRow(cb) {
+    const row = cb.closest('.avail-row');
+    row.classList.toggle('active', cb.checked);
+    row.querySelectorAll('.time-input').forEach(i => { i.disabled = !cb.checked; });
+    row.querySelector('.avail-times').classList.toggle('disabled', !cb.checked);
+}
+
+async function saveAvailability() {
+    const btn = document.getElementById('save-avail-btn');
+    btn.disabled = true; btn.textContent = 'Saving...';
+    const upserts = [];
+    document.querySelectorAll('.avail-row').forEach(row => {
+        if (row.querySelector('.avail-check').checked) {
+            upserts.push({
+                employee_id: _user.id,
+                day_of_week: parseInt(row.dataset.dow),
+                start_time:  row.querySelector('.avail-start').value,
+                end_time:    row.querySelector('.avail-end').value
+            });
+        }
+    });
+    try {
+        await sb.from('availability').delete().eq('employee_id', _user.id);
+        if (upserts.length) await sb.from('availability').insert(upserts);
+        _availability = upserts;
+        const al = document.getElementById('avail-alert');
+        al.textContent = 'Availability saved.';
+        al.style.display = 'block';
+        al.classList.add('show');
+        setTimeout(() => { al.classList.remove('show'); al.style.display = 'none'; }, 3000);
+    } catch(e) {
+        alert('Error saving availability. Please try again.');
+    } finally {
+        btn.disabled = false; btn.textContent = 'Save Changes';
+    }
+}
+
+// ---- Job roster ----
+function renderRoster() {
+    const list = document.getElementById('roster-list');
+    if (!list) return;
+    const now = new Date();
+    let rows = _shifts;
+    if (_rosterFilter === 'upcoming')  rows = _shifts.filter(s => new Date(s.start_at) >= now && s.status !== 'cancelled');
+    if (_rosterFilter === 'completed') rows = _shifts.filter(s => s.status === 'completed');
+
+    if (rows.length === 0) {
+        list.innerHTML = `<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">No shifts found</div><div class="empty-desc">Shifts assigned by the admin team will appear here</div></div>`;
+        return;
+    }
+    list.innerHTML = `<table class="roster-table">
+        <thead><tr><th>Date &amp; Time</th><th>Client</th><th>Service</th><th>Address</th><th>Status</th></tr></thead>
+        <tbody>${rows.map(s => {
+            const st    = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
+            const start = new Date(s.start_at), end = new Date(s.end_at);
+            const dateStr = start.toLocaleDateString('en-CA', {weekday:'short',month:'short',day:'numeric'});
+            const timeStr = `${start.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})} &ndash; ${end.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})}`;
+            return `<tr data-sid="${s.id}" onclick="onRosterRowClick(this)">
+                <td><div class="roster-date">${dateStr}</div><div class="roster-time">${timeStr}</div></td>
+                <td>${s.client_name}</td>
+                <td><span class="svc-pill" style="background:${st.bg};color:${st.color}">${st.label}</span></td>
+                <td class="roster-addr">${s.address || '&mdash;'}</td>
+                <td><span class="status-badge ${s.status}">${capitalise(s.status)}</span></td>
+            </tr>`;
+        }).join('')}</tbody>
+    </table>`;
+}
+
+function filterRoster(filter, btn) {
+    _rosterFilter = filter;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderRoster();
+}
+
+function onRosterRowClick(el) {
+    const s = _shifts.find(x => x.id === el.dataset.sid);
+    if (s) showShiftModal(s);
+}
 </script>
 </body>
 </html>
