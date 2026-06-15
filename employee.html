@@ -1248,7 +1248,7 @@ async function loadDashboard() {
         const { data } = await sb
             .from('employees')
             .select('*')
-            .eq('id', _user.id)
+            .eq('auth_user_id', _user.id)
             .maybeSingle();
         profile = data;
     } catch (err) {
@@ -1321,7 +1321,7 @@ async function handleSetup(e) {
     btn.textContent = 'Saving...';
 
     const row = {
-        id:                _user.id,
+        auth_user_id:      _user.id,
         email:             _user.email,
         first_name:        v('s-first'),
         last_name:         v('s-last'),
@@ -1390,7 +1390,7 @@ async function handleSave(e) {
         emergency_phone:   v('i-ec-phone'),
     };
 
-    const { error } = await sb.from('employees').update(updates).eq('id', _user.id);
+    const { error } = await sb.from('employees').update(updates).eq('auth_user_id', _user.id);
 
     btn.disabled    = false;
     btn.textContent = 'Save Changes';
@@ -1457,6 +1457,17 @@ function closeSidebar() {
 // ---- Utils ----
 function v(id) { return (document.getElementById(id)?.value || '').trim(); }
 function capitalise(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+// Escapes shift/client values before they are placed into innerHTML (defense
+// in depth against stored XSS from admin-entered roster data).
+function esc(value) {
+    if (value === null || value === undefined) return '';
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
 
 // ============================================================
 // PHASE 2 — Schedule, Availability, Roster
@@ -1506,7 +1517,7 @@ function updateStats() {
             return `<div class="shift-item" data-sid="${s.id}" onclick="onShiftItemClick(this)">
                 <div class="shift-dot" style="background:${st.color}"></div>
                 <div>
-                    <div class="shift-item-title">${s.client_name} &mdash; ${st.label}</div>
+                    <div class="shift-item-title">${esc(s.client_name)} &mdash; ${st.label}</div>
                     <div class="shift-item-time">${d.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})} at ${d.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})}</div>
                 </div>
             </div>`;
@@ -1654,9 +1665,9 @@ function renderRoster() {
             const timeStr = `${start.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})} &ndash; ${end.toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit'})}`;
             return `<tr data-sid="${s.id}" onclick="onRosterRowClick(this)">
                 <td><div class="roster-date">${dateStr}</div><div class="roster-time">${timeStr}</div></td>
-                <td>${s.client_name}</td>
+                <td>${esc(s.client_name)}</td>
                 <td><span class="svc-pill" style="background:${st.bg};color:${st.color}">${st.label}</span></td>
-                <td class="roster-addr">${s.address || '&mdash;'}</td>
+                <td class="roster-addr">${s.address ? esc(s.address) : '&mdash;'}</td>
                 <td><span class="status-badge ${s.status}">${capitalise(s.status)}</span></td>
             </tr>`;
         }).join('')}</tbody>

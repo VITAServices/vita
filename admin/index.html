@@ -361,8 +361,8 @@
     // The anon key is safe to expose publicly -- Row Level Security on the
     // database is what actually restricts access (only role = 'admin' can
     // read/write leads, accounts, and employees -- see supabase/schema_phase2.sql).
-    const SUPABASE_URL = 'https://tvtfdvmnmruevwhwqede.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR2dGZkdm1ubXJ1ZXZ3aHdxZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NDA1MzEsImV4cCI6MjA5NjUxNjUzMX0.i8lHpKbml0urQFRMmnvlobK1d6la1QFAB4AoxE-Wv34';
+    const SUPABASE_URL = 'https://jeubjslsrnccdqjmlmsf.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpldWJqc2xzcm5jY2Rxam1sbXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMjQ3MTEsImV4cCI6MjA5NjgwMDcxMX0.NomUSjFMbOhh93qdbG6op5VLReaUSBoqMNoqksmxGdA';
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const loginScreen = document.getElementById('loginScreen');
@@ -373,6 +373,19 @@
 
     function showMsg(el, text, kind) {
         el.innerHTML = '<div class="msg ' + kind + '">' + text + '</div>';
+    }
+
+    // Escapes user-supplied text before it is placed into innerHTML.
+    // Lead/account/employee fields originate from the public site, so they must
+    // never be trusted as markup (prevents stored XSS in this dashboard).
+    function esc(value) {
+        if (value === null || value === undefined) return '';
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
     }
 
     function fmtDate(iso) {
@@ -468,15 +481,15 @@
         data.forEach(function (lead) {
             const tr = document.createElement('tr');
             tr.innerHTML =
-                '<td><strong>' + lead.first_name + ' ' + lead.last_name + '</strong></td>' +
+                '<td><strong>' + esc(lead.first_name) + ' ' + esc(lead.last_name) + '</strong></td>' +
                 '<td>' + (lead.source === 'care_request' ? 'Care request' : 'Job application') + '</td>' +
-                '<td>' + (lead.email || '') + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + (lead.phone || '') + '</span></td>' +
+                '<td>' + esc(lead.email) + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + esc(lead.phone) + '</span></td>' +
                 '<td>' + badge(lead.status) + '</td>' +
                 '<td>' + fmtDate(lead.created_at) + '</td>' +
                 '<td class="row-actions">' +
-                    (lead.status === 'new' ? '<button data-action="contacted" data-id="' + lead.id + '">Mark contacted</button>' : '') +
-                    (lead.status !== 'converted' && lead.source === 'care_request' ? '<button data-action="convert" data-id="' + lead.id + '" data-first="' + lead.first_name + '" data-last="' + lead.last_name + '" data-email="' + (lead.email || '') + '" data-phone="' + (lead.phone || '') + '">Convert to account</button>' : '') +
-                    (lead.status !== 'lost' && lead.status !== 'converted' ? '<button data-action="lost" data-id="' + lead.id + '">Mark lost</button>' : '') +
+                    (lead.status === 'new' ? '<button data-action="contacted" data-id="' + esc(lead.id) + '">Mark contacted</button>' : '') +
+                    (lead.status !== 'converted' && lead.source === 'care_request' ? '<button data-action="convert" data-id="' + esc(lead.id) + '" data-first="' + esc(lead.first_name) + '" data-last="' + esc(lead.last_name) + '" data-email="' + esc(lead.email) + '" data-phone="' + esc(lead.phone) + '">Convert to account</button>' : '') +
+                    (lead.status !== 'lost' && lead.status !== 'converted' ? '<button data-action="lost" data-id="' + esc(lead.id) + '">Mark lost</button>' : '') +
                 '</td>';
             body.appendChild(tr);
         });
@@ -542,9 +555,9 @@
         data.forEach(function (acc) {
             const tr = document.createElement('tr');
             tr.innerHTML =
-                '<td><strong>' + acc.first_name + ' ' + acc.last_name + '</strong></td>' +
-                '<td>' + (acc.email || '') + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + (acc.phone || '') + '</span></td>' +
-                '<td>' + (acc.address || '<span style="color:var(--neutral);">—</span>') + '</td>' +
+                '<td><strong>' + esc(acc.first_name) + ' ' + esc(acc.last_name) + '</strong></td>' +
+                '<td>' + esc(acc.email) + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + esc(acc.phone) + '</span></td>' +
+                '<td>' + (acc.address ? esc(acc.address) : '<span style="color:var(--neutral);">—</span>') + '</td>' +
                 '<td>' + badge(acc.status) + '</td>' +
                 '<td>' + fmtDate(acc.created_at) + '</td>';
             body.appendChild(tr);
@@ -566,9 +579,9 @@
         data.forEach(function (emp) {
             const tr = document.createElement('tr');
             tr.innerHTML =
-                '<td><strong>' + emp.first_name + ' ' + emp.last_name + '</strong></td>' +
-                '<td>' + (emp.email || '') + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + (emp.phone || '') + '</span></td>' +
-                '<td>' + (emp.role || '<span style="color:var(--neutral);">—</span>') + '</td>' +
+                '<td><strong>' + esc(emp.first_name) + ' ' + esc(emp.last_name) + '</strong></td>' +
+                '<td>' + esc(emp.email) + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + esc(emp.phone) + '</span></td>' +
+                '<td>' + (emp.role ? esc(emp.role) : '<span style="color:var(--neutral);">—</span>') + '</td>' +
                 '<td>' + badge(emp.status) + '</td>' +
                 '<td>' + fmtDate(emp.created_at) + '</td>';
             body.appendChild(tr);

@@ -963,11 +963,11 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.08);
+            background: rgba(92,191,58,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255,255,255,0.7);
+            color: var(--vita-green);
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 700;
@@ -2380,6 +2380,8 @@
                 <span data-lang="es">Complete el formulario y uno de nuestros coordinadores se pondra en contacto para hablar sobre sus necesidades.</span>
             </p>
             <form id="careForm" onsubmit="submitCareForm(event)" novalidate>
+                <!-- Honeypot: hidden from real users; bots that fill it are silently dropped. -->
+                <input type="text" id="mCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;">
                 <div class="modal-row">
                     <div class="modal-field">
                         <label for="mFirst">
@@ -2522,6 +2524,8 @@
             </p>
 
             <form id="jobForm" onsubmit="submitJobForm(event)" novalidate>
+                <!-- Honeypot: hidden from real users; bots that fill it are silently dropped. -->
+                <input type="text" id="jCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;">
                 <div class="modal-row">
                     <div class="modal-field">
                         <label for="jFirst">
@@ -3504,6 +3508,7 @@
     }
 
     function openCareModal() {
+        window._careOpenedAt = Date.now();
         document.getElementById('careModal').classList.add('open');
         document.getElementById('modalForm').style.display = 'block';
         document.getElementById('modalSuccess').style.display = 'none';
@@ -3570,6 +3575,8 @@
                 lastName: last,
                 email: email,
                 phone: phone,
+                hp: document.getElementById('mCompany').value,
+                elapsedMs: Date.now() - (window._careOpenedAt || 0),
                 details: { 'Best Time to Reach': bestTime, 'Special Remarks': msg || 'None' }
             })
         }).then(function (res) {
@@ -3683,6 +3690,7 @@
 
     // ---- JOB APPLICATION MODAL ----
     function openJobModal() {
+        window._jobOpenedAt = Date.now();
         document.getElementById('jobModal').classList.add('open');
         document.getElementById('jobModalForm').style.display = 'block';
         document.getElementById('jobModalSuccess').style.display = 'none';
@@ -3770,6 +3778,8 @@
                 lastName: last,
                 email: email,
                 phone: phone,
+                hp: document.getElementById('jCompany').value,
+                elapsedMs: Date.now() - (window._jobOpenedAt || 0),
                 details: {
                     'Best Time to Reach': bestTime,
                     'Years of Experience': experience,
