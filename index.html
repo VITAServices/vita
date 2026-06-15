@@ -68,13 +68,13 @@
         .main-nav.scrolled { box-shadow: 0 4px 24px rgba(4,32,42,0.10); }
 
         .nav-inner {
-            max-width: 1280px;
+            max-width: 1360px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             display: flex;
             align-items: center;
             height: 120px;
-            gap: 2rem;
+            gap: 1rem;
         }
 
         .nav-logo {
@@ -93,8 +93,9 @@
 
         .nav-links {
             display: flex;
+            align-items: center;
             list-style: none;
-            gap: 0.25rem;
+            gap: 0.1rem;
             flex: 1;
         }
 
@@ -102,8 +103,9 @@
             color: var(--teal-dark);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
-            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            padding: 0.5rem 0.6rem;
             border-radius: 8px;
             transition: background 0.2s ease, color 0.2s ease;
         }
@@ -112,8 +114,18 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
             flex-shrink: 0;
+        }
+
+        /* Staff login buttons are icon-only on the desktop bar (keeps it uncluttered).
+           Full text labels still show in the mobile menu (.nav-mobile-extra). */
+        .nav-right > .nav-employee-btn span,
+        .nav-right > .nav-admin-btn span { display: none; }
+        .nav-right > .nav-employee-btn,
+        .nav-right > .nav-admin-btn { padding: 0.6rem; }
+        @media (max-width: 1340px) {
+            .nav-right > .nav-phone { display: none; }
         }
 
         .lang-switcher { display: flex; gap: 0.25rem; align-items: center; }
@@ -1222,7 +1234,7 @@
             .cov-stats { grid-template-columns: 1fr 1fr; }
         }
 
-        @media (max-width: 940px) {
+        @media (max-width: 1200px) {
             .nav-links { display: none; }
             .nav-right > .nav-phone, .nav-right > .btn-primary, .nav-right > .nav-employee-btn, .nav-right > .nav-admin-btn { display: none; }
             .nav-toggle { display: flex; }
@@ -1677,13 +1689,13 @@
                 <span data-lang="fr">Demander des soins</span>
                 <span data-lang="es">Solicitar atencion</span>
             </a>
-            <a href="/employee.html" class="btn-ghost nav-employee-btn">
+            <a href="/employee.html" class="btn-ghost nav-employee-btn" aria-label="Employee Login" title="Employee Login">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <span data-lang="en" class="active">Employee Login</span>
                 <span data-lang="fr">Espace employés</span>
                 <span data-lang="es">Acceso empleados</span>
             </a>
-            <a href="/admin/index.html" class="btn-teal nav-admin-btn">
+            <a href="/admin/index.html" class="btn-teal nav-admin-btn" aria-label="Admin Login" title="Admin Login">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 <span data-lang="en" class="active">Admin Login</span>
                 <span data-lang="fr">Admin</span>
@@ -1753,7 +1765,7 @@
                 <span data-lang="fr">Demander des soins</span>
                 <span data-lang="es">Solicitar atencion</span>
             </a>
-            <a href="/employee.html" class="btn-ghost nav-employee-btn">
+            <a href="/employee.html" class="btn-ghost nav-employee-btn" aria-label="Employee Login" title="Employee Login">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <span data-lang="en" class="active">Employee Login</span>
                 <span data-lang="fr">Espace employés</span>
@@ -2440,6 +2452,83 @@
         </div>
     </div>
 </div>
+
+<!-- STAY CONNECTED -->
+<section id="stay-connected" class="sec sec-alt">
+    <div class="wrap">
+        <div class="vals-hdr">
+            <p class="sec-tag">
+                <span data-lang="en" class="active">Stay connected</span>
+                <span data-lang="fr">Restez connecté</span>
+                <span data-lang="es">Manténgase conectado</span>
+            </p>
+            <h2 class="sec-h2">
+                <span data-lang="en" class="active">Care you can count on, coordinated behind the scenes</span>
+                <span data-lang="fr">Des soins fiables, coordonnés en coulisses</span>
+                <span data-lang="es">Cuidado en el que puede confiar, coordinado tras bambalinas</span>
+            </h2>
+            <p class="sec-sub">
+                <span data-lang="en" class="active">VITA runs on a secure scheduling platform that keeps your caregiver, your family, and our team in sync, so care is reliable, confirmed, and never left to chance.</span>
+                <span data-lang="fr">VITA s'appuie sur une plateforme de planification sécurisée qui garde votre préposée, votre famille et notre équipe synchronisées, pour des soins fiables, confirmés et jamais laissés au hasard.</span>
+                <span data-lang="es">VITA funciona con una plataforma de programacion segura que mantiene sincronizados a su cuidador, su familia y nuestro equipo, para un cuidado confiable, confirmado y nunca dejado al azar.</span>
+            </p>
+        </div>
+        <div class="vals-grid">
+            <div class="val-card reveal">
+                <div class="val-icon">✅</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Confirmed visits</span>
+                    <span data-lang="fr">Visites confirmées</span>
+                    <span data-lang="es">Visitas confirmadas</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">Your caregiver accepts and confirms each visit in our system, so your family always knows care is covered.</span>
+                    <span data-lang="fr">Votre préposée accepte et confirme chaque visite dans notre système, pour que votre famille sache toujours que les soins sont assurés.</span>
+                    <span data-lang="es">Su cuidador acepta y confirma cada visita en nuestro sistema, para que su familia siempre sepa que el cuidado esta cubierto.</span>
+                </p>
+            </div>
+            <div class="val-card reveal">
+                <div class="val-icon">🤝</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Matched with care</span>
+                    <span data-lang="fr">Jumelage attentionné</span>
+                    <span data-lang="es">Emparejamiento cuidadoso</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">We pair you with a caregiver chosen for the right skills, language, and personality, and we work to keep that same trusted person.</span>
+                    <span data-lang="fr">Nous vous jumelons avec une préposée choisie pour ses compétences, sa langue et sa personnalité, et veillons à garder cette même personne de confiance.</span>
+                    <span data-lang="es">Le asignamos un cuidador elegido por sus habilidades, idioma y personalidad, y procuramos mantener a esa misma persona de confianza.</span>
+                </p>
+            </div>
+            <div class="val-card reveal">
+                <div class="val-icon">📅</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Always in sync</span>
+                    <span data-lang="fr">Toujours synchronisé</span>
+                    <span data-lang="es">Siempre sincronizado</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">Our team coordinates every shift through one platform, keeping your care plan organized and on track, week after week.</span>
+                    <span data-lang="fr">Notre équipe coordonne chaque quart de travail sur une seule plateforme, gardant votre plan de soins organisé et sur la bonne voie, semaine après semaine.</span>
+                    <span data-lang="es">Nuestro equipo coordina cada turno en una sola plataforma, manteniendo su plan de cuidado organizado y al dia, semana tras semana.</span>
+                </p>
+            </div>
+            <div class="val-card reveal">
+                <div class="val-icon">🛡️</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Qualified &amp; current</span>
+                    <span data-lang="fr">Qualifiée et à jour</span>
+                    <span data-lang="es">Calificado y al dia</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">We track every caregiver's certifications and renewals, so your loved one is always in capable, up-to-date hands.</span>
+                    <span data-lang="fr">Nous suivons les certifications et les renouvellements de chaque préposée, pour que votre proche soit toujours entre des mains compétentes et à jour.</span>
+                    <span data-lang="es">Damos seguimiento a las certificaciones y renovaciones de cada cuidador, para que su ser querido este siempre en manos capaces y actualizadas.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- TESTIMONIALS -->
 <section id="patient-voices" class="sec">
