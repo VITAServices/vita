@@ -116,24 +116,24 @@
             flex-shrink: 0;
         }
 
-        .lang-switcher { display: flex; gap: 0.2rem; }
+        .lang-switcher { display: flex; gap: 0.25rem; align-items: center; }
         .lang-btn {
             background: none;
-            border: 1px solid var(--teal-light);
-            color: var(--neutral);
-            font-family: 'Figtree', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 0.22rem 0.55rem;
+            border: 2px solid transparent;
+            padding: 0.1rem 0.15rem;
             border-radius: 5px;
             cursor: pointer;
-            letter-spacing: 0.04em;
-            transition: all 0.18s ease;
+            font-size: 1.25rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
         }
-        .lang-btn:hover, .lang-btn.active {
-            background: var(--teal);
-            color: var(--white);
-            border-color: var(--teal);
+        .lang-btn:hover { transform: scale(1.18); border-color: rgba(0,104,129,0.25); }
+        .lang-btn.active {
+            border-color: var(--vita-green);
+            box-shadow: 0 0 0 1px var(--vita-green);
         }
 
         .nav-phone {
@@ -265,7 +265,7 @@
             padding: 0.5rem 1.25rem 1.5rem;
         }
         .nav-mobile-extra .lang-switcher { gap: 0.4rem; }
-        .nav-mobile-extra .lang-btn { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
+        .nav-mobile-extra .lang-btn { font-size: 1.5rem; padding: 0.15rem 0.2rem; }
         .nav-mobile-extra .nav-phone { font-size: 0.95rem; }
         .nav-mobile-extra .btn-primary { text-align: center; }
 
@@ -1026,6 +1026,48 @@
         }
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
+        /* --- REFERRAL PROGRAM --- */
+        .referral-hdr { text-align: center; margin-bottom: 3rem; }
+        .referral-hdr .sec-sub { margin: 0 auto; max-width: 600px; }
+        .referral-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+        .referral-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem 1.75rem;
+            box-shadow: 0 4px 24px rgba(4,32,42,0.07), 0 1px 4px rgba(4,32,42,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+        .referral-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--vita-green), var(--teal));
+        }
+        .referral-step {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--teal-light);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .referral-card-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--teal-dark);
+            margin-bottom: 0.6rem;
+        }
+        .referral-card-desc {
+            font-size: 0.92rem;
+            color: var(--neutral);
+            line-height: 1.65;
+        }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 1100px) {
             .svc-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1053,7 +1095,7 @@
         }
 
         @media (max-width: 640px) {
-            .svc-grid, .vals-grid, .testi-grid, .footer-grid { grid-template-columns: 1fr; }
+            .svc-grid, .vals-grid, .testi-grid, .footer-grid, .referral-grid { grid-template-columns: 1fr; }
             .cov-stats { grid-template-columns: 1fr; }
             .perks-grid { grid-template-columns: 1fr; }
             .hero-title { font-size: 1.75rem; }
@@ -1061,7 +1103,7 @@
             .hero-stat-item { min-width: 80px; padding: 0.7rem 0.75rem; }
             .nav-inner { padding: 0 1.25rem; gap: 1rem; }
             .lang-switcher { gap: 0.15rem; }
-            .lang-btn { font-size: 0.66rem; padding: 0.2rem 0.45rem; }
+            .lang-btn { font-size: 1rem; padding: 0.08rem 0.1rem; }
         }
 
         /* --- COOKIE BANNER --- */
@@ -1464,6 +1506,11 @@
                 <span data-lang="fr">Carrières</span>
                 <span data-lang="es">Carreras</span>
             </a></li>
+            <li><a href="#referral">
+                <span data-lang="en" class="active">Referral Program</span>
+                <span data-lang="fr">Programme de parrainage</span>
+                <span data-lang="es">Programa de referidos</span>
+            </a></li>
             <li><a href="#contact">
                 <span data-lang="en" class="active">Contact</span>
                 <span data-lang="fr">Contact</span>
@@ -1472,13 +1519,18 @@
         </ul>
         <div class="nav-right">
             <div class="lang-switcher">
-                <button type="button" class="lang-btn active" onclick="setLang('en')">EN</button>
-                <button type="button" class="lang-btn" onclick="setLang('fr')">FR</button>
-                <button type="button" class="lang-btn" onclick="setLang('es')">ES</button>
+                <button type="button" class="lang-btn active" data-lang-target="en" onclick="setLang('en')" aria-label="English"><img src="Brand_Assets/Flag-of-Canada-01-1-300x200.png" width="22" height="15" style="display:block;border-radius:2px;object-fit:cover" alt="Canada"></button>
+                <button type="button" class="lang-btn" data-lang-target="fr" onclick="setLang('fr')" aria-label="Français"><svg viewBox="0 0 22 15" width="22" height="15" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:2px"><rect width="22" height="15" fill="#003DA5"/><rect x="9" y="0" width="4" height="15" fill="white"/><rect x="0" y="5.5" width="22" height="4" fill="white"/><text x="4.5" y="2.75" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="17.5" y="2.75" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="4.5" y="12.25" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="17.5" y="12.25" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text></svg></button>
+                <button type="button" class="lang-btn" data-lang-target="es" onclick="setLang('es')" aria-label="Español"><svg viewBox="0 0 22 15" width="22" height="15" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:2px"><rect width="22" height="15" fill="#AA151B"/><rect y="3.75" width="22" height="7.5" fill="#F1BF00"/></svg></button>
             </div>
             <a href="tel:4388393838" class="nav-phone">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 (438) 839-3838
+            </a>
+            <a href="#" onclick="openCareModal(); return false;" class="btn-primary">
+                <span data-lang="en" class="active">Request Care</span>
+                <span data-lang="fr">Demander des soins</span>
+                <span data-lang="es">Solicitar atencion</span>
             </a>
             <a href="/employee.html" class="btn-ghost nav-employee-btn">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -1491,11 +1543,6 @@
                 <span data-lang="en" class="active">Admin Login</span>
                 <span data-lang="fr">Admin</span>
                 <span data-lang="es">Admin</span>
-            </a>
-            <a href="#" onclick="openCareModal(); return false;" class="btn-primary">
-                <span data-lang="en" class="active">Request Care</span>
-                <span data-lang="fr">Demander des soins</span>
-                <span data-lang="es">Solicitar atencion</span>
             </a>
             <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMobilePanel" onclick="toggleMobileNav()">
                 <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
@@ -1524,6 +1571,11 @@
                 <span data-lang="fr">Carrières</span>
                 <span data-lang="es">Carreras</span>
             </a></li>
+            <li><a href="#referral" onclick="closeMobileNav()">
+                <span data-lang="en" class="active">Referral Program</span>
+                <span data-lang="fr">Programme de parrainage</span>
+                <span data-lang="es">Programa de referidos</span>
+            </a></li>
             <li><a href="#contact" onclick="closeMobileNav()">
                 <span data-lang="en" class="active">Contact</span>
                 <span data-lang="fr">Contact</span>
@@ -1533,13 +1585,18 @@
         <div class="nav-mobile-divider"></div>
         <div class="nav-mobile-extra">
             <div class="lang-switcher">
-                <button type="button" class="lang-btn active" onclick="setLang('en')">EN</button>
-                <button type="button" class="lang-btn" onclick="setLang('fr')">FR</button>
-                <button type="button" class="lang-btn" onclick="setLang('es')">ES</button>
+                <button type="button" class="lang-btn active" data-lang-target="en" onclick="setLang('en')" aria-label="English"><img src="Brand_Assets/Flag-of-Canada-01-1-300x200.png" width="22" height="15" style="display:block;border-radius:2px;object-fit:cover" alt="Canada"></button>
+                <button type="button" class="lang-btn" data-lang-target="fr" onclick="setLang('fr')" aria-label="Français"><svg viewBox="0 0 22 15" width="22" height="15" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:2px"><rect width="22" height="15" fill="#003DA5"/><rect x="9" y="0" width="4" height="15" fill="white"/><rect x="0" y="5.5" width="22" height="4" fill="white"/><text x="4.5" y="2.75" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="17.5" y="2.75" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="4.5" y="12.25" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text><text x="17.5" y="12.25" font-size="3.2" fill="white" text-anchor="middle" dominant-baseline="central">⚜</text></svg></button>
+                <button type="button" class="lang-btn" data-lang-target="es" onclick="setLang('es')" aria-label="Español"><svg viewBox="0 0 22 15" width="22" height="15" xmlns="http://www.w3.org/2000/svg" style="display:block;border-radius:2px"><rect width="22" height="15" fill="#AA151B"/><rect y="3.75" width="22" height="7.5" fill="#F1BF00"/></svg></button>
             </div>
             <a href="tel:4388393838" class="nav-phone">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
                 (438) 839-3838
+            </a>
+            <a href="#" onclick="openCareModal(); closeMobileNav(); return false;" class="btn-primary">
+                <span data-lang="en" class="active">Request Care</span>
+                <span data-lang="fr">Demander des soins</span>
+                <span data-lang="es">Solicitar atencion</span>
             </a>
             <a href="/employee.html" class="btn-ghost nav-employee-btn">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
@@ -1552,11 +1609,6 @@
                 <span data-lang="en" class="active">Admin Login</span>
                 <span data-lang="fr">Admin</span>
                 <span data-lang="es">Admin</span>
-            </a>
-            <a href="#" onclick="openCareModal(); closeMobileNav(); return false;" class="btn-primary">
-                <span data-lang="en" class="active">Request Care</span>
-                <span data-lang="fr">Demander des soins</span>
-                <span data-lang="es">Solicitar atencion</span>
             </a>
         </div>
     </div>
@@ -2290,6 +2342,77 @@
     </div>
 </section>
 
+<!-- REFERRAL PROGRAM -->
+<section id="referral" class="sec sec-alt">
+    <div class="wrap">
+        <div class="referral-hdr reveal">
+            <span class="sec-tag">
+                <span data-lang="en" class="active">Referral Program</span>
+                <span data-lang="fr">Programme de parrainage</span>
+                <span data-lang="es">Programa de referidos</span>
+            </span>
+            <h2 class="sec-title">
+                <span data-lang="en" class="active">Share the care.<br><span class="highlight">Earn together.</span></span>
+                <span data-lang="fr">Partagez les soins.<br><span class="highlight">Gagnez ensemble.</span></span>
+                <span data-lang="es">Comparta el cuidado.<br><span class="highlight">Ganen juntos.</span></span>
+            </h2>
+            <p class="sec-sub">
+                <span data-lang="en" class="active">Know someone who could benefit from VITA's care services, or a great caregiver looking for work? Refer them and we'll reward you both.</span>
+                <span data-lang="fr">Vous connaissez quelqu'un qui pourrait bénéficier des services de VITA, ou un excellent soignant à la recherche d'un emploi? Référez-les et nous vous récompenserons tous les deux.</span>
+                <span data-lang="es">¿Conoce a alguien que podría beneficiarse de los servicios de VITA, o a un excelente cuidador en busca de trabajo? Refiéralos y los recompensaremos a ambos.</span>
+            </p>
+        </div>
+        <div class="referral-grid">
+            <div class="referral-card reveal">
+                <div class="referral-step">01</div>
+                <h3 class="referral-card-title">
+                    <span data-lang="en" class="active">Share VITA</span>
+                    <span data-lang="fr">Partagez VITA</span>
+                    <span data-lang="es">Comparta VITA</span>
+                </h3>
+                <p class="referral-card-desc">
+                    <span data-lang="en" class="active">Tell a friend, family member, or colleague about VITA's compassionate home care services.</span>
+                    <span data-lang="fr">Parlez à un ami, un membre de la famille ou un collègue des services de soins à domicile bienveillants de VITA.</span>
+                    <span data-lang="es">Cuéntele a un amigo, familiar o colega sobre los compasivos servicios de cuidado en el hogar de VITA.</span>
+                </p>
+            </div>
+            <div class="referral-card reveal">
+                <div class="referral-step">02</div>
+                <h3 class="referral-card-title">
+                    <span data-lang="en" class="active">They Connect</span>
+                    <span data-lang="fr">Ils prennent contact</span>
+                    <span data-lang="es">Ellos se conectan</span>
+                </h3>
+                <p class="referral-card-desc">
+                    <span data-lang="en" class="active">Your contact reaches out to VITA and mentions your name when they get in touch with our team.</span>
+                    <span data-lang="fr">Votre contact prend contact avec VITA et mentionne votre nom lors de sa prise de contact avec notre équipe.</span>
+                    <span data-lang="es">Su contacto se comunica con VITA y menciona su nombre al ponerse en contacto con nuestro equipo.</span>
+                </p>
+            </div>
+            <div class="referral-card reveal">
+                <div class="referral-step">03</div>
+                <h3 class="referral-card-title">
+                    <span data-lang="en" class="active">You Both Earn</span>
+                    <span data-lang="fr">Vous gagnez tous les deux</span>
+                    <span data-lang="es">Ambos ganan</span>
+                </h3>
+                <p class="referral-card-desc">
+                    <span data-lang="en" class="active">Once services begin, you receive a reward as a thank-you for growing the VITA family.</span>
+                    <span data-lang="fr">Une fois les services commencés, vous recevez une récompense en remerciement d'avoir agrandi la famille VITA.</span>
+                    <span data-lang="es">Una vez iniciados los servicios, usted recibe una recompensa como agradecimiento por hacer crecer la familia VITA.</span>
+                </p>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:2.75rem;" class="reveal">
+            <button type="button" onclick="openReferralModal()" class="btn-primary" style="border:none; cursor:pointer; font-size:1rem; padding:0.85rem 2.25rem;">
+                <span data-lang="en" class="active">Refer Someone Now</span>
+                <span data-lang="fr">Référer quelqu'un maintenant</span>
+                <span data-lang="es">Referir a alguien ahora</span>
+            </button>
+        </div>
+    </div>
+</section>
+
 <!-- CONTACT CTA -->
 <section id="contact" class="cta-sec">
     <div class="wrap">
@@ -2682,6 +2805,178 @@
                     </span>
                 </button>
                 <button type="button" onclick="closeJobModal()" class="btn-ghost" style="cursor:pointer;">
+                    <span data-lang="en" class="active">Close</span>
+                    <span data-lang="fr">Fermer</span>
+                    <span data-lang="es">Cerrar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- REFERRAL MODAL -->
+<div id="referralModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="referralModalTitle">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeReferralModal()" aria-label="Close">&#x2715;</button>
+
+        <div id="referralModalForm">
+            <p class="sec-tag" style="margin-bottom:0.4rem;">
+                <span data-lang="en" class="active">Referral Program</span>
+                <span data-lang="fr">Programme de parrainage</span>
+                <span data-lang="es">Programa de referidos</span>
+            </p>
+            <h2 id="referralModalTitle" style="font-size:1.55rem; font-weight:900; letter-spacing:-0.03em; color:var(--teal-dark); margin-bottom:0.5rem; line-height:1.2;">
+                <span data-lang="en" class="active">Refer someone to VITA</span>
+                <span data-lang="fr">Référer quelqu'un à VITA</span>
+                <span data-lang="es">Referir a alguien a VITA</span>
+            </h2>
+            <p style="font-size:0.875rem; color:var(--neutral); margin-bottom:1.5rem; line-height:1.6;">
+                <span data-lang="en" class="active">Fill out the form and our team will reach out to your referral within 24 hours.</span>
+                <span data-lang="fr">Remplissez le formulaire et notre équipe contactera votre référence dans les 24 heures.</span>
+                <span data-lang="es">Complete el formulario y nuestro equipo se comunicará con su referido en 24 horas.</span>
+            </p>
+            <form id="referralForm" onsubmit="submitReferralForm(event)" novalidate>
+                <input type="text" id="rHp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;">
+
+                <p style="font-size:0.72rem; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.65rem;">
+                    <span data-lang="en" class="active">Your Information</span>
+                    <span data-lang="fr">Vos coordonnées</span>
+                    <span data-lang="es">Su información</span>
+                </p>
+                <div class="modal-row">
+                    <div class="modal-field">
+                        <label for="rFirst">
+                            <span data-lang="en" class="active">First Name *</span>
+                            <span data-lang="fr">Prénom *</span>
+                            <span data-lang="es">Nombre *</span>
+                        </label>
+                        <input id="rFirst" type="text" required autocomplete="given-name">
+                    </div>
+                    <div class="modal-field">
+                        <label for="rLast">
+                            <span data-lang="en" class="active">Last Name *</span>
+                            <span data-lang="fr">Nom *</span>
+                            <span data-lang="es">Apellido *</span>
+                        </label>
+                        <input id="rLast" type="text" required autocomplete="family-name">
+                    </div>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-field">
+                        <label for="rEmail">
+                            <span data-lang="en" class="active">Email Address *</span>
+                            <span data-lang="fr">Adresse courriel *</span>
+                            <span data-lang="es">Correo electrónico *</span>
+                        </label>
+                        <input id="rEmail" type="email" required autocomplete="email">
+                    </div>
+                    <div class="modal-field">
+                        <label for="rPhone">
+                            <span data-lang="en" class="active">Phone Number *</span>
+                            <span data-lang="fr">Téléphone *</span>
+                            <span data-lang="es">Teléfono *</span>
+                        </label>
+                        <input id="rPhone" type="tel" required autocomplete="tel">
+                    </div>
+                </div>
+
+                <p style="font-size:0.72rem; font-weight:700; color:var(--teal); text-transform:uppercase; letter-spacing:0.07em; margin:1.1rem 0 0.65rem;">
+                    <span data-lang="en" class="active">Person You Are Referring</span>
+                    <span data-lang="fr">Personne que vous référez</span>
+                    <span data-lang="es">Persona que usted refiere</span>
+                </p>
+                <div class="modal-field">
+                    <label for="rType">
+                        <span data-lang="en" class="active">Type of Referral *</span>
+                        <span data-lang="fr">Type de référence *</span>
+                        <span data-lang="es">Tipo de referido *</span>
+                    </label>
+                    <select id="rType" required class="modal-select">
+                        <option value="">-- Select / Sélectionner / Seleccionar --</option>
+                        <option value="New Client">New Client / Nouveau client / Nuevo cliente</option>
+                        <option value="New Caregiver">New Caregiver / Nouveau soignant / Nuevo cuidador</option>
+                    </select>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-field">
+                        <label for="rRefName">
+                            <span data-lang="en" class="active">Their Full Name *</span>
+                            <span data-lang="fr">Leur nom complet *</span>
+                            <span data-lang="es">Su nombre completo *</span>
+                        </label>
+                        <input id="rRefName" type="text" required>
+                    </div>
+                    <div class="modal-field">
+                        <label for="rRefPhone">
+                            <span data-lang="en" class="active">Their Phone (optional)</span>
+                            <span data-lang="fr">Leur téléphone (optionnel)</span>
+                            <span data-lang="es">Su teléfono (opcional)</span>
+                        </label>
+                        <input id="rRefPhone" type="tel">
+                    </div>
+                </div>
+                <div class="modal-field" style="margin-bottom:1.5rem;">
+                    <label for="rNotes">
+                        <span data-lang="en" class="active">Additional Notes</span>
+                        <span data-lang="fr">Notes supplémentaires</span>
+                        <span data-lang="es">Notas adicionales</span>
+                    </label>
+                    <textarea id="rNotes" rows="3" placeholder="Any context about the person you're referring..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%; font-size:1rem; padding:0.9rem; border:none; cursor:pointer;">
+                    <span data-lang="en" class="active">Submit Referral</span>
+                    <span data-lang="fr">Soumettre la référence</span>
+                    <span data-lang="es">Enviar referido</span>
+                </button>
+            </form>
+        </div>
+
+        <div class="modal-success" id="referralModalSuccess" style="display:none;">
+            <div class="success-icon">&#10003;</div>
+            <h3 style="font-size:1.35rem; font-weight:900; color:var(--teal-dark); margin-bottom:0.6rem;">
+                <span data-lang="en" class="active">Referral Submitted!</span>
+                <span data-lang="fr">Référence soumise!</span>
+                <span data-lang="es">Referido enviado!</span>
+            </h3>
+            <p style="font-size:0.9rem; color:var(--neutral); line-height:1.65; margin-bottom:1.5rem;">
+                <span data-lang="en" class="active">Thank you! Our team will reach out to your referral within 24 hours. We appreciate you growing the VITA family.</span>
+                <span data-lang="fr">Merci! Notre équipe contactera votre référence dans les 24 heures. Nous apprécions que vous fassiez grandir la famille VITA.</span>
+                <span data-lang="es">Gracias! Nuestro equipo se comunicará con su referido en 24 horas. Apreciamos que haga crecer la familia VITA.</span>
+            </p>
+            <button type="button" onclick="closeReferralModal()" class="btn-primary" style="border:none; cursor:pointer;">
+                <span data-lang="en" class="active">Close</span>
+                <span data-lang="fr">Fermer</span>
+                <span data-lang="es">Cerrar</span>
+            </button>
+        </div>
+
+        <div class="modal-success" id="referralModalFallback" style="display:none;">
+            <div class="success-icon" style="background:rgba(0,104,129,0.12); color:var(--teal-dark);">&#9993;</div>
+            <h3 style="font-size:1.35rem; font-weight:900; color:var(--teal-dark); margin-bottom:0.6rem;">
+                <span data-lang="en" class="active">Couldn't open your email app</span>
+                <span data-lang="fr">Impossible d'ouvrir votre messagerie</span>
+                <span data-lang="es">No se pudo abrir su correo</span>
+            </h3>
+            <p style="font-size:0.9rem; color:var(--neutral); line-height:1.65; margin-bottom:1rem;">
+                <span data-lang="en" class="active">No problem - copy your referral below and send it to <strong>Lorena@vitasoinsetservices.com</strong>, or call us at <strong>(438) 839-3838</strong>.</span>
+                <span data-lang="fr">Pas de souci - copiez votre référence ci-dessous et envoyez-la à <strong>Lorena@vitasoinsetservices.com</strong>, ou appelez-nous au <strong>(438) 839-3838</strong>.</span>
+                <span data-lang="es">No hay problema - copie su referido y envíenoslo a <strong>Lorena@vitasoinsetservices.com</strong>, o llámenos al <strong>(438) 839-3838</strong>.</span>
+            </p>
+            <textarea id="referralModalFallbackText" readonly style="width:100%; min-height:140px; padding:0.85rem; border-radius:12px; border:1px solid var(--teal-light); background:var(--teal-lighter); color:var(--teal-dark); font-family:'Courier New', monospace; font-size:0.76rem; line-height:1.5; resize:vertical;"></textarea>
+            <div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap; justify-content:center;">
+                <button type="button" onclick="copyFallbackText('referralModalFallbackText', this)" class="btn-primary" style="border:none; cursor:pointer;">
+                    <span class="copy-label-default">
+                        <span data-lang="en" class="active">Copy to clipboard</span>
+                        <span data-lang="fr">Copier le texte</span>
+                        <span data-lang="es">Copiar texto</span>
+                    </span>
+                    <span class="copy-label-done" style="display:none;">
+                        <span data-lang="en" class="active">Copied!</span>
+                        <span data-lang="fr">Copié!</span>
+                        <span data-lang="es">Copiado!</span>
+                    </span>
+                </button>
+                <button type="button" onclick="closeReferralModal()" class="btn-ghost" style="cursor:pointer;">
                     <span data-lang="en" class="active">Close</span>
                     <span data-lang="fr">Fermer</span>
                     <span data-lang="es">Cerrar</span>
@@ -3426,7 +3721,7 @@
         });
         // Toggle lang buttons
         document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === lang);
+            btn.classList.toggle('active', btn.getAttribute('data-lang-target') === lang);
         });
         document.documentElement.lang = lang;
     }
@@ -3522,6 +3817,94 @@
     function closeCareModal() {
         document.getElementById('careModal').classList.remove('open');
         document.body.style.overflow = '';
+    }
+
+    function openReferralModal() {
+        window._referralOpenedAt = Date.now();
+        document.getElementById('referralModal').classList.add('open');
+        document.getElementById('referralModalForm').style.display = 'block';
+        document.getElementById('referralModalSuccess').style.display = 'none';
+        document.getElementById('referralModalFallback').style.display = 'none';
+        document.getElementById('referralForm').reset();
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('rFirst').focus(), 100);
+    }
+
+    function closeReferralModal() {
+        document.getElementById('referralModal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function submitReferralForm(e) {
+        e.preventDefault();
+        const first    = document.getElementById('rFirst').value.trim();
+        const last     = document.getElementById('rLast').value.trim();
+        const email    = document.getElementById('rEmail').value.trim();
+        const phone    = document.getElementById('rPhone').value.trim();
+        const type     = document.getElementById('rType').value;
+        const refName  = document.getElementById('rRefName').value.trim();
+        const refPhone = document.getElementById('rRefPhone').value.trim();
+        const notes    = document.getElementById('rNotes').value.trim();
+
+        if (!first || !last || !email || !phone || !type || !refName) return;
+
+        const subject = 'New Referral - VITA Soins et Services';
+        const plainBody =
+            'New Referral\n' +
+            '==================================\n\n' +
+            '--- YOUR INFORMATION ---\n' +
+            'First Name:            ' + first + '\n' +
+            'Last Name:             ' + last + '\n' +
+            'Email:                 ' + email + '\n' +
+            'Phone:                 ' + phone + '\n\n' +
+            '--- REFERRED PERSON ---\n' +
+            'Type of Referral:      ' + type + '\n' +
+            'Name:                  ' + refName + '\n' +
+            'Phone:                 ' + (refPhone || 'Not provided') + '\n\n' +
+            'Additional Notes:\n' + (notes || 'None');
+
+        const mailto = 'mailto:Lorena@vitasoinsetservices.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(plainBody);
+
+        function showSuccess() {
+            document.getElementById('referralModalForm').style.display = 'none';
+            document.getElementById('referralModalFallback').style.display = 'none';
+            document.getElementById('referralModalSuccess').style.display = 'block';
+        }
+        function showFallback(text) {
+            document.getElementById('referralModalFallbackText').value = 'To: Lorena@vitasoinsetservices.com\nSubject: ' + subject + '\n\n' + text;
+            document.getElementById('referralModalForm').style.display = 'none';
+            document.getElementById('referralModalSuccess').style.display = 'none';
+            document.getElementById('referralModalFallback').style.display = 'block';
+        }
+
+        fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                source: 'care_request',
+                firstName: first,
+                lastName: last,
+                email: email,
+                phone: phone,
+                hp: document.getElementById('rHp').value,
+                elapsedMs: Date.now() - (window._referralOpenedAt || 0),
+                details: {
+                    submission_type: 'referral',
+                    'Referral Type': type,
+                    'Referred Person Name': refName,
+                    'Referred Person Phone': refPhone || 'Not provided',
+                    'Additional Notes': notes || 'None'
+                }
+            })
+        }).then(function(res) {
+            if (!res.ok) throw new Error('failed');
+            return res.json();
+        }).then(function(data) {
+            if (!data || !data.ok) throw new Error('failed');
+            showSuccess();
+        }).catch(function() {
+            attemptMailto(mailto, plainBody, showSuccess, showFallback);
+        });
     }
 
     function submitCareForm(e) {
