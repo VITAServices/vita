@@ -399,6 +399,7 @@
         }
 
         .hero-ctas { display: flex; gap: 0.875rem; flex-wrap: wrap; }
+        .hero-reassure { margin-top: 1rem; font-size: 0.82rem; font-weight: 600; color: var(--neutral); letter-spacing: 0.01em; }
 
         .hero-media {
             position: relative;
@@ -641,6 +642,69 @@
             line-height: 1.65;
         }
 
+        /* --- HOW IT WORKS (3 steps) --- */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .step-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem 1.6rem;
+            box-shadow: var(--shadow-sm);
+            border-top: 3px solid var(--vita-green);
+            position: relative;
+        }
+        .step-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.6rem;
+            height: 2.6rem;
+            border-radius: 50%;
+            background: var(--vita-green);
+            color: var(--white);
+            font-weight: 900;
+            font-size: 1.15rem;
+            margin-bottom: 1.1rem;
+        }
+        .step-card .val-title { font-size: 1.08rem; }
+        @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; max-width: 460px; } }
+
+        /* --- LANGUAGE / CULTURE CALLOUT --- */
+        .lang-callout {
+            display: flex;
+            align-items: center;
+            gap: 1.6rem;
+            background: var(--teal-dark);
+            color: var(--white);
+            border-radius: 20px;
+            padding: 2.25rem 2.6rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        .lang-callout::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 12% 20%, rgba(92,191,58,0.22), transparent 45%),
+                        radial-gradient(circle at 90% 90%, rgba(0,104,129,0.45), transparent 50%);
+            pointer-events: none;
+        }
+        .lang-callout > * { position: relative; z-index: 1; }
+        .lang-callout-icon { font-size: 2.8rem; flex-shrink: 0; line-height: 1; }
+        .lang-callout-h { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.45rem; color: var(--white); }
+        .lang-callout-p { font-size: 0.95rem; line-height: 1.65; color: rgba(255,255,255,0.85); max-width: 660px; }
+        .lang-callout .btn-primary { flex-shrink: 0; white-space: nowrap; }
+        @media (max-width: 760px) {
+            .lang-callout { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+            .lang-callout-p { margin: 0 auto; }
+        }
+
         /* --- STORY SECTION (dark) --- */
         .story-sec {
             background: var(--teal-dark);
@@ -856,6 +920,19 @@
 
         /* --- JOIN TEAM --- */
         .join-sec { background: var(--teal); color: var(--white); }
+        .hiring-badge {
+            display: inline-block;
+            background: var(--vita-green);
+            color: var(--white);
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 14px rgba(92,191,58,0.35);
+        }
 
         .join-inner {
             display: grid;
@@ -905,6 +982,45 @@
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* --- FAQ --- */
+        .faq-list { max-width: 780px; margin: 0 auto; }
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--teal-light);
+            border-radius: 12px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 1.15rem 1.35rem;
+            font-weight: 700;
+            font-size: 0.98rem;
+            color: var(--teal-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--vita-green);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-item .faq-a {
+            padding: 0 1.35rem 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            color: var(--neutral);
         }
 
         /* --- CONTACT CTA --- */
@@ -1017,6 +1133,25 @@
 
         .footer-bottom a { text-decoration: none; margin-left: 1rem; }
         .footer-bottom a:hover { color: rgba(255,255,255,0.65); }
+
+        .proudly-canadian {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 1.75rem 0 0.5rem;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            color: rgba(255,255,255,0.9);
+        }
+        .proudly-canadian img {
+            height: 22px;
+            width: auto;
+            border-radius: 3px;
+            display: block;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.35);
+        }
 
         /* --- REVEAL ANIMATIONS --- */
         .reveal {
@@ -1486,6 +1621,11 @@
             <img src="Brand_Assets/VITA_SERVICES_LOGO.png" alt="VITA Services a Domicile">
         </a>
         <ul class="nav-links">
+            <li><a href="#how-it-works">
+                <span data-lang="en" class="active">How it works</span>
+                <span data-lang="fr">Comment ça marche</span>
+                <span data-lang="es">Como funciona</span>
+            </a></li>
             <li><a href="#services">
                 <span data-lang="en" class="active">Services</span>
                 <span data-lang="fr">Services</span>
@@ -1497,7 +1637,7 @@
                 <span data-lang="es">Nosotros</span>
             </a></li>
             <li><a href="#patient-voices">
-                <span data-lang="en" class="active">Patient Stories</span>
+                <span data-lang="en" class="active">Client Stories</span>
                 <span data-lang="fr">Témoignages</span>
                 <span data-lang="es">Historias</span>
             </a></li>
@@ -1510,6 +1650,11 @@
                 <span data-lang="en" class="active">Referral Program</span>
                 <span data-lang="fr">Programme de parrainage</span>
                 <span data-lang="es">Programa de referidos</span>
+            </a></li>
+            <li><a href="#faq">
+                <span data-lang="en" class="active">FAQ</span>
+                <span data-lang="fr">FAQ</span>
+                <span data-lang="es">FAQ</span>
             </a></li>
             <li><a href="#contact">
                 <span data-lang="en" class="active">Contact</span>
@@ -1551,6 +1696,11 @@
     </div>
     <div class="nav-mobile-panel" id="navMobilePanel">
         <ul class="nav-mobile-links">
+            <li><a href="#how-it-works" onclick="closeMobileNav()">
+                <span data-lang="en" class="active">How it works</span>
+                <span data-lang="fr">Comment ça marche</span>
+                <span data-lang="es">Como funciona</span>
+            </a></li>
             <li><a href="#services" onclick="closeMobileNav()">
                 <span data-lang="en" class="active">Services</span>
                 <span data-lang="fr">Services</span>
@@ -1562,7 +1712,7 @@
                 <span data-lang="es">Nosotros</span>
             </a></li>
             <li><a href="#patient-voices" onclick="closeMobileNav()">
-                <span data-lang="en" class="active">Patient Stories</span>
+                <span data-lang="en" class="active">Client Stories</span>
                 <span data-lang="fr">Témoignages</span>
                 <span data-lang="es">Historias</span>
             </a></li>
@@ -1575,6 +1725,11 @@
                 <span data-lang="en" class="active">Referral Program</span>
                 <span data-lang="fr">Programme de parrainage</span>
                 <span data-lang="es">Programa de referidos</span>
+            </a></li>
+            <li><a href="#faq" onclick="closeMobileNav()">
+                <span data-lang="en" class="active">FAQ</span>
+                <span data-lang="fr">FAQ</span>
+                <span data-lang="es">FAQ</span>
             </a></li>
             <li><a href="#contact" onclick="closeMobileNav()">
                 <span data-lang="en" class="active">Contact</span>
@@ -1634,17 +1789,22 @@
             <span data-lang="es">Es posible mejorar su calidad de vida y bienestar con el apoyo de un profesional de confianza de VITA Services. Reserve hoy su consulta gratuita y descubra como podemos ayudarle a usted o a un ser querido.</span>
         </p>
         <div class="hero-ctas">
-            <a href="#services" class="btn-primary">
+            <a href="#" onclick="openCareModal(); return false;" class="btn-primary" style="background:var(--vita-green);">
+                <span data-lang="en" class="active">Book a free consultation</span>
+                <span data-lang="fr">Réservez une consultation gratuite</span>
+                <span data-lang="es">Reserve una consulta gratuita</span>
+            </a>
+            <a href="#services" class="btn-teal">
                 <span data-lang="en" class="active">Explore Services</span>
                 <span data-lang="fr">Nos services</span>
                 <span data-lang="es">Nuestros servicios</span>
             </a>
-            <a href="#patient-voices" class="btn-teal">
-                <span data-lang="en" class="active">Patient Stories</span>
-                <span data-lang="fr">Témoignages</span>
-                <span data-lang="es">Historias</span>
-            </a>
         </div>
+        <p class="hero-reassure">
+            <span data-lang="en" class="active">Free &bull; No commitment &bull; We respond within 24 hours</span>
+            <span data-lang="fr">Gratuit &bull; Sans engagement &bull; Réponse sous 24 heures</span>
+            <span data-lang="es">Gratis &bull; Sin compromiso &bull; Respondemos en 24 horas</span>
+        </p>
     </div>
     <div class="hero-media">
         <video id="heroVideo" autoplay muted playsinline preload="auto">
@@ -1676,11 +1836,11 @@
                 </div>
             </div>
             <div class="hero-stat-item">
-                <div class="num">98%</div>
+                <div class="num">95%</div>
                 <div class="lbl">
-                    <span data-lang="en" class="active">Patient Satisfaction</span>
-                    <span data-lang="fr">Satisfaction patient</span>
-                    <span data-lang="es">Satisfaccion del paciente</span>
+                    <span data-lang="en" class="active">Client Satisfaction</span>
+                    <span data-lang="fr">Satisfaction client</span>
+                    <span data-lang="es">Satisfaccion del cliente</span>
                 </div>
             </div>
         </div>
@@ -1693,6 +1853,70 @@
     <span data-lang="fr">VITA a le privilege d'ameliorer la vie de ses clients chaque jour.</span>
     <span data-lang="es">VITA tiene el privilegio de mejorar la vida de sus clientes cada dia.</span>
 </div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works" class="sec">
+    <div class="wrap">
+        <div class="vals-hdr">
+            <p class="sec-tag">
+                <span data-lang="en" class="active">How it works</span>
+                <span data-lang="fr">Comment ça fonctionne</span>
+                <span data-lang="es">Como funciona</span>
+            </p>
+            <h2 class="sec-h2">
+                <span data-lang="en" class="active">Getting started is simple</span>
+                <span data-lang="fr">Commencer est tout simple</span>
+                <span data-lang="es">Comenzar es muy sencillo</span>
+            </h2>
+            <p class="sec-sub">
+                <span data-lang="en" class="active">From your first call to your first visit, we make the process clear, personal, and pressure-free.</span>
+                <span data-lang="fr">De votre premier appel à votre première visite, nous rendons le processus clair, personnel et sans pression.</span>
+                <span data-lang="es">Desde su primera llamada hasta su primera visita, hacemos el proceso claro, personal y sin presion.</span>
+            </p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <div class="step-num">1</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Free consultation</span>
+                    <span data-lang="fr">Consultation gratuite</span>
+                    <span data-lang="es">Consulta gratuita</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">We listen. Together we discuss your loved one's needs, routines, preferences, and the schedule that works for your family. For in-home care that is tailored to your individual needs and preferences.</span>
+                    <span data-lang="fr">Nous écoutons. Ensemble, nous discutons des besoins de votre proche, de ses habitudes, de ses préférences et de l'horaire qui convient à votre famille. Pour des soins à domicile adaptés à vos besoins et préférences individuels.</span>
+                    <span data-lang="es">Escuchamos. Juntos conversamos sobre las necesidades de su ser querido, sus rutinas, preferencias y el horario que funciona para su familia. Para un cuidado en el hogar adaptado a sus necesidades y preferencias individuales.</span>
+                </p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-num">2</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Personalized matching</span>
+                    <span data-lang="fr">Jumelage personnalisé</span>
+                    <span data-lang="es">Emparejamiento personalizado</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">We pair you with a qualified, certified caregiver chosen to fit your personality, language, and the care you need.</span>
+                    <span data-lang="fr">Nous vous jumelons avec une préposée qualifiée et certifiée, choisie selon votre personnalité, votre langue et les soins dont vous avez besoin.</span>
+                    <span data-lang="es">Le asignamos un cuidador calificado y certificado, elegido segun su personalidad, su idioma y el cuidado que necesita.</span>
+                </p>
+            </div>
+            <div class="step-card reveal">
+                <div class="step-num">3</div>
+                <h3 class="val-title">
+                    <span data-lang="en" class="active">Care begins</span>
+                    <span data-lang="fr">Les soins commencent</span>
+                    <span data-lang="es">Comienza el cuidado</span>
+                </h3>
+                <p class="val-desc">
+                    <span data-lang="en" class="active">Your care plan starts on your schedule. Flexible, no long-term commitment, and you only pay for the hours you need.</span>
+                    <span data-lang="fr">Votre plan de soins débute selon votre horaire. Flexible, sans engagement à long terme, et vous ne payez que les heures dont vous avez besoin.</span>
+                    <span data-lang="es">Su plan de cuidado comienza segun su horario. Flexible, sin compromiso a largo plazo, y solo paga por las horas que necesita.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- VALUES -->
 <section id="about" class="sec sec-alt">
@@ -1772,6 +1996,32 @@
                 </p>
             </div>
 
+        </div>
+    </div>
+</section>
+
+<!-- LANGUAGE & CULTURE CALLOUT -->
+<section class="sec sec-alt" style="padding-top:0;">
+    <div class="wrap">
+        <div class="lang-callout reveal">
+            <div class="lang-callout-icon">🗣️</div>
+            <div>
+                <h3 class="lang-callout-h">
+                    <span data-lang="en" class="active">We speak your language and understand your culture</span>
+                    <span data-lang="fr">Nous parlons votre langue et comprenons votre culture</span>
+                    <span data-lang="es">Hablamos su idioma y entendemos su cultura</span>
+                </h3>
+                <p class="lang-callout-p">
+                    <span data-lang="en" class="active">Our team cares for families in English, French, and Spanish, with genuine cultural understanding so your loved one feels truly at home. Have a specific language or cultural need? Ask us.</span>
+                    <span data-lang="fr">Notre équipe accompagne les familles en français, en anglais et en espagnol, avec une réelle compréhension culturelle pour que votre proche se sente vraiment chez lui. Un besoin linguistique ou culturel particulier&nbsp;? Demandez-nous.</span>
+                    <span data-lang="es">Nuestro equipo cuida a las familias en espanol, frances e ingles, con una verdadera comprension cultural para que su ser querido se sienta como en casa. ¿Tiene una necesidad de idioma o cultura especifica? Preguntenos.</span>
+                </p>
+            </div>
+            <a href="#" onclick="openCareModal(); return false;" class="btn-primary" style="background:var(--vita-green);">
+                <span data-lang="en" class="active">Ask us</span>
+                <span data-lang="fr">Demandez-nous</span>
+                <span data-lang="es">Pregúntenos</span>
+            </a>
         </div>
     </div>
 </section>
@@ -2030,9 +2280,9 @@
                     <span data-lang="es">Ayudando a todos nuestros clientes en esta region</span>
                 </h2>
                 <p class="sec-sub">
-                    <span data-lang="en" class="active">VITA Services operates across 5 regions, bringing professional home care within reach of every family who needs it.</span>
+                    <span data-lang="en" class="active">VITA Services operates across 14 regions, bringing professional home care within reach of every family who needs it.</span>
                     <span data-lang="fr">VITA Services opère dans 14 régions, mettant les soins à domicile professionnels à portée de chaque famille qui en a besoin.</span>
-                    <span data-lang="es">VITA Services opera en 5 regiones, poniendo el cuidado profesional en el hogar al alcance de cada familia que lo necesita.</span>
+                    <span data-lang="es">VITA Services opera en 14 regiones, poniendo el cuidado profesional en el hogar al alcance de cada familia que lo necesita.</span>
                 </p>
                 <div class="cov-stats">
                     <div class="cov-stat">
@@ -2060,11 +2310,11 @@
                         </div>
                     </div>
                     <div class="cov-stat">
-                        <div class="num">98%</div>
+                        <div class="num">95%</div>
                         <div class="lbl">
-                            <span data-lang="en" class="active">Patient satisfaction</span>
-                            <span data-lang="fr">Satisfaction patient</span>
-                            <span data-lang="es">Satisfaccion del paciente</span>
+                            <span data-lang="en" class="active">Client satisfaction</span>
+                            <span data-lang="fr">Satisfaction client</span>
+                            <span data-lang="es">Satisfaccion del cliente</span>
                         </div>
                     </div>
                 </div>
@@ -2097,9 +2347,9 @@
                     <span data-lang="es">Ayudando a nuestros clientes en casa</span>
                 </h2>
                 <p class="sec-sub">
-                    <span data-lang="en" class="active">Research shows patients recover faster in the familiar comfort of home. VITA makes this possible through expert, coordinated care built around each person.</span>
-                    <span data-lang="fr">La recherche démontre que les patients récupèrent plus rapidement dans le confort familier de leur domicile. VITA rend cela possible grâce à des soins experts et coordonnés bâtis autour de chaque personne.</span>
-                    <span data-lang="es">La investigacion demuestra que los pacientes se recuperan mas rapido en la comodidad familiar del hogar. VITA hace esto posible a traves de cuidados expertos y coordinados construidos alrededor de cada persona.</span>
+                    <span data-lang="en" class="active">Research shows people recover faster in the familiar comfort of home. VITA makes this possible through expert, coordinated care built around each person.</span>
+                    <span data-lang="fr">La recherche démontre que les gens récupèrent plus rapidement dans le confort familier de leur domicile. VITA rend cela possible grâce à des soins experts et coordonnés bâtis autour de chaque personne.</span>
+                    <span data-lang="es">La investigacion demuestra que las personas se recuperan mas rapido en la comodidad familiar del hogar. VITA hace esto posible a traves de cuidados expertos y coordinados construidos alrededor de cada persona.</span>
                 </p>
                 <ul class="heal-list">
                     <li>
@@ -2181,11 +2431,11 @@
             </span>
         </div>
         <div class="stat-item">
-            <span class="stat-num">98%</span>
+            <span class="stat-num">95%</span>
             <span class="stat-lbl">
-                <span data-lang="en" class="active">Patient Satisfaction</span>
-                <span data-lang="fr">Satisfaction patient</span>
-                <span data-lang="es">Satisfaccion del paciente</span>
+                <span data-lang="en" class="active">Client Satisfaction</span>
+                <span data-lang="fr">Satisfaction client</span>
+                <span data-lang="es">Satisfaccion del cliente</span>
             </span>
         </div>
     </div>
@@ -2196,9 +2446,9 @@
     <div class="wrap">
         <div class="testi-hdr">
             <p class="sec-tag">
-                <span data-lang="en" class="active">Patient voices</span>
-                <span data-lang="fr">Voix des patients</span>
-                <span data-lang="es">Voces de los pacientes</span>
+                <span data-lang="en" class="active">Client voices</span>
+                <span data-lang="fr">Voix des clients</span>
+                <span data-lang="es">Voces de los clientes</span>
             </p>
             <h2 class="sec-h2">
                 <span data-lang="en" class="active">See what our clients say about VITA</span>
@@ -2221,9 +2471,9 @@
                     <div>
                         <p class="testi-name">Jean-Pierre B.</p>
                         <p class="testi-role">
-                            <span data-lang="en" class="active">Family member of patient</span>
-                            <span data-lang="fr">Membre de la famille d'un patient</span>
-                            <span data-lang="es">Familiar de paciente</span>
+                            <span data-lang="en" class="active">Family member of a client</span>
+                            <span data-lang="fr">Membre de la famille d'un client</span>
+                            <span data-lang="es">Familiar de un cliente</span>
                         </p>
                     </div>
                 </div>
@@ -2275,6 +2525,103 @@
     </div>
 </section>
 
+<!-- FAQ -->
+<section id="faq" class="sec sec-alt">
+    <div class="wrap">
+        <div class="vals-hdr">
+            <p class="sec-tag">
+                <span data-lang="en" class="active">Questions &amp; answers</span>
+                <span data-lang="fr">Questions et réponses</span>
+                <span data-lang="es">Preguntas y respuestas</span>
+            </p>
+            <h2 class="sec-h2">
+                <span data-lang="en" class="active">Answers to help you decide</span>
+                <span data-lang="fr">Des réponses pour vous aider à décider</span>
+                <span data-lang="es">Respuestas para ayudarle a decidir</span>
+            </h2>
+            <p class="sec-sub">
+                <span data-lang="en" class="active">Choosing home care is a big step. Here are the questions families ask us most.</span>
+                <span data-lang="fr">Choisir des soins à domicile est une décision importante. Voici les questions que les familles nous posent le plus souvent.</span>
+                <span data-lang="es">Elegir cuidado en el hogar es un paso importante. Estas son las preguntas que mas nos hacen las familias.</span>
+            </p>
+        </div>
+        <div class="faq-list">
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">How quickly can care begin?</span>
+                    <span data-lang="fr">Dans quel délai les soins peuvent-ils commencer&nbsp;?</span>
+                    <span data-lang="es">¿Que tan rapido puede comenzar el cuidado?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">After your free consultation, we match you with a caregiver and most families begin within a few days, depending on your needs and preferred schedule.</span>
+                    <span data-lang="fr">Après votre consultation gratuite, nous vous jumelons avec une préposée et la plupart des familles commencent en quelques jours, selon vos besoins et l'horaire souhaité.</span>
+                    <span data-lang="es">Despues de su consulta gratuita, le asignamos un cuidador y la mayoria de las familias comienzan en pocos dias, segun sus necesidades y horario preferido.</span>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">Is there a long-term commitment?</span>
+                    <span data-lang="fr">Y a-t-il un engagement à long terme&nbsp;?</span>
+                    <span data-lang="es">¿Hay un compromiso a largo plazo?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">No. Our care is flexible and adapts to your situation. You pay only for the hours you need, and you can adjust your plan as things change.</span>
+                    <span data-lang="fr">Non. Nos soins sont flexibles et s'adaptent à votre situation. Vous ne payez que les heures dont vous avez besoin et pouvez ajuster votre plan au fil du temps.</span>
+                    <span data-lang="es">No. Nuestro cuidado es flexible y se adapta a su situacion. Solo paga por las horas que necesita y puede ajustar su plan a medida que las cosas cambian.</span>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">Can we keep the same caregiver?</span>
+                    <span data-lang="fr">Pouvons-nous garder la même préposée&nbsp;?</span>
+                    <span data-lang="es">¿Podemos mantener el mismo cuidador?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">Yes. We believe consistency builds trust, so we work to keep the same caregiver with your loved one for a familiar, comfortable relationship.</span>
+                    <span data-lang="fr">Oui. Nous croyons que la constance bâtit la confiance, alors nous veillons à garder la même préposée auprès de votre proche pour une relation familière et rassurante.</span>
+                    <span data-lang="es">Si. Creemos que la constancia genera confianza, por eso procuramos mantener el mismo cuidador con su ser querido para una relacion familiar y comoda.</span>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">What languages do your caregivers speak?</span>
+                    <span data-lang="fr">Quelles langues parlent vos préposées&nbsp;?</span>
+                    <span data-lang="es">¿Que idiomas hablan sus cuidadores?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">Our team serves families in English, French, and Spanish, so your loved one can receive care and conversation in the language they are most comfortable with.</span>
+                    <span data-lang="fr">Notre équipe accompagne les familles en français, en anglais et en espagnol, afin que votre proche reçoive soins et conversation dans la langue où il se sent le plus à l'aise.</span>
+                    <span data-lang="es">Nuestro equipo atiende a las familias en espanol, frances e ingles, para que su ser querido reciba cuidado y conversacion en el idioma con el que se siente mas comodo.</span>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">What if my loved one is hesitant to accept help?</span>
+                    <span data-lang="fr">Et si mon proche hésite à accepter de l'aide&nbsp;?</span>
+                    <span data-lang="es">¿Y si mi ser querido duda en aceptar ayuda?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">This is very common. We start gently, often with a short visit, and let the relationship build at your loved one's pace. Our consultation includes tips for introducing care with care.</span>
+                    <span data-lang="fr">C'est très fréquent. Nous commençons en douceur, souvent par une courte visite, et laissons la relation se développer au rythme de votre proche. Notre consultation inclut des conseils pour introduire les soins avec délicatesse.</span>
+                    <span data-lang="es">Esto es muy comun. Comenzamos con suavidad, a menudo con una visita corta, y dejamos que la relacion crezca al ritmo de su ser querido. Nuestra consulta incluye consejos para introducir el cuidado con delicadeza.</span>
+                </div>
+            </details>
+            <details class="faq-item">
+                <summary>
+                    <span data-lang="en" class="active">How are your caregivers selected?</span>
+                    <span data-lang="fr">Comment vos préposées sont-elles sélectionnées&nbsp;?</span>
+                    <span data-lang="es">¿Como se seleccionan sus cuidadores?</span>
+                </summary>
+                <div class="faq-a">
+                    <span data-lang="en" class="active">Every caregiver is qualified, certified, and carefully screened. We then match them to your family by skills, personality, and language for the right fit.</span>
+                    <span data-lang="fr">Chaque préposée est qualifiée, certifiée et soigneusement vérifiée. Nous la jumelons ensuite à votre famille selon ses compétences, sa personnalité et sa langue pour un bon arrimage.</span>
+                    <span data-lang="es">Cada cuidador es calificado, certificado y cuidadosamente verificado. Luego lo emparejamos con su familia segun sus habilidades, personalidad e idioma para lograr la combinacion adecuada.</span>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+
 <!-- JOIN TEAM -->
 <section id="careers" class="sec join-sec">
     <div class="wrap">
@@ -2285,6 +2632,11 @@
                     <span data-lang="fr">Rejoignez notre équipe</span>
                     <span data-lang="es">Unase a nuestro equipo</span>
                 </p>
+                <div class="hiring-badge">
+                    <span data-lang="en" class="active">★ We are hiring!</span>
+                    <span data-lang="fr">★ Nous recrutons&nbsp;!</span>
+                    <span data-lang="es">★ ¡Estamos contratando!</span>
+                </div>
                 <h2 class="join-h2">
                     <span data-lang="en" class="active">Build a career that changes lives, including your own.</span>
                     <span data-lang="fr">Construisez une carrière qui change des vies, y compris la vôtre.</span>
@@ -3551,9 +3903,9 @@
                     <img src="Brand_Assets/VITA_SERVICES_LOGO.png" alt="VITA Services a Domicile">
                 </div>
                 <p>
-                    <span data-lang="en" class="active">Providing compassionate, expert home care services to families across the region since 2023.</span>
-                    <span data-lang="fr">Fournissant des soins à domicile bienveillants et experts aux familles de la région depuis 2023.</span>
-                    <span data-lang="es">Brindando servicios de atencion domiciliaria compasivos y expertos a familias en toda la region desde 2023.</span>
+                    <span data-lang="en" class="active">Providing compassionate, expert home care services to families across the Montreal metropolitan region since 2023.</span>
+                    <span data-lang="fr">Fournissant des soins à domicile bienveillants et experts aux familles de la région métropolitaine de Montréal depuis 2023.</span>
+                    <span data-lang="es">Brindando servicios de atencion domiciliaria compasivos y expertos a familias en toda la region metropolitana de Montreal desde 2023.</span>
                 </p>
                 <div class="footer-socials">
                     <a href="#" aria-label="Facebook">f</a>
@@ -3603,7 +3955,7 @@
                         <span data-lang="es">Nosotros</span>
                     </a></li>
                     <li><a href="#patient-voices">
-                        <span data-lang="en" class="active">Patient Stories</span>
+                        <span data-lang="en" class="active">Client Stories</span>
                         <span data-lang="fr">Témoignages</span>
                         <span data-lang="es">Historias</span>
                     </a></li>
@@ -3633,6 +3985,12 @@
                     </li>
                 </ul>
             </div>
+        </div>
+        <div class="proudly-canadian">
+            <img src="Brand_Assets/Flag-of-Canada-01-1-300x200.png" alt="Canadian flag" width="33" height="22" loading="lazy">
+            <span data-lang="en" class="active">Proudly Canadian</span>
+            <span data-lang="fr">Fièrement canadien</span>
+            <span data-lang="es">Orgullosamente canadiense</span>
         </div>
         <div class="footer-bottom">
             <p>
