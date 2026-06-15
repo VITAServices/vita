@@ -446,7 +446,7 @@
         /* ---- Stats ---- */
         .stats-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 1rem;
             margin-bottom: 1.25rem;
         }
@@ -667,6 +667,13 @@
         .status-badge.confirmed { background: #dcfce7; color: #16a34a; }
         .status-badge.completed { background: var(--teal-lighter); color: var(--teal); }
         .status-badge.cancelled { background: #fee2e2; color: #dc2626; }
+        .status-badge.pending  { background: #fef3c7; color: #b45309; }
+        .status-badge.accepted { background: #dcfce7; color: #16a34a; }
+        .status-badge.declined { background: #fee2e2; color: #dc2626; }
+        .status-badge.valid    { background: #dcfce7; color: #16a34a; }
+        .status-badge.expiring { background: #fef3c7; color: #b45309; }
+        .status-badge.expired  { background: #fee2e2; color: #dc2626; }
+        .status-badge.none     { background: var(--teal-lighter); color: var(--neutral); }
 
         /* ---- Shift modal ---- */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(4,32,42,0.55); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
@@ -895,6 +902,13 @@
                 </svg>
                 Job Roster
             </button>
+
+            <button type="button" class="nav-item" id="nav-certs" onclick="showSection('sec-certs', this)">
+                <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                </svg>
+                My Certifications
+            </button>
         </nav>
 
         <div class="sb-bottom">
@@ -929,6 +943,11 @@
                         <div class="stat-sub">Scheduled shifts</div>
                     </div>
                     <div class="stat-card">
+                        <div class="stat-label">Hours This Week</div>
+                        <div class="stat-value" id="stat-hours">0</div>
+                        <div class="stat-sub">Scheduled hours</div>
+                    </div>
+                    <div class="stat-card">
                         <div class="stat-label">This Month</div>
                         <div class="stat-value" id="stat-month">0</div>
                         <div class="stat-sub">Completed visits</div>
@@ -937,6 +956,11 @@
                         <div class="stat-label">Upcoming</div>
                         <div class="stat-value" id="stat-open">0</div>
                         <div class="stat-sub">Confirmed shifts</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Awaiting Response</div>
+                        <div class="stat-value" id="stat-pending">0</div>
+                        <div class="stat-sub">Shifts to accept</div>
                     </div>
                 </div>
 
@@ -1135,6 +1159,15 @@
                 <h2 class="section-h">Job Roster</h2>
                 <p class="section-desc">All shifts assigned to you. Click a row for full details.</p>
 
+                <div class="card" style="margin-bottom:1rem">
+                    <div class="card-head"><span class="card-title">Export Timesheet</span></div>
+                    <div class="card-body" style="display:flex;gap:0.85rem;align-items:flex-end;flex-wrap:wrap">
+                        <div class="pf-field"><label class="pf-label" for="ts-from">From</label><input class="pf-input" style="display:block" type="date" id="ts-from"></div>
+                        <div class="pf-field"><label class="pf-label" for="ts-to">To</label><input class="pf-input" style="display:block" type="date" id="ts-to"></div>
+                        <button class="btn-primary" type="button" onclick="exportTimesheet()">Download CSV</button>
+                    </div>
+                </div>
+
                 <div class="card">
                     <div class="card-head">
                         <span class="card-title">Shifts</span>
@@ -1147,6 +1180,20 @@
                     <div class="card-body" style="padding:0">
                         <div id="roster-list" style="padding:1.25rem"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ========== MY CERTIFICATIONS ========== -->
+            <div id="sec-certs" class="sec" style="display:none">
+                <h2 class="section-h">My Certifications</h2>
+                <p class="section-desc">Keep your CPR, first aid and licenses current. Anything expiring within 30 days is flagged.</p>
+
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Certifications</span>
+                        <button type="button" class="btn-primary" onclick="openMyCert()">+ Add</button>
+                    </div>
+                    <div class="card-body" id="my-certs-list" style="padding:1.25rem"></div>
                 </div>
             </div>
 
@@ -1163,7 +1210,46 @@
         <div class="modal-row"><span class="modal-label">Time</span><span class="modal-val" id="modal-time"></span></div>
         <div class="modal-row"><span class="modal-label">Address</span><span class="modal-val" id="modal-address"></span></div>
         <div class="modal-row"><span class="modal-label">Status</span><span class="modal-val"><span class="status-badge" id="modal-status"></span></span></div>
+        <div class="modal-row"><span class="modal-label">Your response</span><span class="modal-val"><span class="status-badge" id="modal-response"></span></span></div>
         <div class="modal-row"><span class="modal-label">Notes</span><span class="modal-val" id="modal-notes"></span></div>
+        <div class="btn-row" id="modal-actions" style="display:none;margin-top:1.1rem">
+            <button type="button" class="btn-primary" id="modal-accept" onclick="respondToShift('accepted')">Accept</button>
+            <button type="button" class="btn-secondary" id="modal-decline" onclick="respondToShift('declined')">Decline</button>
+        </div>
+        <div id="modal-resp-msg" class="alert alert-ok" style="display:none;margin-top:0.9rem"></div>
+    </div>
+</div>
+
+<!-- ========== CERTIFICATION ADD / EDIT MODAL ========== -->
+<div class="modal-overlay" id="cert-modal" onclick="closeCertModal(event)">
+    <div class="modal-box">
+        <button type="button" class="modal-close" onclick="document.getElementById('cert-modal').classList.remove('show')">&times;</button>
+        <h3 id="mc-title" style="font-size:1.15rem;font-weight:800;margin-bottom:1.1rem">Add certification</h3>
+        <form id="my-cert-form" onsubmit="saveMyCert(event)">
+            <input type="hidden" id="mc-id">
+            <div class="pf-field" style="margin-bottom:1rem">
+                <label class="pf-label" for="mc-type">Type</label>
+                <select class="pf-input" style="display:block" id="mc-type"></select>
+            </div>
+            <div class="pf-field" style="margin-bottom:1rem">
+                <label class="pf-label" for="mc-name">Detail</label>
+                <input class="pf-input" style="display:block" id="mc-name" placeholder="Issuing body, number, notes">
+            </div>
+            <div class="pf-grid">
+                <div class="pf-field">
+                    <label class="pf-label" for="mc-issued">Issued on</label>
+                    <input class="pf-input" style="display:block" type="date" id="mc-issued">
+                </div>
+                <div class="pf-field">
+                    <label class="pf-label" for="mc-expires">Expires on</label>
+                    <input class="pf-input" style="display:block" type="date" id="mc-expires">
+                </div>
+            </div>
+            <div class="btn-row" style="margin-top:1.3rem">
+                <button class="btn-primary" type="submit" id="mc-save">Save</button>
+                <button class="btn-secondary" type="button" onclick="document.getElementById('cert-modal').classList.remove('show')">Cancel</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -1181,6 +1267,21 @@ let _shifts          = [];
 let _availability    = [];
 let _scheduleCalendar = null;
 let _rosterFilter    = 'upcoming';
+let _modalShift      = null;
+let _myCerts         = [];
+
+const CERT_TYPES = ['CPR', 'First Aid', 'Nursing License', 'PSW Certificate', 'Vulnerable Sector Check', 'Other'];
+
+// Certification status keyed to a status-badge class (matches the admin portal).
+function certStatus(cert) {
+    if (!cert.expires_on) return { key: 'none', label: 'No expiry' };
+    const today = new Date(); today.setHours(0,0,0,0);
+    const exp = new Date(cert.expires_on + 'T00:00:00');
+    const days = Math.round((exp - today) / 86400000);
+    if (days < 0)   return { key: 'expired',  label: 'Expired' };
+    if (days <= 30) return { key: 'expiring', label: 'Expires in ' + days + 'd' };
+    return { key: 'valid', label: 'Valid' };
+}
 
 const SERVICE_TYPES = {
     home_care:           { label: 'Home Care',          color: '#e8383a', bg: '#fde8e8' },
@@ -1294,8 +1395,9 @@ async function loadDashboard() {
     }
 
     // Load Phase 2 data in parallel
-    await Promise.all([loadShifts(), loadAvailability()]);
+    await Promise.all([loadShifts(), loadAvailability(), loadMyCerts()]);
     updateStats();
+    initTimesheetDates();
 
     showDashboard();
 }
@@ -1474,9 +1576,12 @@ function esc(value) {
 // ============================================================
 
 async function loadShifts() {
+    // shifts.employee_id now references employees.id (not auth.users.id), so we
+    // filter by the roster row id captured during loadDashboard.
+    if (!_profile || !_profile.id) { _shifts = []; return; }
     try {
         const { data } = await sb.from('shifts').select('*')
-            .eq('employee_id', _user.id).order('start_at', { ascending: true });
+            .eq('employee_id', _profile.id).order('start_at', { ascending: true });
         _shifts = data || [];
     } catch(e) { _shifts = []; }
 }
@@ -1497,13 +1602,18 @@ function updateStats() {
     const moStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const moEnd   = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
-    const weekCount  = _shifts.filter(s => { const d = new Date(s.start_at); return d >= wkStart && d < wkEnd && s.status !== 'cancelled'; }).length;
+    const weekShifts = _shifts.filter(s => { const d = new Date(s.start_at); return d >= wkStart && d < wkEnd && s.status !== 'cancelled'; });
+    const weekCount  = weekShifts.length;
+    const weekHours  = weekShifts.reduce((sum, s) => sum + Math.max(0, (new Date(s.end_at) - new Date(s.start_at)) / 3600000), 0);
     const moComplete = _shifts.filter(s => { const d = new Date(s.start_at); return d >= moStart && d < moEnd && s.status === 'completed'; }).length;
     const upcoming   = _shifts.filter(s => new Date(s.start_at) >= now && s.status !== 'cancelled').length;
+    const pending    = _shifts.filter(s => new Date(s.start_at) >= now && s.status === 'scheduled' && (s.employee_response || 'pending') === 'pending').length;
 
-    const wv = document.getElementById('stat-week');  if (wv) wv.textContent = weekCount;
-    const mv = document.getElementById('stat-month'); if (mv) mv.textContent = moComplete;
-    const ov = document.getElementById('stat-open');  if (ov) ov.textContent = upcoming;
+    const wv = document.getElementById('stat-week');    if (wv) wv.textContent = weekCount;
+    const hv = document.getElementById('stat-hours');   if (hv) hv.textContent = weekHours.toFixed(1);
+    const mv = document.getElementById('stat-month');   if (mv) mv.textContent = moComplete;
+    const ov = document.getElementById('stat-open');    if (ov) ov.textContent = upcoming;
+    const pv = document.getElementById('stat-pending'); if (pv) pv.textContent = pending;
 
     const upcomingEl = document.getElementById('upcoming-list');
     if (!upcomingEl) return;
@@ -1554,6 +1664,7 @@ function initScheduleCalendar() {
 
 // ---- Shift detail modal ----
 function showShiftModal(s) {
+    _modalShift = s;
     const st  = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
     const fmt = d => new Date(d).toLocaleString('en-CA', { weekday:'short', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
     const tag = document.getElementById('modal-title');
@@ -1561,13 +1672,55 @@ function showShiftModal(s) {
     tag.style.background = st.bg;
     tag.style.color      = st.color;
     document.getElementById('modal-client').textContent  = s.client_name;
-    document.getElementById('modal-time').textContent    = `${fmt(s.start_at)} — ${fmt(s.end_at)}`;
+    document.getElementById('modal-time').textContent    = `${fmt(s.start_at)} to ${fmt(s.end_at)}`;
     document.getElementById('modal-address').textContent = s.address || 'Not specified';
     document.getElementById('modal-notes').textContent   = s.notes   || 'None';
     const badge = document.getElementById('modal-status');
     badge.textContent = capitalise(s.status);
     badge.className   = `status-badge ${s.status}`;
+
+    const resp = s.employee_response || 'pending';
+    const respBadge = document.getElementById('modal-response');
+    respBadge.textContent = capitalise(resp);
+    respBadge.className    = `status-badge ${resp}`;
+
+    // Offer Accept/Decline only for an upcoming, still-scheduled shift.
+    const canRespond = s.status === 'scheduled' && new Date(s.start_at) >= new Date();
+    document.getElementById('modal-actions').style.display = canRespond ? 'flex' : 'none';
+    const msg = document.getElementById('modal-resp-msg');
+    msg.style.display = 'none'; msg.classList.remove('show');
+
     document.getElementById('shift-modal').classList.add('show');
+}
+
+async function respondToShift(response) {
+    if (!_modalShift) return;
+    const accept = document.getElementById('modal-accept');
+    const decline = document.getElementById('modal-decline');
+    accept.disabled = true; decline.disabled = true;
+    try {
+        const { error } = await sb.rpc('respond_to_shift', { p_shift_id: _modalShift.id, p_response: response });
+        if (error) throw error;
+        // Reflect locally without a full reload.
+        _modalShift.employee_response = response;
+        const local = _shifts.find(x => x.id === _modalShift.id);
+        if (local) local.employee_response = response;
+
+        const respBadge = document.getElementById('modal-response');
+        respBadge.textContent = capitalise(response);
+        respBadge.className    = `status-badge ${response}`;
+        document.getElementById('modal-actions').style.display = 'none';
+        const msg = document.getElementById('modal-resp-msg');
+        msg.textContent = response === 'accepted' ? 'Shift accepted. Thank you!' : 'Shift declined. The team has been notified.';
+        msg.style.display = 'block'; msg.classList.add('show');
+
+        updateStats();
+        renderRoster();
+    } catch (err) {
+        alert('Could not save your response. Please try again.');
+    } finally {
+        accept.disabled = false; decline.disabled = false;
+    }
 }
 
 function closeShiftModal(e) {
@@ -1657,7 +1810,7 @@ function renderRoster() {
         return;
     }
     list.innerHTML = `<table class="roster-table">
-        <thead><tr><th>Date &amp; Time</th><th>Client</th><th>Service</th><th>Address</th><th>Status</th></tr></thead>
+        <thead><tr><th>Date &amp; Time</th><th>Client</th><th>Service</th><th>Address</th><th>Status</th><th>Response</th></tr></thead>
         <tbody>${rows.map(s => {
             const st    = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
             const start = new Date(s.start_at), end = new Date(s.end_at);
@@ -1669,6 +1822,7 @@ function renderRoster() {
                 <td><span class="svc-pill" style="background:${st.bg};color:${st.color}">${st.label}</span></td>
                 <td class="roster-addr">${s.address ? esc(s.address) : '&mdash;'}</td>
                 <td><span class="status-badge ${s.status}">${capitalise(s.status)}</span></td>
+                <td><span class="status-badge ${s.employee_response || 'pending'}">${capitalise(s.employee_response || 'pending')}</span></td>
             </tr>`;
         }).join('')}</tbody>
     </table>`;
@@ -1684,6 +1838,156 @@ function filterRoster(filter, btn) {
 function onRosterRowClick(el) {
     const s = _shifts.find(x => x.id === el.dataset.sid);
     if (s) showShiftModal(s);
+}
+
+// ---- Timesheet CSV export (this employee's own shifts) ----
+function tsDateInput(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function initTimesheetDates() {
+    const now = new Date();
+    const first = new Date(now.getFullYear(), now.getMonth(), 1);
+    const fromEl = document.getElementById('ts-from');
+    const toEl   = document.getElementById('ts-to');
+    if (fromEl && !fromEl.value) fromEl.value = tsDateInput(first);
+    if (toEl   && !toEl.value)   toEl.value   = tsDateInput(now);
+}
+function tsCsvCell(v) { const s = String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s; }
+
+function exportTimesheet() {
+    const fromVal = document.getElementById('ts-from').value;
+    const toVal   = document.getElementById('ts-to').value;
+    if (!fromVal || !toVal) { alert('Pick both a start and end date.'); return; }
+    const from = new Date(fromVal + 'T00:00:00');
+    const to   = new Date(toVal + 'T23:59:59');
+    if (to < from) { alert('The end date is before the start date.'); return; }
+
+    const rows = _shifts.filter(s => {
+        if (s.status === 'cancelled') return false;
+        const d = new Date(s.start_at);
+        return d >= from && d <= to;
+    }).sort((a, b) => new Date(a.start_at) - new Date(b.start_at));
+
+    if (!rows.length) { alert('No shifts found in that date range.'); return; }
+
+    const out = [['Date', 'Client', 'Service', 'Start', 'End', 'Hours', 'Status']];
+    let totalHours = 0;
+    rows.forEach(s => {
+        const start = new Date(s.start_at), end = new Date(s.end_at);
+        const hours = Math.max(0, (end - start) / 3600000);
+        totalHours += hours;
+        const st = SERVICE_TYPES[s.service_type] || SERVICE_TYPES.home_care;
+        out.push([
+            start.toLocaleDateString('en-CA'),
+            s.client_name,
+            st.label,
+            start.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }),
+            end.toLocaleTimeString('en-CA', { hour:'2-digit', minute:'2-digit' }),
+            hours.toFixed(2),
+            capitalise(s.status),
+        ]);
+    });
+    out.push(['Total', '', '', '', '', totalHours.toFixed(2), '']);
+
+    const csv = out.map(r => r.map(tsCsvCell).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const who = _profile ? (_profile.first_name + '-' + _profile.last_name) : 'me';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'timesheet-' + who + '-' + fromVal + '-to-' + toVal + '.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// ---- My certifications ----
+async function loadMyCerts() {
+    if (!_profile || !_profile.id) { _myCerts = []; renderMyCerts(); return; }
+    try {
+        const { data } = await sb.from('certifications').select('*').eq('employee_id', _profile.id);
+        _myCerts = data || [];
+    } catch (e) { _myCerts = []; }
+    renderMyCerts();
+}
+
+function fmtCertDate(d) { return d ? new Date(d + 'T00:00:00').toLocaleDateString('en-CA', { year:'numeric', month:'short', day:'numeric' }) : '-'; }
+
+function renderMyCerts() {
+    const el = document.getElementById('my-certs-list');
+    if (!el) return;
+    if (!_myCerts.length) {
+        el.innerHTML = `<div class="empty"><div class="empty-icon">&#128737;</div><div class="empty-title">No certifications yet</div><div class="empty-desc">Add your CPR, first aid or license details so the team has them on file</div></div>`;
+        return;
+    }
+    const order = { expired: 0, expiring: 1, valid: 2, none: 3 };
+    const rows = _myCerts.slice().sort((a, b) => order[certStatus(a).key] - order[certStatus(b).key]);
+    el.innerHTML = `<table class="roster-table">
+        <thead><tr><th>Type</th><th>Detail</th><th>Issued</th><th>Expires</th><th>Status</th><th></th></tr></thead>
+        <tbody>${rows.map(c => {
+            const st = certStatus(c);
+            return `<tr>
+                <td><strong>${esc(c.type)}</strong></td>
+                <td>${c.name ? esc(c.name) : '-'}</td>
+                <td>${fmtCertDate(c.issued_on)}</td>
+                <td>${fmtCertDate(c.expires_on)}</td>
+                <td><span class="status-badge ${st.key}">${esc(st.label)}</span></td>
+                <td style="text-align:right;white-space:nowrap">
+                    <button type="button" class="btn-secondary" style="padding:0.3rem 0.7rem;margin-right:0.35rem" onclick="openMyCert('${c.id}')">Edit</button>
+                    <button type="button" class="btn-secondary" style="padding:0.3rem 0.7rem" onclick="deleteMyCert('${c.id}')">Delete</button>
+                </td>
+            </tr>`;
+        }).join('')}</tbody>
+    </table>`;
+}
+
+function openMyCert(id) {
+    document.getElementById('my-cert-form').reset();
+    document.getElementById('mc-type').innerHTML = CERT_TYPES.map(t => `<option value="${t}">${t}</option>`).join('');
+    const cert = id ? _myCerts.find(c => c.id === id) : null;
+    document.getElementById('mc-id').value = cert ? cert.id : '';
+    document.getElementById('mc-title').textContent = cert ? 'Edit certification' : 'Add certification';
+    if (cert) {
+        document.getElementById('mc-type').value    = CERT_TYPES.includes(cert.type) ? cert.type : 'Other';
+        document.getElementById('mc-name').value    = cert.name || '';
+        document.getElementById('mc-issued').value  = cert.issued_on || '';
+        document.getElementById('mc-expires').value = cert.expires_on || '';
+    }
+    document.getElementById('cert-modal').classList.add('show');
+}
+
+function closeCertModal(e) {
+    if (e.target === document.getElementById('cert-modal')) document.getElementById('cert-modal').classList.remove('show');
+}
+
+async function saveMyCert(e) {
+    e.preventDefault();
+    if (!_profile || !_profile.id) { alert('Please complete your profile before adding certifications.'); return; }
+    const btn = document.getElementById('mc-save');
+    btn.disabled = true; btn.textContent = 'Saving...';
+    const id = document.getElementById('mc-id').value;
+    const row = {
+        employee_id: _profile.id,
+        type:        document.getElementById('mc-type').value,
+        name:        document.getElementById('mc-name').value.trim() || null,
+        issued_on:   document.getElementById('mc-issued').value || null,
+        expires_on:  document.getElementById('mc-expires').value || null,
+    };
+    let error;
+    if (id) ({ error } = await sb.from('certifications').update(row).eq('id', id));
+    else    ({ error } = await sb.from('certifications').insert(row));
+    btn.disabled = false; btn.textContent = 'Save';
+    if (error) { alert('Could not save. Please try again.'); return; }
+    document.getElementById('cert-modal').classList.remove('show');
+    await loadMyCerts();
+}
+
+async function deleteMyCert(id) {
+    const cert = _myCerts.find(c => c.id === id);
+    if (!cert) return;
+    if (!confirm('Delete your ' + cert.type + ' certification?')) return;
+    const { error } = await sb.from('certifications').delete().eq('id', id);
+    if (error) { alert('Could not delete. Please try again.'); return; }
+    await loadMyCerts();
 }
 </script>
 </body>

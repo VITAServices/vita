@@ -173,6 +173,15 @@
         .badge.converted, .badge.active { background: rgba(92,191,58,0.16); color: var(--vita-green-dark, #48a82e); }
         .badge.lost, .badge.closed, .badge.inactive { background: rgba(90,115,128,0.12); color: var(--neutral); }
         .badge.paused { background: rgba(232,56,58,0.1); color: var(--vita-red); }
+        .badge.scheduled { background: rgba(0,104,129,0.12); color: var(--teal); }
+        .badge.completed { background: rgba(92,191,58,0.16); color: #48a82e; }
+        .badge.cancelled { background: rgba(90,115,128,0.12); color: var(--neutral); }
+        .badge.accepted { background: rgba(92,191,58,0.16); color: #48a82e; }
+        .badge.declined { background: rgba(232,56,58,0.1); color: var(--vita-red); }
+        .badge.valid    { background: rgba(92,191,58,0.16); color: #48a82e; }
+        .badge.expiring { background: rgba(224,150,47,0.18); color: #b45309; }
+        .badge.expired  { background: rgba(232,56,58,0.12); color: var(--vita-red); }
+        .badge.none     { background: rgba(90,115,128,0.12); color: var(--neutral); }
         .empty { padding: 2.5rem; text-align: center; color: var(--neutral); font-size: 0.9rem; }
         .row-actions button {
             background: transparent;
@@ -198,6 +207,115 @@
         }
         .panel-head h2 { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; }
         .panel-head p { font-size: 0.85rem; color: var(--neutral); }
+
+        /* ---- FORM CONTROLS (shared) ---- */
+        .field select, .field textarea {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border: 1.5px solid var(--teal-light);
+            border-radius: 10px;
+            font-family: 'Figtree', sans-serif;
+            font-size: 0.95rem;
+            color: var(--teal-dark);
+            background: var(--white);
+        }
+        .field textarea { resize: vertical; min-height: 70px; line-height: 1.5; }
+        .field select:focus, .field textarea:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,104,129,0.12); }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+        @media (max-width: 480px) { .field-row { grid-template-columns: 1fr; } }
+
+        /* ---- DASHBOARD KPIs ---- */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+        .kpi-card {
+            background: var(--white);
+            border-radius: 14px;
+            box-shadow: var(--shadow-sm);
+            padding: 1.4rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid var(--teal);
+        }
+        .kpi-card.green  { border-left-color: var(--vita-green); }
+        .kpi-card.amber  { border-left-color: #e0962f; }
+        .kpi-card.red    { border-left-color: var(--vita-red); }
+        .kpi-value { font-size: 2.4rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--teal-dark); }
+        .kpi-label { font-size: 0.85rem; font-weight: 700; margin-top: 0.55rem; color: var(--teal-dark); }
+        .kpi-sub   { font-size: 0.76rem; color: var(--neutral); margin-top: 0.2rem; }
+
+        /* ---- VIEW TOGGLE ---- */
+        .view-toggle { display: inline-flex; background: var(--teal-lighter); border-radius: 9px; padding: 3px; gap: 2px; }
+        .toggle-btn {
+            border: none; background: transparent; cursor: pointer;
+            font-family: 'Figtree', sans-serif; font-size: 0.78rem; font-weight: 700;
+            color: var(--neutral); padding: 0.4rem 0.85rem; border-radius: 7px;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .toggle-btn.active { background: var(--white); color: var(--teal-dark); box-shadow: var(--shadow-sm); }
+
+        /* ---- KANBAN BOARD ---- */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.9rem;
+            align-items: start;
+        }
+        @media (max-width: 900px) { .board { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px) { .board { grid-template-columns: 1fr; } }
+        .board-col {
+            background: rgba(211,225,233,0.4);
+            border-radius: 14px;
+            padding: 0.85rem;
+            min-height: 140px;
+            transition: background 0.15s ease, outline 0.15s ease;
+            outline: 2px dashed transparent;
+            outline-offset: -2px;
+        }
+        .board-col.drag-over { background: var(--teal-lighter); outline-color: var(--teal); }
+        .board-col-head {
+            display: flex; align-items: center; justify-content: space-between;
+            font-size: 0.74rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.06em; color: var(--neutral); padding: 0.2rem 0.4rem 0.7rem;
+        }
+        .board-count {
+            background: var(--white); color: var(--teal-dark);
+            border-radius: 999px; padding: 0.05rem 0.5rem; font-size: 0.72rem; font-weight: 800;
+        }
+        .lead-card {
+            background: var(--white);
+            border-radius: 11px;
+            box-shadow: var(--shadow-sm);
+            padding: 0.8rem 0.9rem;
+            margin-bottom: 0.7rem;
+            cursor: grab;
+            border-left: 3px solid var(--teal);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+        }
+        .lead-card:last-child { margin-bottom: 0; }
+        .lead-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .lead-card:active { cursor: grabbing; }
+        .lead-card.dragging { opacity: 0.45; }
+        .lead-card.job { border-left-color: var(--vita-green); }
+        .lead-card .lc-name { font-weight: 700; font-size: 0.9rem; }
+        .lead-card .lc-meta { font-size: 0.76rem; color: var(--neutral); margin-top: 0.25rem; }
+        .lead-card .lc-source { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--teal); margin-top: 0.4rem; }
+        .lead-card.job .lc-source { color: var(--vita-green); }
+        .board-empty { font-size: 0.78rem; color: var(--neutral); text-align: center; padding: 1rem 0; opacity: 0.7; }
+
+        /* ---- PAYROLL ---- */
+        .payroll-controls {
+            display: flex; align-items: flex-end; gap: 0.9rem; flex-wrap: wrap;
+            background: var(--white); border-radius: 14px; box-shadow: var(--shadow-sm);
+            padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
+        }
+        .payroll-controls .field { margin-bottom: 0; }
+        .payroll-controls .field input { padding: 0.6rem 0.75rem; }
+        tbody td.num, thead th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        tfoot td { padding: 0.9rem 1.1rem; font-weight: 800; border-top: 2px solid var(--teal-light); }
 
         .modal-overlay {
             display: none;
@@ -253,21 +371,94 @@
         </div>
     </div>
     <div class="tabs">
-        <button class="tab active" data-tab="leads">Leads</button>
+        <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="leads">Leads</button>
         <button class="tab" data-tab="accounts">Accounts</button>
         <button class="tab" data-tab="employees">Employees</button>
+        <button class="tab" data-tab="certifications">Certifications</button>
+        <button class="tab" data-tab="shifts">Shifts</button>
+        <button class="tab" data-tab="payroll">Payroll</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="panel active" id="panel-dashboard">
+        <div class="panel-head">
+            <div>
+                <h2>Dashboard</h2>
+                <p>A one-glance view of the business right now.</p>
+            </div>
+            <button class="btn-ghost-sm" id="refreshDashboard">Refresh</button>
+        </div>
+        <div class="kpi-grid">
+            <div class="kpi-card green">
+                <div class="kpi-value" id="kpiClients">0</div>
+                <div class="kpi-label">Active clients</div>
+                <div class="kpi-sub">Accounts marked active</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value" id="kpiShifts">0</div>
+                <div class="kpi-label">Shifts this week</div>
+                <div class="kpi-sub" id="kpiShiftsSub">Sun to Sat</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-value" id="kpiLeads">0</div>
+                <div class="kpi-label">Open leads</div>
+                <div class="kpi-sub">New + contacted</div>
+            </div>
+            <div class="kpi-card red">
+                <div class="kpi-value" id="kpiDuty">0</div>
+                <div class="kpi-label">Employees on duty today</div>
+                <div class="kpi-sub" id="kpiDutySub">Unique staff with a shift today</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-value" id="kpiCerts">0</div>
+                <div class="kpi-label">Certifications to renew</div>
+                <div class="kpi-sub">Expired or within 30 days</div>
+            </div>
+        </div>
     </div>
 
     <!-- LEADS -->
-    <div class="panel active" id="panel-leads">
+    <div class="panel" id="panel-leads">
         <div class="panel-head">
             <div>
                 <h2>Incoming leads</h2>
-                <p>New care requests and job applications, captured automatically from the website.</p>
+                <p>Drag a card between columns to update its status. Care requests dropped on Converted open the account form.</p>
             </div>
-            <button class="btn-ghost-sm" id="refreshLeads">Refresh</button>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <div class="view-toggle" id="leadsViewToggle">
+                    <button class="toggle-btn active" data-view="board">Board</button>
+                    <button class="toggle-btn" data-view="table">Table</button>
+                </div>
+                <button class="btn-ghost-sm" id="refreshLeads">Refresh</button>
+                <button class="btn" style="width:auto;" id="addLeadBtn">+ Add lead</button>
+            </div>
         </div>
-        <div class="card">
+
+        <!-- BOARD VIEW -->
+        <div id="leadsBoardView">
+            <div class="board" id="leadsBoard">
+                <div class="board-col" data-status="new">
+                    <div class="board-col-head"><span>New</span><span class="board-count" data-count="new">0</span></div>
+                    <div class="board-col-body" data-status="new"></div>
+                </div>
+                <div class="board-col" data-status="contacted">
+                    <div class="board-col-head"><span>Contacted</span><span class="board-count" data-count="contacted">0</span></div>
+                    <div class="board-col-body" data-status="contacted"></div>
+                </div>
+                <div class="board-col" data-status="converted">
+                    <div class="board-col-head"><span>Converted</span><span class="board-count" data-count="converted">0</span></div>
+                    <div class="board-col-body" data-status="converted"></div>
+                </div>
+                <div class="board-col" data-status="lost">
+                    <div class="board-col-head"><span>Lost</span><span class="board-count" data-count="lost">0</span></div>
+                    <div class="board-col-body" data-status="lost"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE VIEW -->
+        <div class="card" id="leadsTableView" style="display:none;">
             <table>
                 <thead>
                     <tr><th>Name</th><th>Source</th><th>Contact</th><th>Status</th><th>Received</th><th>Actions</th></tr>
@@ -285,12 +476,15 @@
                 <h2>Client accounts</h2>
                 <p>Confirmed clients, ready to be matched and booked with employees.</p>
             </div>
-            <button class="btn-ghost-sm" id="refreshAccounts">Refresh</button>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <button class="btn-ghost-sm" id="refreshAccounts">Refresh</button>
+                <button class="btn" style="width:auto;" id="addAccountBtn">+ Add account</button>
+            </div>
         </div>
         <div class="card">
             <table>
                 <thead>
-                    <tr><th>Name</th><th>Contact</th><th>Address</th><th>Status</th><th>Added</th></tr>
+                    <tr><th>Name</th><th>Contact</th><th>Address</th><th>Status</th><th>Added</th><th>Actions</th></tr>
                 </thead>
                 <tbody id="accountsBody"></tbody>
             </table>
@@ -310,11 +504,83 @@
         <div class="card">
             <table>
                 <thead>
-                    <tr><th>Name</th><th>Contact</th><th>Role</th><th>Status</th><th>Added</th></tr>
+                    <tr><th>Name</th><th>Contact</th><th>Role</th><th>Status</th><th>Added</th><th>Actions</th></tr>
                 </thead>
                 <tbody id="employeesBody"></tbody>
             </table>
             <div class="empty" id="employeesEmpty" style="display:none;">No employees added yet.</div>
+        </div>
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div class="panel" id="panel-certifications">
+        <div class="panel-head">
+            <div>
+                <h2>Certifications</h2>
+                <p>Track CPR, first aid, nursing licenses and more. Rows expiring within 30 days or already expired are highlighted.</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <button class="btn-ghost-sm" id="refreshCerts">Refresh</button>
+                <button class="btn" style="width:auto;" id="addCertBtn">+ Add certification</button>
+            </div>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr><th>Employee</th><th>Type</th><th>Detail</th><th>Issued</th><th>Expires</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="certsBody"></tbody>
+            </table>
+            <div class="empty" id="certsEmpty" style="display:none;">No certifications recorded yet. Use “Add certification” to start tracking.</div>
+        </div>
+    </div>
+
+    <!-- SHIFTS -->
+    <div class="panel" id="panel-shifts">
+        <div class="panel-head">
+            <div>
+                <h2>Shifts</h2>
+                <p>Assign employees to clients. Assigned shifts appear in the employee's portal automatically.</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+                <button class="btn-ghost-sm" id="refreshShifts">Refresh</button>
+                <button class="btn" style="width:auto;" id="assignShiftBtn">+ Assign shift</button>
+            </div>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr><th>Employee</th><th>Client</th><th>Service</th><th>When</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody id="shiftsBody"></tbody>
+            </table>
+            <div class="empty" id="shiftsEmpty" style="display:none;">No shifts scheduled yet. Use the Assign shift button to create one.</div>
+        </div>
+    </div>
+
+    <!-- PAYROLL -->
+    <div class="panel" id="panel-payroll">
+        <div class="panel-head">
+            <div>
+                <h2>Payroll export</h2>
+                <p>Total shift hours per employee for a pay period. Hours only; pay rates aren't stored.</p>
+            </div>
+        </div>
+        <div class="payroll-controls">
+            <div class="field"><label for="payFrom">From</label><input type="date" id="payFrom"></div>
+            <div class="field"><label for="payTo">To</label><input type="date" id="payTo"></div>
+            <button class="btn" style="width:auto;" id="payRun">Calculate</button>
+            <button class="btn-ghost-sm" id="payExport" disabled>Download CSV</button>
+        </div>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr><th>Employee</th><th class="num">Shifts</th><th class="num">Total hours</th></tr>
+                </thead>
+                <tbody id="payrollBody"></tbody>
+                <tfoot id="payrollFoot"></tfoot>
+            </table>
+            <div class="empty" id="payrollEmpty">Pick a date range and select “Calculate” to see hours.</div>
         </div>
     </div>
 </div>
@@ -356,6 +622,140 @@
     </div>
 </div>
 
+<!-- ADD LEAD MODAL -->
+<div class="modal-overlay" id="leadModal">
+    <div class="modal-box">
+        <h3>Add lead</h3>
+        <form id="leadForm">
+            <div class="field-row">
+                <div class="field"><label>First name</label><input type="text" id="lFirst" required></div>
+                <div class="field"><label>Last name</label><input type="text" id="lLast" required></div>
+            </div>
+            <div class="field"><label>Email</label><input type="email" id="lEmail" required></div>
+            <div class="field"><label>Phone</label><input type="text" id="lPhone" required></div>
+            <div class="field">
+                <label>Source</label>
+                <select id="lSource">
+                    <option value="care_request">Care request</option>
+                    <option value="job_application">Job application</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Status</label>
+                <select id="lStatus">
+                    <option value="new">New</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="lost">Lost</option>
+                </select>
+            </div>
+            <div id="leadMsg"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn-ghost-sm" id="leadCancel">Cancel</button>
+                <button type="submit" class="btn">Add lead</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ADD ACCOUNT MODAL -->
+<div class="modal-overlay" id="accountModal">
+    <div class="modal-box">
+        <h3>Add client account</h3>
+        <form id="accountForm">
+            <div class="field-row">
+                <div class="field"><label>First name</label><input type="text" id="aFirst" required></div>
+                <div class="field"><label>Last name</label><input type="text" id="aLast" required></div>
+            </div>
+            <div class="field"><label>Email</label><input type="email" id="aEmail"></div>
+            <div class="field"><label>Phone</label><input type="text" id="aPhone"></div>
+            <div class="field"><label>Address</label><input type="text" id="aAddress"></div>
+            <div class="field">
+                <label>Status</label>
+                <select id="aStatus">
+                    <option value="active">Active</option>
+                    <option value="paused">Paused</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+            <div id="accountMsg"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn-ghost-sm" id="accountCancel">Cancel</button>
+                <button type="submit" class="btn">Add account</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ASSIGN SHIFT MODAL -->
+<div class="modal-overlay" id="shiftModal">
+    <div class="modal-box">
+        <h3>Assign shift</h3>
+        <form id="shiftForm">
+            <div class="field">
+                <label>Employee</label>
+                <select id="sEmployee" required></select>
+            </div>
+            <div class="field">
+                <label>Client</label>
+                <select id="sClient"></select>
+            </div>
+            <div class="field" id="sClientCustomWrap" style="display:none;">
+                <label>Client name</label>
+                <input type="text" id="sClientCustom" placeholder="Type a client name">
+            </div>
+            <div class="field">
+                <label>Service type</label>
+                <select id="sService">
+                    <option value="home_care">Home care</option>
+                    <option value="personal_care">Personal care</option>
+                    <option value="companionship">Companionship</option>
+                    <option value="respite">Respite care</option>
+                    <option value="nursing">Nursing</option>
+                </select>
+            </div>
+            <div class="field-row">
+                <div class="field"><label>Start</label><input type="datetime-local" id="sStart" required></div>
+                <div class="field"><label>End</label><input type="datetime-local" id="sEnd" required></div>
+            </div>
+            <div class="field"><label>Address</label><input type="text" id="sAddress" placeholder="Optional"></div>
+            <div class="field"><label>Notes</label><textarea id="sNotes" placeholder="Optional"></textarea></div>
+            <div id="shiftMsg"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn-ghost-sm" id="shiftCancel">Cancel</button>
+                <button type="submit" class="btn">Create shift</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ADD / EDIT CERTIFICATION MODAL -->
+<div class="modal-overlay" id="certModal">
+    <div class="modal-box">
+        <h3 id="certModalTitle">Add certification</h3>
+        <form id="certForm">
+            <input type="hidden" id="certId">
+            <div class="field">
+                <label>Employee</label>
+                <select id="certEmployee" required></select>
+            </div>
+            <div class="field">
+                <label>Type</label>
+                <select id="certType" required></select>
+            </div>
+            <div class="field"><label>Detail (issuing body, number, notes)</label><input type="text" id="certName" placeholder="Optional"></div>
+            <div class="field-row">
+                <div class="field"><label>Issued on</label><input type="date" id="certIssued"></div>
+                <div class="field"><label>Expires on</label><input type="date" id="certExpires"></div>
+            </div>
+            <div id="certMsg"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn-ghost-sm" id="certCancel">Cancel</button>
+                <button type="submit" class="btn">Save certification</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
     // ---- Supabase config ----
     // The anon key is safe to expose publicly -- Row Level Security on the
@@ -364,6 +764,31 @@
     const SUPABASE_URL = 'https://jeubjslsrnccdqjmlmsf.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpldWJqc2xzcm5jY2Rxam1sbXNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMjQ3MTEsImV4cCI6MjA5NjgwMDcxMX0.NomUSjFMbOhh93qdbG6op5VLReaUSBoqMNoqksmxGdA';
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ---- Shared in-memory caches (populated by the load* functions) ----
+    let _leads = [], _accounts = [], _employees = [], _shifts = [], _payrollRows = [], _certifications = [];
+
+    const CERT_TYPES = ['CPR', 'First Aid', 'Nursing License', 'PSW Certificate', 'Vulnerable Sector Check', 'Other'];
+
+    // Shared certification status: returns {key, label} keyed to a badge class.
+    function certStatus(cert) {
+        if (!cert.expires_on) return { key: 'none', label: 'No expiry' };
+        const today = new Date(); today.setHours(0,0,0,0);
+        const exp = new Date(cert.expires_on + 'T00:00:00');
+        const days = Math.round((exp - today) / 86400000);
+        if (days < 0)  return { key: 'expired',  label: 'Expired' };
+        if (days <= 30) return { key: 'expiring', label: 'Expires in ' + days + 'd' };
+        return { key: 'valid', label: 'Valid' };
+    }
+
+    // Service-type labels mirror the employee portal so shift cards read the same.
+    const SERVICE_LABELS = {
+        home_care: 'Home care',
+        personal_care: 'Personal care',
+        companionship: 'Companionship',
+        respite: 'Respite care',
+        nursing: 'Nursing',
+    };
 
     const loginScreen = document.getElementById('loginScreen');
     const app = document.getElementById('app');
@@ -437,12 +862,14 @@
         loginBtn.disabled = false;
     });
 
-    function enterApp() {
+    async function enterApp() {
         loginScreen.style.display = 'none';
         app.classList.add('show');
-        loadLeads();
-        loadAccounts();
-        loadEmployees();
+        // Accounts and employees first; the dashboard and shift modal depend on them.
+        await Promise.all([loadLeads(), loadAccounts(), loadEmployees()]);
+        await Promise.all([loadShifts(), loadCertifications()]);
+        loadDashboard();
+        initPayrollDates();
     }
 
     // Restore session on reload
@@ -469,16 +896,19 @@
 
     // ---- LEADS ----
     async function loadLeads() {
+        const { data, error } = await sb.from('leads').select('*').order('created_at', { ascending: false });
+        _leads = (error || !data) ? [] : data;
+        renderLeadsTable();
+        renderLeadsBoard();
+    }
+
+    function renderLeadsTable() {
         const body = document.getElementById('leadsBody');
         const empty = document.getElementById('leadsEmpty');
-        const { data, error } = await sb.from('leads').select('*').order('created_at', { ascending: false });
         body.innerHTML = '';
-        if (error || !data || !data.length) {
-            empty.style.display = 'block';
-            return;
-        }
+        if (!_leads.length) { empty.style.display = 'block'; return; }
         empty.style.display = 'none';
-        data.forEach(function (lead) {
+        _leads.forEach(function (lead) {
             const tr = document.createElement('tr');
             tr.innerHTML =
                 '<td><strong>' + esc(lead.first_name) + ' ' + esc(lead.last_name) + '</strong></td>' +
@@ -490,35 +920,151 @@
                     (lead.status === 'new' ? '<button data-action="contacted" data-id="' + esc(lead.id) + '">Mark contacted</button>' : '') +
                     (lead.status !== 'converted' && lead.source === 'care_request' ? '<button data-action="convert" data-id="' + esc(lead.id) + '" data-first="' + esc(lead.first_name) + '" data-last="' + esc(lead.last_name) + '" data-email="' + esc(lead.email) + '" data-phone="' + esc(lead.phone) + '">Convert to account</button>' : '') +
                     (lead.status !== 'lost' && lead.status !== 'converted' ? '<button data-action="lost" data-id="' + esc(lead.id) + '">Mark lost</button>' : '') +
+                    '<button data-action="delete" data-id="' + esc(lead.id) + '">Delete</button>' +
                 '</td>';
             body.appendChild(tr);
         });
     }
+
+    // ---- LEADS KANBAN ----
+    const LEAD_STATUSES = ['new', 'contacted', 'converted', 'lost'];
+
+    function renderLeadsBoard() {
+        LEAD_STATUSES.forEach(function (status) {
+            const col = document.querySelector('.board-col-body[data-status="' + status + '"]');
+            const rows = _leads.filter(l => l.status === status);
+            document.querySelector('.board-count[data-count="' + status + '"]').textContent = rows.length;
+            col.innerHTML = '';
+            if (!rows.length) {
+                col.innerHTML = '<div class="board-empty">Empty</div>';
+                return;
+            }
+            rows.forEach(function (lead) {
+                const card = document.createElement('div');
+                card.className = 'lead-card' + (lead.source === 'job_application' ? ' job' : '');
+                card.draggable = true;
+                card.dataset.id = lead.id;
+                card.innerHTML =
+                    '<div class="lc-name">' + esc(lead.first_name) + ' ' + esc(lead.last_name) + '</div>' +
+                    '<div class="lc-meta">' + esc(lead.email || lead.phone || '') + '</div>' +
+                    '<div class="lc-source">' + (lead.source === 'care_request' ? 'Care request' : 'Job application') + '</div>';
+                col.appendChild(card);
+            });
+        });
+    }
+
+    let _dragLeadId = null;
+    const leadsBoard = document.getElementById('leadsBoard');
+
+    leadsBoard.addEventListener('dragstart', function (e) {
+        const card = e.target.closest('.lead-card');
+        if (!card) return;
+        _dragLeadId = card.dataset.id;
+        card.classList.add('dragging');
+    });
+    leadsBoard.addEventListener('dragend', function (e) {
+        const card = e.target.closest('.lead-card');
+        if (card) card.classList.remove('dragging');
+        document.querySelectorAll('.board-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+    });
+    leadsBoard.querySelectorAll('.board-col').forEach(function (col) {
+        col.addEventListener('dragover', function (e) { e.preventDefault(); col.classList.add('drag-over'); });
+        col.addEventListener('dragleave', function () { col.classList.remove('drag-over'); });
+        col.addEventListener('drop', function (e) {
+            e.preventDefault();
+            col.classList.remove('drag-over');
+            const newStatus = col.dataset.status;
+            const lead = _leads.find(l => l.id === _dragLeadId);
+            _dragLeadId = null;
+            if (!lead || lead.status === newStatus) return;
+            handleLeadStatusChange(lead, newStatus);
+        });
+    });
+
+    // Centralised status change so the board, table and convert flow stay in sync.
+    async function handleLeadStatusChange(lead, newStatus) {
+        if (newStatus === 'converted') {
+            if (lead.source !== 'care_request') {
+                alert('Only care requests can become client accounts.');
+                return;
+            }
+            openConvertModal(lead);   // status flips to converted when the account is created
+            return;
+        }
+        await sb.from('leads').update({ status: newStatus }).eq('id', lead.id);
+        await loadLeads();
+        loadDashboard();
+    }
+
+    // ---- Leads view toggle ----
+    document.getElementById('leadsViewToggle').addEventListener('click', function (e) {
+        const btn = e.target.closest('.toggle-btn');
+        if (!btn) return;
+        this.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const board = btn.dataset.view === 'board';
+        document.getElementById('leadsBoardView').style.display = board ? 'block' : 'none';
+        document.getElementById('leadsTableView').style.display = board ? 'none' : 'block';
+    });
 
     document.getElementById('refreshLeads').addEventListener('click', loadLeads);
 
     document.getElementById('leadsBody').addEventListener('click', async function (e) {
         const btn = e.target.closest('button[data-action]');
         if (!btn) return;
-        const action = btn.dataset.action;
-        const id = btn.dataset.id;
+        const lead = _leads.find(l => l.id === btn.dataset.id);
+        if (!lead) return;
+        if (btn.dataset.action === 'convert') openConvertModal(lead);
+        else if (btn.dataset.action === 'delete') deleteLead(lead);
+        else handleLeadStatusChange(lead, btn.dataset.action);  // 'contacted' | 'lost'
+    });
 
-        if (action === 'contacted' || action === 'lost') {
-            await sb.from('leads').update({ status: action === 'contacted' ? 'contacted' : 'lost' }).eq('id', id);
-            loadLeads();
-        } else if (action === 'convert') {
-            document.getElementById('cLeadId').value = id;
-            document.getElementById('cFirst').value = btn.dataset.first || '';
-            document.getElementById('cLast').value = btn.dataset.last || '';
-            document.getElementById('cEmail').value = btn.dataset.email || '';
-            document.getElementById('cPhone').value = btn.dataset.phone || '';
-            document.getElementById('cAddress').value = '';
-            document.getElementById('convertModal').classList.add('open');
-        }
+    async function deleteLead(lead) {
+        if (!confirm('Delete the lead for ' + lead.first_name + ' ' + lead.last_name + '? This cannot be undone.')) return;
+        const { error } = await sb.from('leads').delete().eq('id', lead.id);
+        if (error) { alert('Could not delete this lead.'); return; }
+        await loadLeads();
+        loadDashboard();
+    }
+
+    // ---- ADD LEAD ----
+    const leadModal = document.getElementById('leadModal');
+    document.getElementById('addLeadBtn').addEventListener('click', function () {
+        document.getElementById('leadForm').reset();
+        document.getElementById('leadMsg').innerHTML = '';
+        leadModal.classList.add('open');
+    });
+    document.getElementById('leadCancel').addEventListener('click', () => leadModal.classList.remove('open'));
+    leadModal.addEventListener('click', (e) => { if (e.target === leadModal) leadModal.classList.remove('open'); });
+    document.getElementById('leadForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const lead = {
+            first_name: document.getElementById('lFirst').value.trim(),
+            last_name: document.getElementById('lLast').value.trim(),
+            email: document.getElementById('lEmail').value.trim() || null,
+            phone: document.getElementById('lPhone').value.trim() || null,
+            source: document.getElementById('lSource').value,
+            status: document.getElementById('lStatus').value,
+        };
+        const { error } = await sb.from('leads').insert(lead);
+        if (error) { showMsg(document.getElementById('leadMsg'), 'Could not add the lead. Please try again.', 'error'); return; }
+        leadModal.classList.remove('open');
+        await loadLeads();
+        loadDashboard();
     });
 
     // ---- CONVERT LEAD -> ACCOUNT ----
     const convertModal = document.getElementById('convertModal');
+
+    function openConvertModal(lead) {
+        document.getElementById('cLeadId').value = lead.id;
+        document.getElementById('cFirst').value = lead.first_name || '';
+        document.getElementById('cLast').value = lead.last_name || '';
+        document.getElementById('cEmail').value = lead.email || '';
+        document.getElementById('cPhone').value = lead.phone || '';
+        document.getElementById('cAddress').value = '';
+        convertModal.classList.add('open');
+    }
     document.getElementById('convertCancel').addEventListener('click', () => convertModal.classList.remove('open'));
     convertModal.addEventListener('click', (e) => { if (e.target === convertModal) convertModal.classList.remove('open'); });
 
@@ -537,8 +1083,8 @@
         if (insertErr) return;
         await sb.from('leads').update({ status: 'converted' }).eq('id', leadId);
         convertModal.classList.remove('open');
-        loadLeads();
-        loadAccounts();
+        await Promise.all([loadLeads(), loadAccounts()]);
+        loadDashboard();
     });
 
     // ---- ACCOUNTS ----
@@ -546,47 +1092,101 @@
         const body = document.getElementById('accountsBody');
         const empty = document.getElementById('accountsEmpty');
         const { data, error } = await sb.from('accounts').select('*').order('created_at', { ascending: false });
+        _accounts = (error || !data) ? [] : data;
         body.innerHTML = '';
-        if (error || !data || !data.length) {
+        if (!_accounts.length) {
             empty.style.display = 'block';
             return;
         }
         empty.style.display = 'none';
-        data.forEach(function (acc) {
+        _accounts.forEach(function (acc) {
             const tr = document.createElement('tr');
             tr.innerHTML =
                 '<td><strong>' + esc(acc.first_name) + ' ' + esc(acc.last_name) + '</strong></td>' +
                 '<td>' + esc(acc.email) + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + esc(acc.phone) + '</span></td>' +
                 '<td>' + (acc.address ? esc(acc.address) : '<span style="color:var(--neutral);">—</span>') + '</td>' +
                 '<td>' + badge(acc.status) + '</td>' +
-                '<td>' + fmtDate(acc.created_at) + '</td>';
+                '<td>' + fmtDate(acc.created_at) + '</td>' +
+                '<td class="row-actions"><button data-action="delete" data-id="' + esc(acc.id) + '">Delete</button></td>';
             body.appendChild(tr);
         });
     }
     document.getElementById('refreshAccounts').addEventListener('click', loadAccounts);
+
+    document.getElementById('accountsBody').addEventListener('click', async function (e) {
+        const btn = e.target.closest('button[data-action="delete"]');
+        if (!btn) return;
+        const acc = _accounts.find(a => a.id === btn.dataset.id);
+        if (!acc) return;
+        if (!confirm('Delete the account for ' + acc.first_name + ' ' + acc.last_name + '? This cannot be undone.')) return;
+        const { error } = await sb.from('accounts').delete().eq('id', acc.id);
+        if (error) { alert('Could not delete this account. It may still have shifts linked to it.'); return; }
+        await loadAccounts();
+        loadDashboard();
+    });
+
+    // ---- ADD ACCOUNT ----
+    const accountModal = document.getElementById('accountModal');
+    document.getElementById('addAccountBtn').addEventListener('click', function () {
+        document.getElementById('accountForm').reset();
+        document.getElementById('accountMsg').innerHTML = '';
+        accountModal.classList.add('open');
+    });
+    document.getElementById('accountCancel').addEventListener('click', () => accountModal.classList.remove('open'));
+    accountModal.addEventListener('click', (e) => { if (e.target === accountModal) accountModal.classList.remove('open'); });
+    document.getElementById('accountForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const account = {
+            first_name: document.getElementById('aFirst').value.trim(),
+            last_name: document.getElementById('aLast').value.trim(),
+            email: document.getElementById('aEmail').value.trim() || null,
+            phone: document.getElementById('aPhone').value.trim() || null,
+            address: document.getElementById('aAddress').value.trim() || null,
+            status: document.getElementById('aStatus').value,
+        };
+        const { error } = await sb.from('accounts').insert(account);
+        if (error) { showMsg(document.getElementById('accountMsg'), 'Could not add the account. Please try again.', 'error'); return; }
+        accountModal.classList.remove('open');
+        await loadAccounts();
+        loadDashboard();
+    });
 
     // ---- EMPLOYEES ----
     async function loadEmployees() {
         const body = document.getElementById('employeesBody');
         const empty = document.getElementById('employeesEmpty');
         const { data, error } = await sb.from('employees').select('*').order('created_at', { ascending: false });
+        _employees = (error || !data) ? [] : data;
         body.innerHTML = '';
-        if (error || !data || !data.length) {
+        if (!_employees.length) {
             empty.style.display = 'block';
             return;
         }
         empty.style.display = 'none';
-        data.forEach(function (emp) {
+        _employees.forEach(function (emp) {
             const tr = document.createElement('tr');
             tr.innerHTML =
                 '<td><strong>' + esc(emp.first_name) + ' ' + esc(emp.last_name) + '</strong></td>' +
                 '<td>' + esc(emp.email) + '<br><span style="color:var(--neutral); font-size:0.8rem;">' + esc(emp.phone) + '</span></td>' +
                 '<td>' + (emp.role ? esc(emp.role) : '<span style="color:var(--neutral);">—</span>') + '</td>' +
                 '<td>' + badge(emp.status) + '</td>' +
-                '<td>' + fmtDate(emp.created_at) + '</td>';
+                '<td>' + fmtDate(emp.created_at) + '</td>' +
+                '<td class="row-actions"><button data-action="delete" data-id="' + esc(emp.id) + '">Delete</button></td>';
             body.appendChild(tr);
         });
     }
+
+    document.getElementById('employeesBody').addEventListener('click', async function (e) {
+        const btn = e.target.closest('button[data-action="delete"]');
+        if (!btn) return;
+        const emp = _employees.find(x => x.id === btn.dataset.id);
+        if (!emp) return;
+        if (!confirm('Delete ' + emp.first_name + ' ' + emp.last_name + ' from the roster? Their assigned shifts will also be removed. This cannot be undone.')) return;
+        const { error } = await sb.from('employees').delete().eq('id', emp.id);
+        if (error) { alert('Could not delete this employee.'); return; }
+        await Promise.all([loadEmployees(), loadShifts()]);
+        loadDashboard();
+    });
 
     const employeeModalAdmin = document.getElementById('employeeModalAdmin');
     document.getElementById('addEmployeeBtn').addEventListener('click', function () {
@@ -610,6 +1210,358 @@
         employeeModalAdmin.classList.remove('open');
         loadEmployees();
     });
+
+    // ============================================================
+    //  DASHBOARD KPIs
+    // ============================================================
+    document.getElementById('refreshDashboard').addEventListener('click', async function () {
+        await Promise.all([loadAccounts(), loadEmployees(), loadLeads()]);
+        await Promise.all([loadShifts(), loadCertifications()]);
+        loadDashboard();
+    });
+
+    function loadDashboard() {
+        const now = new Date();
+        const wkStart = new Date(now); wkStart.setDate(now.getDate() - now.getDay()); wkStart.setHours(0,0,0,0);
+        const wkEnd = new Date(wkStart); wkEnd.setDate(wkStart.getDate() + 7);
+        const dayStart = new Date(now); dayStart.setHours(0,0,0,0);
+        const dayEnd = new Date(dayStart); dayEnd.setDate(dayStart.getDate() + 1);
+
+        const activeClients = _accounts.filter(a => a.status === 'active').length;
+        const shiftsWeek = _shifts.filter(s => {
+            const d = new Date(s.start_at); return d >= wkStart && d < wkEnd && s.status !== 'cancelled';
+        }).length;
+        const openLeads = _leads.filter(l => l.status === 'new' || l.status === 'contacted').length;
+        const onDuty = new Set(_shifts.filter(s => {
+            const d = new Date(s.start_at); return d >= dayStart && d < dayEnd && s.status !== 'cancelled';
+        }).map(s => s.employee_id)).size;
+
+        const certsToRenew = _certifications.filter(c => {
+            const k = certStatus(c).key; return k === 'expiring' || k === 'expired';
+        }).length;
+
+        document.getElementById('kpiClients').textContent = activeClients;
+        document.getElementById('kpiShifts').textContent = shiftsWeek;
+        document.getElementById('kpiLeads').textContent = openLeads;
+        document.getElementById('kpiDuty').textContent = onDuty;
+        document.getElementById('kpiCerts').textContent = certsToRenew;
+        const fmt = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        document.getElementById('kpiShiftsSub').textContent = fmt(wkStart) + ' to ' + fmt(new Date(wkEnd.getTime() - 1));
+    }
+
+    // ============================================================
+    //  SHIFTS
+    // ============================================================
+    function employeeName(id) {
+        const e = _employees.find(x => x.id === id);
+        return e ? (e.first_name + ' ' + e.last_name) : 'Unknown';
+    }
+
+    async function loadShifts() {
+        const { data, error } = await sb.from('shifts').select('*').order('start_at', { ascending: false });
+        _shifts = (error || !data) ? [] : data;
+        renderShifts();
+    }
+
+    function renderShifts() {
+        const body = document.getElementById('shiftsBody');
+        const empty = document.getElementById('shiftsEmpty');
+        body.innerHTML = '';
+        if (!_shifts.length) { empty.style.display = 'block'; return; }
+        empty.style.display = 'none';
+        _shifts.forEach(function (s) {
+            const start = new Date(s.start_at), end = new Date(s.end_at);
+            const when = start.toLocaleDateString(undefined, { month:'short', day:'numeric' }) + ', ' +
+                start.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) + ' to ' +
+                end.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td><strong>' + esc(employeeName(s.employee_id)) + '</strong></td>' +
+                '<td>' + esc(s.client_name) + '</td>' +
+                '<td>' + esc(SERVICE_LABELS[s.service_type] || s.service_type) + '</td>' +
+                '<td>' + when + '</td>' +
+                '<td>' + badge(s.status) +
+                    (s.employee_response && s.employee_response !== 'pending'
+                        ? ' <span class="badge ' + s.employee_response + '">' + s.employee_response + '</span>' : '') +
+                '</td>' +
+                '<td class="row-actions">' +
+                    (s.status === 'scheduled' ? '<button data-action="complete" data-id="' + esc(s.id) + '">Complete</button>' : '') +
+                    (s.status !== 'cancelled' ? '<button data-action="cancel" data-id="' + esc(s.id) + '">Cancel</button>' : '') +
+                '</td>';
+            body.appendChild(tr);
+        });
+    }
+
+    document.getElementById('refreshShifts').addEventListener('click', loadShifts);
+
+    document.getElementById('shiftsBody').addEventListener('click', async function (e) {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const status = btn.dataset.action === 'complete' ? 'completed' : 'cancelled';
+        await sb.from('shifts').update({ status }).eq('id', btn.dataset.id);
+        await loadShifts();
+        loadDashboard();
+    });
+
+    // ---- Assign shift modal ----
+    const shiftModal = document.getElementById('shiftModal');
+    const shiftMsg = document.getElementById('shiftMsg');
+
+    document.getElementById('assignShiftBtn').addEventListener('click', function () {
+        const actives = _employees.filter(e => e.status === 'active');
+        if (!actives.length) { alert('Add an employee to the roster first.'); return; }
+
+        document.getElementById('shiftForm').reset();
+
+        document.getElementById('sEmployee').innerHTML = actives.map(e =>
+            '<option value="' + esc(e.id) + '">' + esc(e.first_name + ' ' + e.last_name) + '</option>'
+        ).join('');
+
+        const accOpts = _accounts.filter(a => a.status === 'active').map(a => {
+            const nm = a.first_name + ' ' + a.last_name;
+            return '<option value="' + esc(nm) + '">' + esc(nm) + '</option>';
+        }).join('');
+        document.getElementById('sClient').innerHTML = accOpts + '<option value="__custom__">Other (type a name)…</option>';
+        toggleCustomClient();
+
+        shiftMsg.innerHTML = '';
+        shiftModal.classList.add('open');
+    });
+
+    function toggleCustomClient() {
+        const isCustom = document.getElementById('sClient').value === '__custom__';
+        document.getElementById('sClientCustomWrap').style.display = isCustom ? 'block' : 'none';
+    }
+    document.getElementById('sClient').addEventListener('change', toggleCustomClient);
+    document.getElementById('shiftCancel').addEventListener('click', () => shiftModal.classList.remove('open'));
+    shiftModal.addEventListener('click', (e) => { if (e.target === shiftModal) shiftModal.classList.remove('open'); });
+
+    document.getElementById('shiftForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const clientSel = document.getElementById('sClient').value;
+        const clientName = clientSel === '__custom__'
+            ? document.getElementById('sClientCustom').value.trim()
+            : clientSel;
+        const startVal = document.getElementById('sStart').value;
+        const endVal = document.getElementById('sEnd').value;
+
+        if (!clientName) { showMsg(shiftMsg, 'Please choose or type a client name.', 'error'); return; }
+        if (new Date(endVal) <= new Date(startVal)) { showMsg(shiftMsg, 'End time must be after the start time.', 'error'); return; }
+
+        const shift = {
+            employee_id: document.getElementById('sEmployee').value,
+            client_name: clientName,
+            service_type: document.getElementById('sService').value,
+            start_at: new Date(startVal).toISOString(),
+            end_at: new Date(endVal).toISOString(),
+            address: document.getElementById('sAddress').value.trim() || null,
+            notes: document.getElementById('sNotes').value.trim() || null,
+        };
+        const { error } = await sb.from('shifts').insert(shift);
+        if (error) { showMsg(shiftMsg, 'Could not create the shift. Please try again.', 'error'); return; }
+        shiftModal.classList.remove('open');
+        await loadShifts();
+        loadDashboard();
+    });
+
+    // ============================================================
+    //  CERTIFICATIONS
+    // ============================================================
+    async function loadCertifications() {
+        const { data, error } = await sb.from('certifications').select('*');
+        _certifications = (error || !data) ? [] : data;
+        renderCertifications();
+    }
+
+    function fmtDateMaybe(d) { return d ? fmtDate(d + 'T00:00:00') : '<span style="color:var(--neutral);">-</span>'; }
+
+    function renderCertifications() {
+        const body = document.getElementById('certsBody');
+        const empty = document.getElementById('certsEmpty');
+        body.innerHTML = '';
+        if (!_certifications.length) { empty.style.display = 'block'; return; }
+        empty.style.display = 'none';
+        // Needs-attention first: expired, then expiring, then valid, then no-expiry.
+        const order = { expired: 0, expiring: 1, valid: 2, none: 3 };
+        const rows = _certifications.slice().sort((a, b) => order[certStatus(a).key] - order[certStatus(b).key]);
+        rows.forEach(function (c) {
+            const st = certStatus(c);
+            const tr = document.createElement('tr');
+            tr.innerHTML =
+                '<td><strong>' + esc(employeeName(c.employee_id)) + '</strong></td>' +
+                '<td>' + esc(c.type) + '</td>' +
+                '<td>' + (c.name ? esc(c.name) : '<span style="color:var(--neutral);">-</span>') + '</td>' +
+                '<td>' + fmtDateMaybe(c.issued_on) + '</td>' +
+                '<td>' + fmtDateMaybe(c.expires_on) + '</td>' +
+                '<td><span class="badge ' + st.key + '">' + esc(st.label) + '</span></td>' +
+                '<td class="row-actions">' +
+                    '<button data-action="edit" data-id="' + esc(c.id) + '">Edit</button>' +
+                    '<button data-action="delete" data-id="' + esc(c.id) + '">Delete</button>' +
+                '</td>';
+            body.appendChild(tr);
+        });
+    }
+    document.getElementById('refreshCerts').addEventListener('click', loadCertifications);
+
+    const certModal = document.getElementById('certModal');
+    const certMsg = document.getElementById('certMsg');
+
+    function populateCertEmployees() {
+        document.getElementById('certEmployee').innerHTML = _employees.map(e =>
+            '<option value="' + esc(e.id) + '">' + esc(e.first_name + ' ' + e.last_name) + '</option>'
+        ).join('');
+    }
+    function populateCertTypes() {
+        document.getElementById('certType').innerHTML = CERT_TYPES.map(t =>
+            '<option value="' + esc(t) + '">' + esc(t) + '</option>'
+        ).join('');
+    }
+
+    document.getElementById('addCertBtn').addEventListener('click', function () {
+        if (!_employees.length) { alert('Add an employee to the roster first.'); return; }
+        document.getElementById('certForm').reset();
+        document.getElementById('certId').value = '';
+        document.getElementById('certModalTitle').textContent = 'Add certification';
+        populateCertEmployees();
+        populateCertTypes();
+        certMsg.innerHTML = '';
+        certModal.classList.add('open');
+    });
+    document.getElementById('certCancel').addEventListener('click', () => certModal.classList.remove('open'));
+    certModal.addEventListener('click', (e) => { if (e.target === certModal) certModal.classList.remove('open'); });
+
+    document.getElementById('certsBody').addEventListener('click', async function (e) {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const cert = _certifications.find(c => c.id === btn.dataset.id);
+        if (!cert) return;
+        if (btn.dataset.action === 'edit') { openCertEdit(cert); return; }
+        if (!confirm('Delete this ' + cert.type + ' certification for ' + employeeName(cert.employee_id) + '?')) return;
+        const { error } = await sb.from('certifications').delete().eq('id', cert.id);
+        if (error) { alert('Could not delete this certification.'); return; }
+        await loadCertifications();
+        loadDashboard();
+    });
+
+    function openCertEdit(cert) {
+        document.getElementById('certForm').reset();
+        document.getElementById('certModalTitle').textContent = 'Edit certification';
+        populateCertEmployees();
+        populateCertTypes();
+        document.getElementById('certId').value = cert.id;
+        document.getElementById('certEmployee').value = cert.employee_id;
+        document.getElementById('certType').value = CERT_TYPES.includes(cert.type) ? cert.type : 'Other';
+        document.getElementById('certName').value = cert.name || '';
+        document.getElementById('certIssued').value = cert.issued_on || '';
+        document.getElementById('certExpires').value = cert.expires_on || '';
+        certMsg.innerHTML = '';
+        certModal.classList.add('open');
+    }
+
+    document.getElementById('certForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const id = document.getElementById('certId').value;
+        const row = {
+            employee_id: document.getElementById('certEmployee').value,
+            type: document.getElementById('certType').value,
+            name: document.getElementById('certName').value.trim() || null,
+            issued_on: document.getElementById('certIssued').value || null,
+            expires_on: document.getElementById('certExpires').value || null,
+        };
+        let error;
+        if (id) ({ error } = await sb.from('certifications').update(row).eq('id', id));
+        else    ({ error } = await sb.from('certifications').insert(row));
+        if (error) { showMsg(certMsg, 'Could not save the certification. Please try again.', 'error'); return; }
+        certModal.classList.remove('open');
+        await loadCertifications();
+        loadDashboard();
+    });
+
+    // ============================================================
+    //  PAYROLL
+    // ============================================================
+    function initPayrollDates() {
+        const now = new Date();
+        const first = new Date(now.getFullYear(), now.getMonth(), 1);
+        document.getElementById('payFrom').value = toDateInput(first);
+        document.getElementById('payTo').value = toDateInput(now);
+    }
+    function toDateInput(d) {
+        return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    }
+
+    document.getElementById('payRun').addEventListener('click', function () {
+        const fromVal = document.getElementById('payFrom').value;
+        const toVal = document.getElementById('payTo').value;
+        if (!fromVal || !toVal) { alert('Pick both a start and end date.'); return; }
+        const from = new Date(fromVal + 'T00:00:00');
+        const to = new Date(toVal + 'T23:59:59');
+        if (to < from) { alert('The end date is before the start date.'); return; }
+
+        const map = {};
+        _shifts.forEach(function (s) {
+            if (s.status === 'cancelled') return;
+            const start = new Date(s.start_at);
+            if (start < from || start > to) return;
+            const hours = (new Date(s.end_at) - start) / 3600000;
+            if (!(hours > 0)) return;
+            if (!map[s.employee_id]) map[s.employee_id] = { count: 0, hours: 0 };
+            map[s.employee_id].count += 1;
+            map[s.employee_id].hours += hours;
+        });
+
+        _payrollRows = Object.keys(map).map(id => ({
+            name: employeeName(id), count: map[id].count, hours: map[id].hours,
+        })).sort((a, b) => a.name.localeCompare(b.name));
+
+        renderPayroll();
+    });
+
+    function renderPayroll() {
+        const body = document.getElementById('payrollBody');
+        const foot = document.getElementById('payrollFoot');
+        const empty = document.getElementById('payrollEmpty');
+        body.innerHTML = ''; foot.innerHTML = '';
+        if (!_payrollRows.length) {
+            empty.style.display = 'block';
+            empty.textContent = 'No shifts found in that date range.';
+            document.getElementById('payExport').disabled = true;
+            return;
+        }
+        empty.style.display = 'none';
+        let totalShifts = 0, totalHours = 0;
+        _payrollRows.forEach(function (r) {
+            totalShifts += r.count; totalHours += r.hours;
+            const tr = document.createElement('tr');
+            tr.innerHTML = '<td><strong>' + esc(r.name) + '</strong></td>' +
+                '<td class="num">' + r.count + '</td>' +
+                '<td class="num">' + r.hours.toFixed(2) + '</td>';
+            body.appendChild(tr);
+        });
+        foot.innerHTML = '<tr><td>Total</td><td class="num">' + totalShifts + '</td><td class="num">' + totalHours.toFixed(2) + '</td></tr>';
+        document.getElementById('payExport').disabled = false;
+    }
+
+    document.getElementById('payExport').addEventListener('click', function () {
+        if (!_payrollRows.length) return;
+        const from = document.getElementById('payFrom').value;
+        const to = document.getElementById('payTo').value;
+        const rows = [['Employee', 'Shifts', 'Total hours']];
+        _payrollRows.forEach(r => rows.push([r.name, r.count, r.hours.toFixed(2)]));
+        const csv = rows.map(r => r.map(csvCell).join(',')).join('\r\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'vita-payroll-' + from + '-to-' + to + '.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    function csvCell(value) {
+        const s = String(value);
+        return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
 </script>
 </body>
 </html>
