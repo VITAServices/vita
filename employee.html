@@ -713,9 +713,9 @@
         .avail-times { display: flex; align-items: center; gap: 0.6rem; }
         .avail-times.disabled { opacity: 0.35; }
         .avail-sep { font-size: 0.78rem; color: var(--neutral); font-weight: 600; }
-        .time-input { border: 2px solid var(--teal-lighter); border-radius: 8px; padding: 0.35rem 0.6rem; font-family: 'Figtree', Arial, sans-serif; font-size: 0.85rem; color: var(--teal-dark); background: var(--bg); outline: none; transition: border-color 0.15s; }
+        .time-input { border: 2px solid var(--teal-lighter); border-radius: 8px; padding: 0.35rem 0.6rem; font-family: 'Figtree', Arial, sans-serif; font-size: 0.85rem; color: var(--teal-dark); background: var(--bg); outline: none; transition: border-color 0.15s; cursor: pointer; appearance: none; -webkit-appearance: none; min-width: 72px; }
         .time-input:focus { border-color: var(--teal); }
-        .time-input:disabled { cursor: not-allowed; }
+        .time-input:disabled { cursor: not-allowed; opacity: 0.4; }
 
         /* ---- Availability toggle ---- */
         .avail-toggle { position: relative; display: inline-block; width: 40px; height: 22px; flex-shrink: 0; }
@@ -1739,6 +1739,17 @@ function renderAvailabilitySection() {
     const avMap = {};
     _availability.forEach(a => { avMap[a.day_of_week] = a; });
     const order = [1,2,3,4,5,6,0];
+    function timeOptions(selected) {
+        const opts = [];
+        for (let h = 0; h < 24; h++) {
+            for (const m of [0, 30]) {
+                const val = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+                opts.push(`<option value="${val}"${val === selected ? ' selected' : ''}>${val}</option>`);
+            }
+        }
+        opts.push(`<option value="23:59"${'23:59' === selected ? ' selected' : ''}>23:59</option>`);
+        return opts.join('');
+    }
     grid.innerHTML = order.map(dow => {
         const a       = avMap[dow];
         const checked = !!a;
@@ -1751,9 +1762,9 @@ function renderAvailabilitySection() {
             </label>
             <span class="avail-day">${DAY_NAMES[dow]}</span>
             <div class="avail-times${checked ? '' : ' disabled'}">
-                <input type="time" class="avail-start time-input" value="${start}"${checked ? '' : ' disabled'}>
+                <select class="avail-start time-input"${checked ? '' : ' disabled'}>${timeOptions(start)}</select>
                 <span class="avail-sep">to</span>
-                <input type="time" class="avail-end time-input" value="${end}"${checked ? '' : ' disabled'}>
+                <select class="avail-end time-input"${checked ? '' : ' disabled'}>${timeOptions(end)}</select>
             </div>
         </div>`;
     }).join('');
