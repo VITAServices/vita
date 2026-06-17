@@ -12,7 +12,7 @@ function getTwilioClient() {
     return twilio(sid, token);
 }
 
-const NOTIFY_EMAIL = 'Lorena@vitasoinsetservices.com';
+const NOTIFY_EMAIL = 'info@vitasoinsetservices.com';
 const NOTIFY_PHONE = '+14388393838';
 const FROM_EMAIL = process.env.NOTIFY_FROM_EMAIL || 'VITA Website <onboarding@resend.dev>';
 
@@ -22,6 +22,8 @@ const FROM_EMAIL = process.env.NOTIFY_FROM_EMAIL || 'VITA Website <onboarding@re
 const ALLOWED_ORIGINS = new Set([
     'https://www.vitasoinsetservices.com',
     'https://vitasoinsetservices.com',
+    'https://www.vitasoinsetservices.ca',
+    'https://vitasoinsetservices.ca',
 ]);
 
 // Maximum accepted length per field — anything longer is almost certainly
