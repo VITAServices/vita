@@ -135,7 +135,8 @@ export default async function handler(req, res) {
         .single();
 
     if (dbError) {
-        return res.status(500).json({ ok: false, error: 'db_insert_failed' });
+        console.error('Supabase insert error:', JSON.stringify(dbError));
+        return res.status(500).json({ ok: false, error: 'db_insert_failed', detail: dbError.message });
     }
 
     const fullName = `${lead.first_name} ${lead.last_name}`;
